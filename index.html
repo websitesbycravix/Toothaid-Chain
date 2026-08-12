@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toothaid Chain</title>
+    <title>ApexCare - Dental Centre</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,12 +74,18 @@
             border-bottom-color: #3b82f6; 
             box-shadow: 0 1px 0 0 #3b82f6; 
         }
+        .custom-input.error {
+            border-bottom-color: #ef4444;
+            box-shadow: 0 1px 0 0 #ef4444;
+        }
+        .custom-input.error::placeholder {
+            color: #ef4444;
+        }
 
         .hero-gradient { background: linear-gradient(180deg, #ffffff 0%, #c7d2fe 100%); }
         .booking-gradient { background: linear-gradient(180deg, #ffffff 0%, #e0e7ff 100%); }
         .footer-bg { background-color: #0b112c; }
 
-        /* Slider Specific Classes */
         .slider-track {
             display: flex;
             will-change: transform;
@@ -99,7 +105,6 @@
         .grabbing { cursor: grabbing !important; }
         .grab { cursor: grab; }
         
-        /* HD Image Fix */
         .doctor-img {
             width: 100%;
             height: 320px;
@@ -113,7 +118,7 @@
     <nav class="flex items-center justify-between p-6 bg-white sticky top-0 z-50 shadow-sm reveal active">
         <div class="flex items-center gap-2">
             <i class="fa-solid fa-asterisk text-blue-500 text-2xl"></i>
-            <span class="text-xl font-bold text-navy-900 tracking-tight">Toothaid Chain</span>
+            <span class="text-xl font-bold text-navy-900 tracking-tight">ApexCare</span>
         </div>
         <button class="w-10 h-10 bg-navy-900 text-white rounded flex items-center justify-center hover:bg-navy-800 transition">
             <i class="fa-solid fa-bars"></i>
@@ -136,18 +141,6 @@
                     <i class="fa-solid fa-arrow-right -rotate-45"></i>
                 </div>
             </button>
-        </div>
-
-        <div class="relative w-32 h-32 mx-auto reveal" style="transition-delay: 300ms;">
-            <div class="absolute inset-0 bg-white/40 rounded-full backdrop-blur-sm border border-white/60 flex items-center justify-center">
-                <span class="text-4xl font-bold text-navy-900">M</span>
-            </div>
-            <svg class="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
-                <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-                <text class="text-[10px] font-medium fill-navy-900 uppercase tracking-widest">
-                    <textPath href="#circlePath" startOffset="0%">Your Dental Assistant | Your Dental Assistant | </textPath>
-                </text>
-            </svg>
         </div>
     </header>
 
@@ -186,10 +179,10 @@
         </div>
 
         <div class="text-center pt-10 pb-4 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About Clinic</span>
+            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About ApexCare</span>
             <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-4">Your trusted partners in<br>dental care</h2>
             <p class="text-gray-600 text-sm leading-relaxed mb-8 px-2">
-                At Toothaid Chain, we believe that a healthy smile is a happy smile. Our dedicated team of professionals combines years of experience, cutting-edge technology, and a warm, caring atmosphere to ensure you get the best dental care possible.
+                At ApexCare, we believe that a healthy smile is a happy smile. Our dedicated team of professionals combines years of experience, cutting-edge technology, and a warm, caring atmosphere to ensure you get the best dental care possible.
             </p>
             <div class="flex justify-center mb-10">
                 <button class="bg-navy-900 text-white pl-6 pr-2 py-2 rounded-full flex items-center gap-4 hover:scale-105 transition-transform shadow-lg group">
@@ -214,7 +207,7 @@
             <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center text-navy-900 text-4xl">
                 <i class="fa-solid fa-file-contract"></i>
             </div>
-            <p class="text-navy-900 font-medium mb-4">Certified by the Dental Association</p>
+            <p class="text-navy-900 font-medium mb-4">Certified by the American Dental Association</p>
             <a href="#" class="text-blue-600 font-semibold text-sm flex items-center justify-center gap-2 border-b border-blue-600 pb-1 inline-flex hover:opacity-70 transition">
                 Schedule Your Visit <i class="fa-solid fa-arrow-right -rotate-45"></i>
             </a>
@@ -226,7 +219,7 @@
             </div>
             <h3 class="text-navy-900 font-semibold mb-3">Experienced & Caring Dentists</h3>
             <p class="text-gray-600 text-sm leading-relaxed">
-                With over years of experience, our team provides expert care with a gentle touch, ensuring a comfortable and effective experience every time.
+                With over 25 years of experience, our team provides expert care with a gentle touch, ensuring a comfortable and effective experience every time.
             </p>
         </div>
 
@@ -256,7 +249,6 @@
                         <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
                     </button>
                 </li>
-                
                 <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
                     <div class="flex items-center gap-4">
                         <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">02</span>
@@ -266,7 +258,6 @@
                         <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
                     </button>
                 </li>
-                
                 <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
                     <div class="flex items-center gap-4">
                         <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">03</span>
@@ -276,7 +267,6 @@
                         <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
                     </button>
                 </li>
-                
                 <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
                     <div class="flex items-center gap-4">
                         <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">04</span>
@@ -286,7 +276,6 @@
                         <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
                     </button>
                 </li>
-                
                 <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
                     <div class="flex items-center gap-4">
                         <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">05</span>
@@ -296,7 +285,6 @@
                         <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
                     </button>
                 </li>
-                
                 <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between pt-1 transition-all duration-500">
                     <div class="flex items-center gap-4">
                         <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">06</span>
@@ -313,23 +301,53 @@
             <span class="inline-block bg-white border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase relative z-10"># Appointment Booking</span>
             <h2 class="text-2xl font-medium text-navy-900 leading-tight mb-8 relative z-10">Easy & quick appointment booking</h2>
             
-            <form class="space-y-4 text-left relative z-10">
-                <input type="text" placeholder="Full name *" class="custom-input text-sm">
-                <input type="email" placeholder="Email *" class="custom-input text-sm">
-                <input type="tel" placeholder="Phone number *" class="custom-input text-sm">
-                <input type="text" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm mb-6">
+            <form id="booking-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4 text-left relative z-10" novalidate>
+
+                <input type="hidden" name="access_key" value="524e4687-5adc-45c4-938c-8601a3ab6d23">
+                <input type="hidden" name="subject" value="New Appointment Booking - ApexCare">
+                <input type="hidden" name="from_name" value="ApexCare Website">
+                <input type="checkbox" name="botcheck" style="display:none;">
+
+                <div class="field-group">
+                    <input type="text" name="name" id="field-name" placeholder="Full name *" class="custom-input text-sm">
+                    <p class="error-msg hidden text-red-500 text-xs mt-1 pl-1">⚠ Please enter your full name.</p>
+                </div>
+
+                <div class="field-group">
+                    <input type="email" name="email" id="field-email" placeholder="Email *" class="custom-input text-sm">
+                    <p class="error-msg hidden text-red-500 text-xs mt-1 pl-1">⚠ Please enter a valid email address.</p>
+                </div>
+
+                <div class="field-group">
+                    <input type="tel" name="phone" id="field-phone" placeholder="Phone number *" class="custom-input text-sm">
+                    <p class="error-msg hidden text-red-500 text-xs mt-1 pl-1">⚠ Please enter your phone number.</p>
+                </div>
+
+                <div class="field-group">
+                    <input type="text" name="reason" id="field-reason" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm">
+                    <p class="error-msg hidden text-red-500 text-xs mt-1 pl-1">⚠ Please enter your reason for visit.</p>
+                </div>
                 
                 <div class="flex justify-start">
-                    <button type="button" id="booking-btn" class="relative bg-navy-900 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-[0_8px_20px_rgba(17,24,54,0.3)] active:scale-95 w-max mt-4 shadow-lg overflow-hidden flex items-center justify-center min-w-[180px] h-[52px]">
+                    <button type="submit" id="booking-btn" class="relative bg-navy-900 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-[0_8px_20px_rgba(17,24,54,0.3)] active:scale-95 w-max mt-4 shadow-lg overflow-hidden flex items-center justify-center min-w-[180px] h-[52px]">
                         <span id="btn-text" class="transition-opacity duration-300 absolute">Reserve Your Spot</span>
-                        
                         <i id="btn-spinner" class="fa-solid fa-circle-notch fa-spin absolute opacity-0 transition-opacity duration-300 pointer-events-none text-lg"></i>
-                        
                         <div id="btn-success" class="absolute flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none">
                             <i class="fa-solid fa-check text-lg"></i>
-                            <span class="font-bold tracking-wide">Reserved!</span>
+                            <span class="font-bold tracking-wide">Sent!</span>
+                        </div>
+                        <div id="btn-error" class="absolute flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                            <span class="font-bold tracking-wide">Try Again</span>
                         </div>
                     </button>
+                </div>
+
+                <div id="form-success" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-2xl text-green-700 text-sm font-medium text-center">
+                    ✅ Booking received! We'll contact you shortly.
+                </div>
+                <div id="form-error" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-sm font-medium text-center">
+                    ❌ Something went wrong. Please try again.
                 </div>
             </form>
             <i class="fa-solid fa-quote-left absolute -bottom-4 -left-2 text-8xl text-blue-100 opacity-50 z-0"></i>
@@ -337,7 +355,6 @@
 
         <div class="reveal relative overflow-hidden -mx-4 px-4 pb-4">
             <div class="slider-track grab" id="testimonial-track">
-                
                 <div class="slider-item original-slide">
                     <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
                         <div>
@@ -360,7 +377,7 @@
                         <div>
                             <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
                             <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                I've always dreaded visiting the dentist, but Toothaid Chain changed that completely. The procedure was incredibly smooth and the recovery was fast.
+                                I've always dreaded visiting the dentist, but ApexCare changed that completely. The procedure was incredibly smooth and the recovery was fast.
                             </p>
                         </div>
                         <div class="flex items-center gap-4 mt-auto">
@@ -388,7 +405,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             
             <div class="flex justify-center items-center gap-2 mt-6" id="slider-dots">
@@ -403,13 +419,21 @@
             <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-6">Your trusted dental professionals</h2>
         </div>
 
-        <div id="team-grid" class="flex justify-center reveal mb-8">
-            <div class="stagger-item-team opacity-0 transform translate-y-4 bg-white rounded-3xl p-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:-translate-y-2 transition-transform duration-300 cursor-pointer w-full md:w-[calc(50%-12px)]">
+        <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal mb-8">
+            <div class="stagger-item-team opacity-0 transform translate-y-4 bg-white rounded-3xl p-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
                 <div class="rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600" alt="Dr. Sanneya Manchanda" class="doctor-img group-hover:scale-105 transition-transform duration-700">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600" alt="Dr. Shubham Sharma" class="doctor-img group-hover:scale-105 transition-transform duration-700">
                 </div>
-                <h3 class="text-navy-900 font-semibold mb-1">Dr. Sanneya Manchanda</h3>
-                <p class="text-gray-500 text-sm pb-2">Chief Dentist</p>
+                <h3 class="text-navy-900 font-semibold mb-1">Dr. Shubham Sharma</h3>
+                <p class="text-gray-500 text-sm pb-2">Orthodontist</p>
+            </div>
+
+            <div class="stagger-item-team opacity-0 transform translate-y-4 bg-white rounded-3xl p-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
+                <div class="rounded-2xl overflow-hidden mb-4 bg-gray-100">
+                    <img src="https://i.ibb.co/1tZJcWx2/Untitled38-20260321165556.jpg" alt="Dr. Abhishek Khanna" class="doctor-img group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <h3 class="text-navy-900 font-semibold mb-1">Dr. Abhishek Khanna</h3>
+                <p class="text-gray-500 text-sm pb-2">Oral Surgeon</p>
             </div>
         </div>
 
@@ -468,15 +492,13 @@
 
     <footer class="footer-bg rounded-t-[40px] px-6 pt-16 pb-10 text-white relative mt-8 max-w-md mx-auto md:max-w-4xl">
         <div class="reveal">
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-                
                 <div>
                     <div class="flex items-center gap-2 mb-6">
                         <i class="fa-solid fa-asterisk text-blue-400 text-2xl"></i>
-                        <span class="text-2xl font-bold tracking-tight">Toothaid Chain</span>
+                        <span class="text-2xl font-bold tracking-tight">ApexCare</span>
                     </div>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Shop No. 4798, Main Bazar, Tooti Chowk,<br>Pahar Ganj,<br>Delhi-110055</p>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">2066 Duncan Avenue,<br>Brooklyn, New York</p>
                     <a href="#" class="inline-flex items-center gap-2 text-sm text-white bg-[#313a60] px-5 py-2.5 rounded-full hover:bg-blue-500 transition-colors w-max shadow-md">
                         <i class="fa-solid fa-location-dot"></i> Get Directions
                     </a>
@@ -498,11 +520,10 @@
                         </div>
                         <p class="text-xs font-bold text-red-500 uppercase mb-2 tracking-wider relative z-10">Emergency 24/7</p>
                         <p class="text-sm mb-4 text-gray-600 relative z-10">Need urgent dental care? Call us immediately.</p>
-                        <p class="text-2xl font-bold mb-1 relative z-10">+91 94641 91581</p>
-                        <a href="mailto:info@toothaidchain.com" class="text-sm font-medium border-b-2 border-blue-200 hover:border-blue-600 transition-colors relative z-10">info@toothaidchain.com</a>
+                        <p class="text-2xl font-bold mb-1 relative z-10">+(1234)-123-56</p>
+                        <a href="mailto:info@apexcare.com" class="text-sm font-medium border-b-2 border-blue-200 hover:border-blue-600 transition-colors relative z-10">info@apexcare.com</a>
                     </div>
                 </div>
-
             </div>
 
             <div class="pt-8 border-t border-[#313a60] flex flex-col md:flex-row items-center justify-between gap-6">
@@ -512,18 +533,16 @@
                     <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
                     <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-pinterest-p text-sm"></i></a>
                 </div>
-                
                 <div class="text-center md:text-right">
-                    <p class="text-gray-500 text-xs mb-1">&copy; 2026 Toothaid Chain. All Rights Reserved.</p>
+                    <p class="text-gray-500 text-xs mb-1">&copy; 2026 ApexCare. All Rights Reserved.</p>
                 </div>
             </div>
-
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
+
             // 1. Scroll Reveal
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -532,15 +551,14 @@
                     }
                 });
             }, { threshold: 0.15 });
-
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            // 2. Services List Stagger 
+            // 2. Services List Stagger
             const servicesList = document.getElementById('services-list');
             const staggerItems = document.querySelectorAll('.stagger-item');
             if (servicesList) {
                 const listObserver = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting) {
+                    if (entries[0].isIntersecting) {
                         staggerItems.forEach((item, index) => {
                             setTimeout(() => {
                                 item.classList.remove('opacity-0', 'translate-y-4');
@@ -558,7 +576,7 @@
             const teamStaggerItems = document.querySelectorAll('.stagger-item-team');
             if (teamGrid) {
                 const teamObserver = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting) {
+                    if (entries[0].isIntersecting) {
                         teamStaggerItems.forEach((item, index) => {
                             setTimeout(() => {
                                 item.classList.remove('opacity-0', 'translate-y-4');
@@ -571,40 +589,105 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Booking Button Animation Logic 
-            const bookingBtn = document.getElementById('booking-btn');
-            if (bookingBtn) {
+            // 4. Booking Form - Web3Forms + Validation
+            const bookingForm = document.getElementById('booking-form');
+            if (bookingForm) {
+                const bookingBtn = document.getElementById('booking-btn');
                 const btnText = document.getElementById('btn-text');
                 const btnSpinner = document.getElementById('btn-spinner');
                 const btnSuccess = document.getElementById('btn-success');
+                const btnError = document.getElementById('btn-error');
+                const formSuccess = document.getElementById('form-success');
+                const formError = document.getElementById('form-error');
 
-                bookingBtn.addEventListener('click', function() {
-                    if (this.classList.contains('processing') || this.classList.contains('success')) return;
-                    
-                    this.classList.add('processing');
-                    
+                // Clear error on input
+                bookingForm.querySelectorAll('.custom-input').forEach(input => {
+                    input.addEventListener('input', () => {
+                        input.classList.remove('error');
+                        const msg = input.closest('.field-group').querySelector('.error-msg');
+                        if (msg) msg.classList.add('hidden');
+                    });
+                });
+
+                const validateForm = () => {
+                    let isValid = true;
+                    const fields = [
+                        { id: 'field-name', check: v => v.trim().length >= 2 },
+                        { id: 'field-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+                        { id: 'field-phone', check: v => v.trim().length >= 6 },
+                        { id: 'field-reason', check: v => v.trim().length >= 3 },
+                    ];
+                    fields.forEach(({ id, check }) => {
+                        const input = document.getElementById(id);
+                        const msg = input.closest('.field-group').querySelector('.error-msg');
+                        if (!check(input.value)) {
+                            input.classList.add('error');
+                            msg.classList.remove('hidden');
+                            isValid = false;
+                        } else {
+                            input.classList.remove('error');
+                            msg.classList.add('hidden');
+                        }
+                    });
+                    return isValid;
+                };
+
+                bookingForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    if (!validateForm()) return;
+
                     btnText.classList.add('opacity-0');
                     btnSpinner.classList.remove('opacity-0');
                     btnSpinner.classList.add('opacity-100');
+                    bookingBtn.disabled = true;
 
-                    setTimeout(() => {
-                        btnSpinner.classList.remove('opacity-100');
+                    const formData = new FormData(bookingForm);
+
+                    try {
+                        const response = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const data = await response.json();
                         btnSpinner.classList.add('opacity-0');
-                        
-                        this.classList.remove('bg-navy-900', 'hover:bg-navy-800');
-                        this.classList.add('bg-blue-600', 'hover:bg-blue-700', 'success');
-                        
-                        btnSuccess.classList.remove('opacity-0');
-                        btnSuccess.classList.add('opacity-100');
-                        
+
+                        if (data.success) {
+                            bookingBtn.classList.remove('bg-navy-900');
+                            bookingBtn.classList.add('bg-green-600');
+                            btnSuccess.classList.remove('opacity-0');
+                            btnSuccess.classList.add('opacity-100');
+                            formSuccess.classList.remove('hidden');
+                            formError.classList.add('hidden');
+                            bookingForm.reset();
+
+                            setTimeout(() => {
+                                bookingBtn.classList.remove('bg-green-600');
+                                bookingBtn.classList.add('bg-navy-900');
+                                btnSuccess.classList.add('opacity-0');
+                                btnText.classList.remove('opacity-0');
+                                bookingBtn.disabled = false;
+                                formSuccess.classList.add('hidden');
+                            }, 3000);
+                        } else {
+                            throw new Error('Failed');
+                        }
+                    } catch (err) {
+                        btnSpinner.classList.add('opacity-0');
+                        bookingBtn.classList.remove('bg-navy-900');
+                        bookingBtn.classList.add('bg-red-600');
+                        btnError.classList.remove('opacity-0');
+                        btnError.classList.add('opacity-100');
+                        formError.classList.remove('hidden');
+
                         setTimeout(() => {
-                            this.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'success', 'processing');
-                            this.classList.add('bg-navy-900', 'hover:bg-navy-800');
-                            btnSuccess.classList.remove('opacity-100');
-                            btnSuccess.classList.add('opacity-0');
+                            bookingBtn.classList.remove('bg-red-600');
+                            bookingBtn.classList.add('bg-navy-900');
+                            btnError.classList.add('opacity-0');
                             btnText.classList.remove('opacity-0');
-                        }, 2000);
-                    }, 800);
+                            bookingBtn.disabled = false;
+                            formError.classList.add('hidden');
+                        }, 3000);
+                    }
                 });
             }
 
@@ -612,23 +695,19 @@
             const track = document.getElementById('testimonial-track');
             const originalSlides = Array.from(document.querySelectorAll('.original-slide'));
             const dots = document.querySelectorAll('#slider-dots button');
-            
+
             const firstClone = originalSlides[0].cloneNode(true);
             const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
             firstClone.id = 'first-clone'; lastClone.id = 'last-clone';
             track.appendChild(firstClone); track.insertBefore(lastClone, originalSlides[0]);
-            
+
             const allSlides = document.querySelectorAll('.slider-item');
             let currentIndex = 1;
             let isDragging = false;
-            let isScrolling = false; 
-            
-            let startPosX = 0;
-            let startPosY = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
-            let animationID;
-            let autoPlayInterval;
+            let isScrolling = false;
+            let startPosX = 0, startPosY = 0;
+            let currentTranslate = 0, prevTranslate = 0;
+            let animationID, autoPlayInterval;
 
             const getValidIndex = (index) => {
                 if (index < 0) return 0;
@@ -639,15 +718,14 @@
             const updatePosition = (animate = true) => {
                 currentIndex = getValidIndex(currentIndex);
                 const slideWidth = allSlides[0].offsetWidth;
-                
                 track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
                 currentTranslate = currentIndex * -slideWidth;
-                track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`; 
-                
+                track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
+
                 let activeDotIndex = currentIndex - 1;
                 if (currentIndex === 0) activeDotIndex = originalSlides.length - 1;
                 if (currentIndex === allSlides.length - 1) activeDotIndex = 0;
-                
+
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('bg-navy-900', index === activeDotIndex);
                     dot.classList.toggle('bg-gray-200', index !== activeDotIndex);
@@ -664,86 +742,54 @@
             const startAutoPlay = () => {
                 clearInterval(autoPlayInterval);
                 autoPlayInterval = setInterval(() => {
-                    if(!document.hidden){
-                        currentIndex++;
-                        updatePosition(true);
-                    }
+                    if (!document.hidden) { currentIndex++; updatePosition(true); }
                 }, 3000);
             };
 
             document.addEventListener("visibilitychange", () => {
-                if (document.hidden) {
-                    clearInterval(autoPlayInterval);
-                } else {
-                    startAutoPlay();
-                }
+                if (document.hidden) clearInterval(autoPlayInterval);
+                else startAutoPlay();
             });
 
             const touchStart = (event) => {
                 clearInterval(autoPlayInterval);
-                
-                if (currentIndex === 0) {
-                    currentIndex = originalSlides.length;
-                    updatePosition(false);
-                } else if (currentIndex === allSlides.length - 1) {
-                    currentIndex = 1;
-                    updatePosition(false);
-                }
-
-                isDragging = true;
-                isScrolling = false; 
-                
+                if (currentIndex === 0) { currentIndex = originalSlides.length; updatePosition(false); }
+                else if (currentIndex === allSlides.length - 1) { currentIndex = 1; updatePosition(false); }
+                isDragging = true; isScrolling = false;
                 startPosX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
                 startPosY = event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
-                
-                currentTranslate = currentIndex * -allSlides[0].offsetWidth; 
+                currentTranslate = currentIndex * -allSlides[0].offsetWidth;
                 prevTranslate = currentTranslate;
-                
-                track.style.transition = 'none'; 
+                track.style.transition = 'none';
                 track.classList.add('grabbing');
                 animationID = requestAnimationFrame(animation);
             };
 
             const touchMove = (event) => {
                 if (!isDragging) return;
-                
                 const currentPosX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
                 const currentPosY = event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
-                
                 const diffX = currentPosX - startPosX;
                 const diffY = currentPosY - startPosY;
-
                 if (!isScrolling) {
                     if (Math.abs(diffY) > Math.abs(diffX)) {
-                        isScrolling = true;
-                        isDragging = false;
+                        isScrolling = true; isDragging = false;
                         track.classList.remove('grabbing');
-                        cancelAnimationFrame(animationID);
-                        return;
+                        cancelAnimationFrame(animationID); return;
                     }
                 }
-
-                if (!isScrolling) {
-                    currentTranslate = prevTranslate + diffX;
-                }
+                if (!isScrolling) currentTranslate = prevTranslate + diffX;
             };
 
             const touchEnd = () => {
-                if (!isDragging && !isScrolling) {
-                    startAutoPlay();
-                    return;
-                }
-                
+                if (!isDragging && !isScrolling) { startAutoPlay(); return; }
                 if (isDragging) {
                     isDragging = false;
                     cancelAnimationFrame(animationID);
                     track.classList.remove('grabbing');
-
                     const movedBy = currentTranslate - prevTranslate;
-
                     if (movedBy < -30) currentIndex++;
                     else if (movedBy > 30) currentIndex--;
-
                     updatePosition(true);
                 }
                 startAutoPlay();
@@ -757,21 +803,24 @@
             track.addEventListener('touchstart', touchStart, { passive: true });
             track.addEventListener('touchmove', touchMove, { passive: true });
             track.addEventListener('touchend', touchEnd);
-            
             track.addEventListener('mousedown', touchStart);
             track.addEventListener('mousemove', touchMove);
             track.addEventListener('mouseup', touchEnd);
-            track.addEventListener('mouseleave', () => {
-                if(isDragging) touchEnd();
-                startAutoPlay();
-            });
+            track.addEventListener('mouseleave', () => { if (isDragging) touchEnd(); startAutoPlay(); });
 
             let resizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    updatePosition(false);
-                }, 100);
+                resizeTimer = setTimeout(() => updatePosition(false), 100);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(autoPlayInterval);
+                    currentIndex = index + 1;
+                    updatePosition(true);
+                    startAutoPlay();
+                });
             });
 
             startAutoPlay();
@@ -781,7 +830,7 @@
             insightCards.forEach(card => {
                 card.addEventListener('click', function(e) {
                     if (!this.classList.contains('hover-activated')) {
-                        e.preventDefault(); 
+                        e.preventDefault();
                         insightCards.forEach(c => c.classList.remove('hover-activated'));
                         this.classList.add('hover-activated');
                     }
@@ -793,6 +842,7 @@
                     insightCards.forEach(c => c.classList.remove('hover-activated'));
                 }
             });
+
         });
     </script>
 </body>
