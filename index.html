@@ -125,13 +125,13 @@
         </button>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-x-0 top-0 h-[100dvh] bg-navy-900/90 backdrop-blur-xl z-50 flex flex-col items-center justify-center space-y-6 text-white transform -translate-y-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-b-[2.5rem] shadow-2xl will-change-transform pointer-events-none">
-        <a href="#" class="menu-link opacity-0 translate-y-6 transition-all duration-500 ease-out text-3xl font-medium hover:text-blue-400 will-change-[transform,opacity]">Home</a>
-        <a href="#" class="menu-link opacity-0 translate-y-6 transition-all duration-500 ease-out text-3xl font-medium hover:text-blue-400 will-change-[transform,opacity]">About Us</a>
-        <a href="#" class="menu-link opacity-0 translate-y-6 transition-all duration-500 ease-out text-3xl font-medium hover:text-blue-400 will-change-[transform,opacity]">Services</a>
-        <a href="#" class="menu-link opacity-0 translate-y-6 transition-all duration-500 ease-out text-3xl font-medium hover:text-blue-400 will-change-[transform,opacity]">Gallery</a>
-        <a href="#" class="menu-link opacity-0 translate-y-6 transition-all duration-500 ease-out text-3xl font-medium hover:text-blue-400 will-change-[transform,opacity]">Contact</a>
-        <a href="#" class="menu-link opacity-0 translate-y-6 transition-all duration-500 ease-out text-xl font-medium bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
+    <div id="mobile-menu" class="fixed inset-x-4 top-24 z-50 flex flex-col items-center justify-center space-y-5 p-8 text-white transform -translate-y-8 scale-95 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-navy-900/30 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] will-change-[transform,opacity] pointer-events-none">
+        <a href="#" class="menu-link opacity-0 translate-y-4 transition-all duration-400 ease-out text-2xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Home</a>
+        <a href="#" class="menu-link opacity-0 translate-y-4 transition-all duration-400 ease-out text-2xl font-medium hover:text-blue-300 will-change-[transform,opacity]">About Us</a>
+        <a href="#" class="menu-link opacity-0 translate-y-4 transition-all duration-400 ease-out text-2xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Services</a>
+        <a href="#" class="menu-link opacity-0 translate-y-4 transition-all duration-400 ease-out text-2xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Gallery</a>
+        <a href="#" class="menu-link opacity-0 translate-y-4 transition-all duration-400 ease-out text-2xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Contact</a>
+        <a href="#" class="menu-link opacity-0 translate-y-4 transition-all duration-400 ease-out text-lg font-medium bg-white text-navy-900 px-8 py-3 rounded-full hover:scale-105 mt-4 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
     </div>
 
     <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
@@ -868,7 +868,7 @@
                 }
             });
 
-            // 7. Butter-Smooth iOS Mobile Menu (Safeguarded)
+            // 7. iOS Floating Glass Menu
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             
@@ -885,31 +885,27 @@
                     icon.classList.toggle('fa-xmark');
 
                     if (menuOpen) {
-                        // Lock background scroll safely
                         document.body.style.overflow = 'hidden';
                         
-                        // Slide down and allow clicks
-                        mobileMenu.classList.remove('-translate-y-full', 'pointer-events-none');
-                        mobileMenu.classList.add('translate-y-0', 'pointer-events-auto');
+                        // Drop down, scale up, fade in
+                        mobileMenu.classList.remove('-translate-y-8', 'scale-95', 'opacity-0', 'pointer-events-none');
+                        mobileMenu.classList.add('translate-y-0', 'scale-100', 'opacity-100', 'pointer-events-auto');
                         
-                        // Stagger text animations
                         menuLinks.forEach((link, index) => {
                             setTimeout(() => {
-                                link.classList.remove('opacity-0', 'translate-y-6');
+                                link.classList.remove('opacity-0', 'translate-y-4');
                                 link.classList.add('opacity-100', 'translate-y-0');
-                            }, 250 + (index * 60));
+                            }, 150 + (index * 50));
                         });
                     } else {
-                        // Unlock background scroll
                         document.body.style.overflow = '';
                         
-                        // Slide up and disable clicks so it doesn't block the page
-                        mobileMenu.classList.remove('translate-y-0', 'pointer-events-auto');
-                        mobileMenu.classList.add('-translate-y-full', 'pointer-events-none');
+                        // Pull up, scale down, fade out
+                        mobileMenu.classList.remove('translate-y-0', 'scale-100', 'opacity-100', 'pointer-events-auto');
+                        mobileMenu.classList.add('-translate-y-8', 'scale-95', 'opacity-0', 'pointer-events-none');
                         
-                        // Instantly reset text positions for next open
                         menuLinks.forEach(link => {
-                            link.classList.add('opacity-0', 'translate-y-6');
+                            link.classList.add('opacity-0', 'translate-y-4');
                             link.classList.remove('opacity-100', 'translate-y-0');
                         });
                     }
