@@ -721,9 +721,6 @@
                         btnSpinner.classList.add('hidden');
 
                         if (data.success) {
-                            bookingBtn.classList.remove('bg-navy-900');
-                            bookingBtn.classList.add('bg-blue-600');
-                            
                             btnSuccess.classList.remove('opacity-0', 'scale-90');
                             btnSuccess.classList.add('opacity-100', 'scale-100');
                             
@@ -738,8 +735,6 @@
                             bookingForm.reset();
 
                             setTimeout(() => {
-                                bookingBtn.classList.remove('bg-blue-600');
-                                bookingBtn.classList.add('bg-navy-900');
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
                                 btnSuccess.classList.add('opacity-0', 'scale-90');
                                 btnText.classList.remove('opacity-0');
@@ -757,8 +752,6 @@
                         }
                     } catch (err) {
                         btnSpinner.classList.add('hidden');
-                        bookingBtn.classList.remove('bg-navy-900');
-                        bookingBtn.classList.add('bg-rose-500');
                         
                         btnError.classList.remove('opacity-0', 'scale-90');
                         btnError.classList.add('opacity-100', 'scale-100');
@@ -772,8 +765,6 @@
                         feedbackWrapper.classList.add('open');
 
                         setTimeout(() => {
-                            bookingBtn.classList.remove('bg-rose-500');
-                            bookingBtn.classList.add('bg-navy-900');
                             btnError.classList.remove('opacity-100', 'scale-100');
                             btnError.classList.add('opacity-0', 'scale-90');
                             btnText.classList.remove('opacity-0');
