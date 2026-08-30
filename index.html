@@ -103,6 +103,26 @@
             margin-top: 4px;
         }
 
+        /* iOS Fluid Box Expansion */
+        .expand-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .expand-wrapper.open {
+            grid-template-rows: 1fr;
+        }
+        .expand-inner {
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .expand-wrapper.open .expand-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .hero-gradient { background: linear-gradient(180deg, #ffffff 0%, #c7d2fe 100%); }
         .booking-gradient { background: linear-gradient(180deg, #ffffff 0%, #e0e7ff 100%); }
         .footer-bg { background-color: #0b112c; }
@@ -373,18 +393,22 @@
                     </button>
                 </div>
 
-                <div id="form-success" class="hidden mt-6 p-4 bg-white/70 backdrop-blur-md border border-teal-100 rounded-2xl shadow-sm items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-check text-teal-600"></i>
+                <div id="feedback-wrapper" class="expand-wrapper mt-0">
+                    <div class="expand-inner">
+                        <div id="form-success" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-blue-100 rounded-2xl shadow-sm items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-check text-blue-600"></i>
+                            </div>
+                            <p class="text-navy-900 text-sm font-medium">Booking confirmed! We'll contact you shortly.</p>
+                        </div>
+                        
+                        <div id="form-error" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-rose-100 rounded-2xl shadow-sm items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-xmark text-rose-500"></i>
+                            </div>
+                            <p class="text-rose-900 text-sm font-medium">Something went wrong. Please try again.</p>
+                        </div>
                     </div>
-                    <p class="text-teal-900 text-sm font-medium">Booking confirmed! We'll contact you shortly.</p>
-                </div>
-                
-                <div id="form-error" class="hidden mt-6 p-4 bg-white/70 backdrop-blur-md border border-rose-100 rounded-2xl shadow-sm items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-xmark text-rose-500"></i>
-                    </div>
-                    <p class="text-rose-900 text-sm font-medium">Something went wrong. Please try again.</p>
                 </div>
             </form>
             <i class="fa-solid fa-quote-left absolute -bottom-4 -left-2 text-8xl text-blue-100 opacity-50 z-0"></i>
@@ -626,7 +650,7 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Booking Form - Web3Forms + Validation
+            // 4. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
             const bookingForm = document.getElementById('booking-form');
             if (bookingForm) {
                 const bookingBtn = document.getElementById('booking-btn');
@@ -636,6 +660,7 @@
                 const btnError = document.getElementById('btn-error');
                 const formSuccess = document.getElementById('form-success');
                 const formError = document.getElementById('form-error');
+                const feedbackWrapper = document.getElementById('feedback-wrapper');
 
                 // Clear error on input
                 bookingForm.querySelectorAll('.custom-input').forEach(input => {
@@ -693,12 +718,11 @@
                         });
                         const data = await response.json();
                         
-                        // Hide spinner completely
                         btnSpinner.classList.add('hidden');
 
                         if (data.success) {
                             bookingBtn.classList.remove('bg-navy-900');
-                            bookingBtn.classList.add('bg-teal-600');
+                            bookingBtn.classList.add('bg-blue-600');
                             
                             btnSuccess.classList.remove('opacity-0', 'scale-90');
                             btnSuccess.classList.add('opacity-100', 'scale-100');
@@ -706,17 +730,27 @@
                             formSuccess.classList.remove('hidden');
                             formSuccess.classList.add('flex');
                             formError.classList.add('hidden');
+                            formError.classList.remove('flex');
+                            
+                            // Trigger fluid iOS expansion
+                            feedbackWrapper.classList.add('open');
+                            
                             bookingForm.reset();
 
                             setTimeout(() => {
-                                bookingBtn.classList.remove('bg-teal-600');
+                                bookingBtn.classList.remove('bg-blue-600');
                                 bookingBtn.classList.add('bg-navy-900');
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
                                 btnSuccess.classList.add('opacity-0', 'scale-90');
                                 btnText.classList.remove('opacity-0');
                                 bookingBtn.disabled = false;
-                                formSuccess.classList.add('hidden');
-                                formSuccess.classList.remove('flex');
+                                
+                                // Close fluid wrapper first, then hide elements
+                                feedbackWrapper.classList.remove('open');
+                                setTimeout(() => {
+                                    formSuccess.classList.add('hidden');
+                                    formSuccess.classList.remove('flex');
+                                }, 600);
                             }, 4000);
                         } else {
                             throw new Error('Failed');
@@ -731,6 +765,11 @@
                         
                         formError.classList.remove('hidden');
                         formError.classList.add('flex');
+                        formSuccess.classList.add('hidden');
+                        formSuccess.classList.remove('flex');
+
+                        // Trigger fluid iOS expansion
+                        feedbackWrapper.classList.add('open');
 
                         setTimeout(() => {
                             bookingBtn.classList.remove('bg-rose-500');
@@ -739,8 +778,13 @@
                             btnError.classList.add('opacity-0', 'scale-90');
                             btnText.classList.remove('opacity-0');
                             bookingBtn.disabled = false;
-                            formError.classList.add('hidden');
-                            formError.classList.remove('flex');
+                            
+                            // Close fluid wrapper first, then hide elements
+                            feedbackWrapper.classList.remove('open');
+                            setTimeout(() => {
+                                formError.classList.add('hidden');
+                                formError.classList.remove('flex');
+                            }, 600);
                         }, 4000);
                     }
                 });
