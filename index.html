@@ -864,7 +864,7 @@
                 });
             });
 
-            // 7. Right-Aligned Floating Menu & Swipe Logic
+            // 7. Right-Aligned Floating Menu Logic
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuOverlay = document.getElementById('menu-overlay');
@@ -926,25 +926,6 @@
                     e.stopPropagation();
                     e.preventDefault();
                     closeMenu();
-                });
-
-                // Swipe-up to close logic
-                let touchStartY = 0;
-                let touchEndY = 0;
-
-                mobileMenu.addEventListener('touchstart', (e) => {
-                    touchStartY = e.changedTouches[0].screenY;
-                }, {passive: true});
-
-                mobileMenu.addEventListener('touchmove', (e) => {
-                    touchEndY = e.changedTouches[0].screenY;
-                }, {passive: true});
-
-                mobileMenu.addEventListener('touchend', (e) => {
-                    // If finger swiped UP by more than 40px, close menu
-                    if (touchStartY - touchEndY > 40) {
-                        closeMenu();
-                    }
                 });
             }
         });
