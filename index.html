@@ -82,6 +82,27 @@
             color: #fda4af;
         }
 
+        /* Form Shake and Smooth Errors */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+        .error-msg {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .error-msg.show {
+            max-height: 24px;
+            opacity: 1;
+            margin-top: 4px;
+        }
+
         .hero-gradient { background: linear-gradient(180deg, #ffffff 0%, #c7d2fe 100%); }
         .booking-gradient { background: linear-gradient(180deg, #ffffff 0%, #e0e7ff 100%); }
         .footer-bg { background-color: #0b112c; }
@@ -319,22 +340,22 @@
 
                 <div class="field-group">
                     <input type="text" name="name" id="field-name" placeholder="Full name *" class="custom-input text-sm">
-                    <p class="error-msg hidden text-rose-400 text-xs mt-1 pl-1">⚠ Please enter your full name.</p>
+                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your full name.</p>
                 </div>
 
                 <div class="field-group">
                     <input type="email" name="email" id="field-email" placeholder="Email *" class="custom-input text-sm">
-                    <p class="error-msg hidden text-rose-400 text-xs mt-1 pl-1">⚠ Please enter a valid email address.</p>
+                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter a valid email address.</p>
                 </div>
 
                 <div class="field-group">
                     <input type="tel" name="phone" id="field-phone" placeholder="Phone number *" class="custom-input text-sm">
-                    <p class="error-msg hidden text-rose-400 text-xs mt-1 pl-1">⚠ Please enter your phone number.</p>
+                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your phone number.</p>
                 </div>
 
                 <div class="field-group">
                     <input type="text" name="reason" id="field-reason" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm">
-                    <p class="error-msg hidden text-rose-400 text-xs mt-1 pl-1">⚠ Please enter your reason for visit.</p>
+                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your reason for visit.</p>
                 </div>
                 
                 <div class="flex justify-start relative">
@@ -621,7 +642,7 @@
                     input.addEventListener('input', () => {
                         input.classList.remove('error');
                         const msg = input.closest('.field-group').querySelector('.error-msg');
-                        if (msg) msg.classList.add('hidden');
+                        if (msg) msg.classList.remove('show');
                     });
                 });
 
@@ -638,13 +659,20 @@
                         const msg = input.closest('.field-group').querySelector('.error-msg');
                         if (!check(input.value)) {
                             input.classList.add('error');
-                            msg.classList.remove('hidden');
+                            msg.classList.add('show');
                             isValid = false;
                         } else {
                             input.classList.remove('error');
-                            msg.classList.add('hidden');
+                            msg.classList.remove('show');
                         }
                     });
+
+                    // Add shake animation to form if invalid
+                    if (!isValid) {
+                        bookingForm.classList.add('shake');
+                        setTimeout(() => bookingForm.classList.remove('shake'), 300);
+                    }
+                    
                     return isValid;
                 };
 
