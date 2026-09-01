@@ -156,7 +156,6 @@
 </head>
 <body class="antialiased">
 
-    <!-- Navigation -->
     <nav class="flex items-center justify-between p-6 bg-white sticky top-0 z-[60] shadow-sm reveal active relative">
         <div class="flex items-center gap-2">
             <i class="fa-solid fa-asterisk text-blue-500 text-2xl"></i>
@@ -167,10 +166,8 @@
         </button>
     </nav>
 
-    <!-- Invisible Overlay to Block Background Clicks -->
     <div id="menu-overlay" class="fixed inset-0 z-40 hidden pointer-events-none"></div>
 
-    <!-- Right-Aligned Floating Spring Menu Overlay -->
     <div id="mobile-menu" class="fixed right-4 top-24 w-[320px] z-50 flex flex-col items-center justify-center space-y-6 py-10 px-6 text-white origin-top-right transform -translate-y-12 scale-75 opacity-0 transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/30 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity] pointer-events-none">
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Home</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">About Us</a>
@@ -180,7 +177,6 @@
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
     </div>
 
-    <!-- Main Content Starts -->
     <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
         <div class="reveal">
             <span class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 tracking-wider mb-6 shadow-sm">DENTAL CLINIC</span>
@@ -210,32 +206,25 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white rounded-3xl p-6 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal flex flex-col justify-center items-center">
-                <i class="fa-solid fa-tooth text-blue-500 text-2xl mb-3"></i>
-                <p class="text-gray-500 text-xs mb-1">Smiles Transformed</p>
-                <h4 class="text-2xl font-bold text-navy-900">5,000+</h4>
-            </div>
+        <div class="reveal relative rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-64 sm:h-96 w-full group" id="ba-container" style="--pos: 50%;">
             
-            <div class="bg-white rounded-3xl overflow-hidden reveal relative h-40 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                <img src="https://i.ibb.co/7NQYj8TQ/1774104674862.png" alt="Dental Equipment" class="absolute inset-0 w-full h-full object-cover z-10">
+            <div class="absolute top-4 left-4 z-10 bg-navy-900/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold px-3.5 py-1.5 rounded-full pointer-events-none uppercase tracking-wider border border-white/10 shadow-sm">Before</div>
+            <div class="absolute top-4 right-4 z-10 bg-white/70 backdrop-blur-md text-navy-900 text-[10px] sm:text-xs font-bold px-3.5 py-1.5 rounded-full pointer-events-none uppercase tracking-wider border border-white/40 shadow-sm">After</div>
+
+            <img src="https://i.ibb.co/cKVxTx7T/1788265607772.png" alt="After Whitening" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+            
+            <img src="https://i.ibb.co/qMH4ScTJ/wmremove-transformed.png" alt="Before Whitening" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0);">
+            
+            <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize pointer-events-none shadow-[0_0_15px_rgba(0,0,0,0.25)] flex items-center justify-center z-10" style="left: var(--pos, 50%); transform: translateX(-50%);">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-xl border border-gray-100 text-navy-900 transition-transform group-hover:scale-110 duration-300">
+                    <i class="fa-solid fa-arrows-left-right text-sm opacity-80"></i>
+                </div>
             </div>
+
+            <input type="range" min="0" max="100" value="50" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20 m-0" id="ba-slider">
         </div>
 
-        <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal flex items-center gap-5">
-            <div class="flex -space-x-4 shrink-0">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full border-2 border-white object-cover relative z-30" alt="User">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full border-2 border-white object-cover relative z-20" alt="User">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full border-2 border-white object-cover relative z-10" alt="User">
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 mb-0.5">Join 5,000+</p>
-                <p class="text-navy-900 font-medium text-sm leading-tight">Trusted by 5,000+ happy patients</p>
-            </div>
-        </div>
-
-        <!-- About Section with Glass Overlay -->
-        <div class="text-center pt-10 pb-4 reveal">
+        <div class="text-center pt-2 pb-4 reveal">
             <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About ApexCare</span>
             <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-4">Your trusted partners in<br>dental care</h2>
             <p class="text-gray-600 text-sm leading-relaxed mb-8 px-2">
@@ -250,12 +239,9 @@
                 </button>
             </div>
             
-            <!-- Image with Glass Card Overlay -->
             <div class="rounded-3xl overflow-hidden reveal relative">
-                <!-- Taller image so the card fits nicely -->
                 <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist treating patient" class="w-full h-80 sm:h-96 object-cover">
                 
-                <!-- Frosted Glass Card overlay -->
                 <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-black/30 backdrop-blur-xl border border-white/30 rounded-2xl p-5 sm:p-6 shadow-2xl">
                     <p class="text-[10px] sm:text-xs tracking-widest text-white/90 uppercase font-semibold mb-3">Prioritize your dental health</p>
                     <div class="flex items-center justify-between gap-4">
@@ -412,7 +398,6 @@
                     </button>
                 </div>
 
-                <!-- Fluid Expansion Wrapper for Alerts -->
                 <div id="feedback-wrapper" class="expand-wrapper mt-0">
                     <div class="expand-inner">
                         <div id="form-success" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-blue-100 rounded-2xl shadow-sm items-center gap-3">
@@ -668,6 +653,15 @@
                     }
                 }, { threshold: 0.2 });
                 teamObserver.observe(teamGrid);
+            }
+
+            // Before & After Interactive Slider Logic
+            const baSlider = document.getElementById('ba-slider');
+            const baContainer = document.getElementById('ba-container');
+            if (baSlider && baContainer) {
+                baSlider.addEventListener('input', (e) => {
+                    baContainer.style.setProperty('--pos', `${e.target.value}%`);
+                });
             }
 
             // 4. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
