@@ -184,7 +184,7 @@
     </div>
 
     <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close"></div>
+        <div id="date-bg" class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close opacity-0 transition-opacity duration-500"></div>
         <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
             <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
             <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
@@ -204,7 +204,7 @@
     </div>
 
     <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close"></div>
+        <div id="time-bg" class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close opacity-0 transition-opacity duration-500"></div>
         <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
             <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
             <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
@@ -714,27 +714,38 @@
             const closePopups = () => {
                 document.body.style.overflow = '';
                 
-                datePopup.classList.add('opacity-0', 'pointer-events-none');
+                // Smoothly fade out the backgrounds first
+                document.getElementById('date-bg').classList.add('opacity-0');
+                document.getElementById('time-bg').classList.add('opacity-0');
+
                 datePopupCard.classList.remove('scale-100', 'opacity-100');
                 datePopupCard.classList.add('scale-90', 'opacity-0');
                 
-                timePopup.classList.add('opacity-0', 'pointer-events-none');
                 timePopupCard.classList.remove('scale-100', 'opacity-100');
                 timePopupCard.classList.add('scale-90', 'opacity-0');
+
+                // Wait for fade out to finish before hiding the wrapper
+                setTimeout(() => {
+                    datePopup.classList.add('opacity-0', 'pointer-events-none');
+                    timePopup.classList.add('opacity-0', 'pointer-events-none');
+                }, 300);
             };
 
-            const openPopup = (wrapper, card) => {
+            const openPopup = (wrapper, card, bgId) => {
                 document.body.style.overflow = 'hidden';
                 wrapper.classList.remove('opacity-0', 'pointer-events-none');
+                
+                // Smoothly fade in the background and scale the card
                 setTimeout(() => {
+                    document.getElementById(bgId).classList.remove('opacity-0');
                     card.classList.remove('scale-90', 'opacity-0');
                     card.classList.add('scale-100', 'opacity-100');
                 }, 10);
             };
 
             // Trigger Popups
-            displayDate.addEventListener('click', () => openPopup(datePopup, datePopupCard));
-            displayTime.addEventListener('click', () => openPopup(timePopup, timePopupCard));
+            displayDate.addEventListener('click', () => openPopup(datePopup, datePopupCard, 'date-bg'));
+            displayTime.addEventListener('click', () => openPopup(timePopup, timePopupCard, 'time-bg'));
 
             // Close on background click or X button
             document.querySelectorAll('.popup-bg-close, .popup-close').forEach(el => {
