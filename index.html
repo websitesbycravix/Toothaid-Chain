@@ -107,7 +107,7 @@
         .expand-wrapper {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .expand-wrapper.open {
             grid-template-rows: 1fr;
@@ -116,7 +116,7 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(-10px);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .expand-wrapper.open .expand-inner {
             opacity: 1;
@@ -153,6 +153,7 @@
             object-position: top;
         }
 
+        /* Custom Date/Time input styling to look clickable */
         .select-trigger {
             cursor: pointer;
             caret-color: transparent;
@@ -161,6 +162,7 @@
 </head>
 <body class="antialiased">
 
+    <!-- Navigation -->
     <nav class="flex items-center justify-between p-6 bg-white sticky top-0 z-[60] shadow-sm reveal active relative">
         <div class="flex items-center gap-2">
             <i class="fa-solid fa-asterisk text-blue-500 text-2xl"></i>
@@ -171,8 +173,10 @@
         </button>
     </nav>
 
+    <!-- Invisible Overlay for Menu -->
     <div id="menu-overlay" class="fixed inset-0 z-40 hidden pointer-events-none"></div>
 
+    <!-- Right-Aligned Floating Spring Menu -->
     <div id="mobile-menu" class="fixed right-4 top-24 w-[320px] z-50 flex flex-col items-center justify-center space-y-6 py-10 px-6 text-white origin-top-right transform -translate-y-12 scale-75 opacity-0 transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/30 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity] pointer-events-none">
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Home</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">About Us</a>
@@ -182,6 +186,55 @@
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
     </div>
 
+    <!-- Center Popup - DATE (Menu Style Glass Box, No BG Blur) -->
+    <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Transparent/Light tint BG (NO BLUR) -->
+        <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
+        
+        <!-- The Glass Box -->
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
+            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
+            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
+            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
+            
+            <div class="relative w-full mt-2">
+                <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
+                    <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
+                </button>
+            </div>
+            
+            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Center Popup - TIME (Menu Style Glass Box, No BG Blur) -->
+    <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Transparent/Light tint BG (NO BLUR) -->
+        <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
+        
+        <!-- The Glass Box -->
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
+            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
+            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
+                <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
+            </button>
+            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Afternoon (1 PM - 4 PM)">
+                <span>Afternoon</span> <span class="text-white/50 text-sm">1pm - 4pm</span>
+            </button>
+            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Evening (5 PM - 8 PM)">
+                <span>Evening</span> <span class="text-white/50 text-sm">5pm - 8pm</span>
+            </button>
+            
+            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Starts -->
     <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
         <div class="reveal">
             <span class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 tracking-wider mb-6 shadow-sm">DENTAL CLINIC</span>
@@ -211,6 +264,7 @@
             </a>
         </div>
 
+        <!-- About Section with Glass Overlay -->
         <div class="text-center pt-2 pb-4 reveal">
             <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About ApexCare</span>
             <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-4">Your trusted partners in<br>dental care</h2>
@@ -226,6 +280,7 @@
                 </button>
             </div>
             
+            <!-- Image with Glass Card Overlay -->
             <div class="rounded-3xl overflow-hidden reveal relative">
                 <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist treating patient" class="w-full h-80 sm:h-96 object-cover">
                 <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-black/30 backdrop-blur-xl border border-white/30 rounded-2xl p-5 sm:p-6 shadow-2xl">
@@ -364,28 +419,13 @@
                     <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your phone number.</p>
                 </div>
 
+                <!-- SLEEK DATE & TIME GRID (Opens center popups) -->
                 <div class="grid grid-cols-2 gap-4 pt-2">
-                    
                     <div class="field-group relative">
                         <input type="hidden" name="date" id="form-date-hidden">
                         <div class="relative">
                             <input type="text" id="display-date" readonly placeholder="Date *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
-                            <i class="fa-solid fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none transition-transform duration-300" id="date-icon"></i>
-                        </div>
-                        
-                        <div id="date-dropdown" class="expand-wrapper mt-0 w-full absolute top-full left-0 z-20">
-                            <div class="expand-inner">
-                                <div class="mt-2 p-3 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex flex-col space-y-2">
-                                    <button type="button" class="date-select w-full py-2.5 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition" data-value="Today">Today</button>
-                                    <button type="button" class="date-select w-full py-2.5 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition" data-value="Tomorrow">Tomorrow</button>
-                                    <div class="relative w-full">
-                                        <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                                        <button type="button" class="w-full py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium transition flex items-center justify-center gap-2 pointer-events-none">
-                                            <i class="fa-regular fa-calendar-days"></i> Custom
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <i class="fa-regular fa-calendar absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
                         </div>
                         <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a date.</p>
                     </div>
@@ -394,27 +434,10 @@
                         <input type="hidden" name="time" id="form-time-hidden">
                         <div class="relative">
                             <input type="text" id="display-time" readonly placeholder="Time *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
-                            <i class="fa-solid fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none transition-transform duration-300" id="time-icon"></i>
-                        </div>
-                        
-                        <div id="time-dropdown" class="expand-wrapper mt-0 w-full absolute top-full left-0 z-30">
-                            <div class="expand-inner">
-                                <div class="mt-2 p-3 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex flex-col space-y-2">
-                                    <button type="button" class="time-select w-full py-2 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition flex flex-col items-center leading-tight" data-value="Morning (9 AM - 12 PM)">
-                                        <span>Morning</span> <span class="text-gray-500 text-[10px]">9am - 12pm</span>
-                                    </button>
-                                    <button type="button" class="time-select w-full py-2 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition flex flex-col items-center leading-tight" data-value="Afternoon (1 PM - 4 PM)">
-                                        <span>Afternoon</span> <span class="text-gray-500 text-[10px]">1pm - 4pm</span>
-                                    </button>
-                                    <button type="button" class="time-select w-full py-2 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition flex flex-col items-center leading-tight" data-value="Evening (5 PM - 8 PM)">
-                                        <span>Evening</span> <span class="text-gray-500 text-[10px]">5pm - 8pm</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <i class="fa-regular fa-clock absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
                         </div>
                         <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a time.</p>
                     </div>
-
                 </div>
 
                 <div class="field-group pt-2">
@@ -437,6 +460,7 @@
                     </button>
                 </div>
 
+                <!-- Fluid Expansion Wrapper for Alerts -->
                 <div id="feedback-wrapper" class="expand-wrapper mt-0">
                     <div class="expand-inner">
                         <div id="form-success" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-blue-100 rounded-2xl shadow-sm items-center gap-3">
@@ -692,52 +716,56 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Fluid Inline Glass Dropdowns Logic
+            // 4. Center Popups Logic for Date & Time
             const displayDate = document.getElementById('display-date');
             const displayTime = document.getElementById('display-time');
             const hiddenDate = document.getElementById('form-date-hidden');
             const hiddenTime = document.getElementById('form-time-hidden');
             
-            const dateDropdown = document.getElementById('date-dropdown');
-            const timeDropdown = document.getElementById('time-dropdown');
-            const dateIcon = document.getElementById('date-icon');
-            const timeIcon = document.getElementById('time-icon');
+            const datePopup = document.getElementById('date-popup');
+            const datePopupCard = document.getElementById('date-popup-card');
+            const timePopup = document.getElementById('time-popup');
+            const timePopupCard = document.getElementById('time-popup-card');
+            
+            const closePopups = () => {
+                document.body.style.overflow = '';
+                
+                // Shrink and fade the glass cards
+                if (datePopupCard) {
+                    datePopupCard.classList.remove('scale-100', 'opacity-100');
+                    datePopupCard.classList.add('scale-90', 'opacity-0');
+                }
+                if (timePopupCard) {
+                    timePopupCard.classList.remove('scale-100', 'opacity-100');
+                    timePopupCard.classList.add('scale-90', 'opacity-0');
+                }
 
-            const closeDropdowns = () => {
-                dateDropdown.classList.remove('open');
-                timeDropdown.classList.remove('open');
-                dateIcon.classList.remove('rotate-180');
-                timeIcon.classList.remove('rotate-180');
+                // Hide wrappers after card transition
+                setTimeout(() => {
+                    if (datePopup) datePopup.classList.add('opacity-0', 'pointer-events-none');
+                    if (timePopup) timePopup.classList.add('opacity-0', 'pointer-events-none');
+                }, 300);
             };
 
-            displayDate.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (dateDropdown.classList.contains('open')) {
-                    closeDropdowns();
-                } else {
-                    closeDropdowns();
-                    dateDropdown.classList.add('open');
-                    dateIcon.classList.add('rotate-180');
-                }
-            });
+            const openPopup = (wrapper, card) => {
+                document.body.style.overflow = 'hidden';
+                wrapper.classList.remove('opacity-0', 'pointer-events-none');
+                
+                // Scale and fade in the glass card smoothly
+                setTimeout(() => {
+                    card.classList.remove('scale-90', 'opacity-0');
+                    card.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            };
 
-            displayTime.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (timeDropdown.classList.contains('open')) {
-                    closeDropdowns();
-                } else {
-                    closeDropdowns();
-                    timeDropdown.classList.add('open');
-                    timeIcon.classList.add('rotate-180');
-                }
-            });
+            // Trigger Popups
+            displayDate.addEventListener('click', () => openPopup(datePopup, datePopupCard));
+            displayTime.addEventListener('click', () => openPopup(timePopup, timePopupCard));
 
-            // Prevent closing when clicking inside the dropdown
-            dateDropdown.addEventListener('click', (e) => e.stopPropagation());
-            timeDropdown.addEventListener('click', (e) => e.stopPropagation());
-            
-            // Close when clicking anywhere outside
-            document.addEventListener('click', closeDropdowns);
+            // Close on background click or X button
+            document.querySelectorAll('.popup-bg-close, .popup-close').forEach(el => {
+                el.addEventListener('click', closePopups);
+            });
 
             // Date Selection
             document.querySelectorAll('.date-select').forEach(btn => {
@@ -747,7 +775,7 @@
                     hiddenDate.value = val;
                     displayDate.classList.remove('error');
                     displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                    closeDropdowns();
+                    closePopups();
                 });
             });
 
@@ -762,7 +790,7 @@
                         hiddenDate.value = e.target.value;
                         displayDate.classList.remove('error');
                         displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                        closeDropdowns();
+                        closePopups();
                     }
                 });
             }
@@ -772,16 +800,16 @@
                 btn.addEventListener('click', (e) => {
                     const el = e.target.closest('.time-select');
                     const val = el.dataset.value;
-                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon" etc
-                    hiddenTime.value = val;
+                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon", etc. in input
+                    hiddenTime.value = val; // Send full string to email
                     displayTime.classList.remove('error');
                     displayTime.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                    closeDropdowns();
+                    closePopups();
                 });
             });
 
 
-            // 5. Booking Form - Web3Forms + Validation
+            // 5. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
             const bookingForm = document.getElementById('booking-form');
             if (bookingForm) {
                 const bookingBtn = document.getElementById('booking-btn');
@@ -793,6 +821,7 @@
                 const formError = document.getElementById('form-error');
                 const feedbackWrapper = document.getElementById('feedback-wrapper');
 
+                // Clear error on generic input
                 bookingForm.querySelectorAll('.custom-input:not(.select-trigger)').forEach(input => {
                     input.addEventListener('input', () => {
                         input.classList.remove('error');
@@ -804,6 +833,7 @@
                 const validateForm = () => {
                     let isValid = true;
                     
+                    // Regular text fields
                     const fields = [
                         { id: 'field-name', check: v => v.trim().length >= 2 },
                         { id: 'field-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
@@ -823,7 +853,7 @@
                         }
                     });
 
-                    // Dropdown Validation
+                    // Validate Popups
                     if (!hiddenDate.value) {
                         displayDate.classList.add('error');
                         displayDate.closest('.field-group').querySelector('.error-msg').classList.add('show');
@@ -835,6 +865,7 @@
                         isValid = false;
                     }
 
+                    // Add shake animation to form if invalid
                     if (!isValid) {
                         bookingForm.classList.add('shake');
                         setTimeout(() => bookingForm.classList.remove('shake'), 300);
@@ -871,6 +902,7 @@
                             formError.classList.add('hidden');
                             formError.classList.remove('flex');
                             
+                            // Trigger fluid iOS expansion
                             feedbackWrapper.classList.add('open');
                             
                             bookingForm.reset();
@@ -886,6 +918,7 @@
                                 btnText.classList.remove('opacity-0');
                                 bookingBtn.disabled = false;
                                 
+                                // Close fluid wrapper first, then hide elements
                                 feedbackWrapper.classList.remove('open');
                                 setTimeout(() => {
                                     formSuccess.classList.add('hidden');
@@ -906,6 +939,7 @@
                         formSuccess.classList.add('hidden');
                         formSuccess.classList.remove('flex');
 
+                        // Trigger fluid iOS expansion
                         feedbackWrapper.classList.add('open');
 
                         setTimeout(() => {
@@ -914,6 +948,7 @@
                             btnText.classList.remove('opacity-0');
                             bookingBtn.disabled = false;
                             
+                            // Close fluid wrapper first, then hide elements
                             feedbackWrapper.classList.remove('open');
                             setTimeout(() => {
                                 formError.classList.add('hidden');
@@ -1086,6 +1121,7 @@
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
                     
+                    // Hide overlay to stop blocking clicks
                     menuOverlay.classList.add('hidden', 'pointer-events-none');
                     menuOverlay.classList.remove('pointer-events-auto');
                     
@@ -1104,6 +1140,7 @@
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-xmark');
                     
+                    // Show overlay to absorb all background clicks
                     menuOverlay.classList.remove('hidden', 'pointer-events-none');
                     menuOverlay.classList.add('pointer-events-auto');
                     
@@ -1118,12 +1155,14 @@
                     });
                 };
 
+                // Toggle menu on button click
                 menuBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (menuOpen) closeMenu();
                     else openMenu();
                 });
 
+                // Clicking the invisible overlay closes the menu and ABSORBS the click
                 menuOverlay.addEventListener('click', (e) => {
                     e.stopPropagation();
                     e.preventDefault();
