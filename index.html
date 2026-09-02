@@ -103,6 +103,10 @@
             margin-top: 4px;
         }
 
+        /* Hide Scrollbar for iOS Date Swipe */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
         /* iOS Fluid Box Expansion */
         .expand-wrapper {
             display: grid;
@@ -156,7 +160,6 @@
 </head>
 <body class="antialiased">
 
-    <!-- Navigation -->
     <nav class="flex items-center justify-between p-6 bg-white sticky top-0 z-[60] shadow-sm reveal active relative">
         <div class="flex items-center gap-2">
             <i class="fa-solid fa-asterisk text-blue-500 text-2xl"></i>
@@ -167,10 +170,8 @@
         </button>
     </nav>
 
-    <!-- Invisible Overlay to Block Background Clicks -->
     <div id="menu-overlay" class="fixed inset-0 z-40 hidden pointer-events-none"></div>
 
-    <!-- Right-Aligned Floating Spring Menu Overlay -->
     <div id="mobile-menu" class="fixed right-4 top-24 w-[320px] z-50 flex flex-col items-center justify-center space-y-6 py-10 px-6 text-white origin-top-right transform -translate-y-12 scale-75 opacity-0 transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/30 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity] pointer-events-none">
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Home</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">About Us</a>
@@ -180,7 +181,6 @@
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
     </div>
 
-    <!-- Main Content Starts -->
     <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
         <div class="reveal">
             <span class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 tracking-wider mb-6 shadow-sm">DENTAL CLINIC</span>
@@ -210,7 +210,6 @@
             </a>
         </div>
 
-        <!-- About Section with Glass Overlay -->
         <div class="text-center pt-2 pb-4 reveal">
             <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About ApexCare</span>
             <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-4">Your trusted partners in<br>dental care</h2>
@@ -226,12 +225,8 @@
                 </button>
             </div>
             
-            <!-- Image with Glass Card Overlay -->
             <div class="rounded-3xl overflow-hidden reveal relative">
-                <!-- Taller image so the card fits nicely -->
                 <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist treating patient" class="w-full h-80 sm:h-96 object-cover">
-                
-                <!-- Frosted Glass Card overlay -->
                 <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-black/30 backdrop-blur-xl border border-white/30 rounded-2xl p-5 sm:p-6 shadow-2xl">
                     <p class="text-[10px] sm:text-xs tracking-widest text-white/90 uppercase font-semibold mb-3">Prioritize your dental health</p>
                     <div class="flex items-center justify-between gap-4">
@@ -368,12 +363,38 @@
                     <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your phone number.</p>
                 </div>
 
-                <div class="field-group">
+                <input type="hidden" name="date" id="selected-date" value="Today">
+                <input type="hidden" name="time" id="selected-time" value="">
+
+                <div class="field-group pt-3">
+                    <label class="text-[10px] text-gray-500 font-bold mb-2 block uppercase tracking-widest pl-1">Select Date *</label>
+                    <div class="flex overflow-x-auto gap-2 pb-1 hide-scrollbar w-full" id="date-pills">
+                        <button type="button" class="date-pill shrink-0 px-5 py-2.5 rounded-full border border-gray-200 bg-navy-900 text-white text-sm font-medium transition-all shadow-sm" data-value="Today">Today</button>
+                        <button type="button" class="date-pill shrink-0 px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Tomorrow">Tomorrow</button>
+                        <div class="relative shrink-0">
+                            <input type="date" id="custom-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                            <button type="button" id="custom-date-btn" class="date-pill block px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all pointer-events-none">
+                                <i class="fa-regular fa-calendar mr-1"></i> Pick Date
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-group pt-2">
+                    <label class="text-[10px] text-gray-500 font-bold mb-2 block uppercase tracking-widest pl-1">Select Time *</label>
+                    <div class="flex flex-wrap gap-2" id="time-pills">
+                        <button type="button" class="time-pill px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Morning">Morning</button>
+                        <button type="button" class="time-pill px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Afternoon">Afternoon</button>
+                        <button type="button" class="time-pill px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Evening">Evening</button>
+                    </div>
+                    <p class="error-msg text-rose-400 text-xs pl-1" id="time-error">⚠ Please select a time slot.</p>
+                </div>
+                <div class="field-group pt-2">
                     <input type="text" name="reason" id="field-reason" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm">
                     <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your reason for visit.</p>
                 </div>
                 
-                <div class="flex justify-start relative">
+                <div class="flex justify-start relative pt-2">
                     <button type="submit" id="booking-btn" class="relative bg-navy-900 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-colors duration-500 hover:shadow-[0_8px_20px_rgba(17,24,54,0.3)] active:scale-95 w-max mt-4 shadow-lg flex items-center justify-center min-w-[180px] h-[52px]">
                         <span id="btn-text" class="transition-opacity duration-300 absolute">Reserve Your Spot</span>
                         <i id="btn-spinner" class="fa-solid fa-circle-notch fa-spin absolute hidden text-lg"></i>
@@ -388,7 +409,6 @@
                     </button>
                 </div>
 
-                <!-- Fluid Expansion Wrapper for Alerts -->
                 <div id="feedback-wrapper" class="expand-wrapper mt-0">
                     <div class="expand-inner">
                         <div id="form-success" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-blue-100 rounded-2xl shadow-sm items-center gap-3">
@@ -428,7 +448,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="slider-item original-slide">
                     <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
                         <div>
@@ -445,7 +464,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="slider-item original-slide">
                     <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
                         <div>
@@ -646,7 +664,66 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
+            // 4. iOS Pill Button Logic
+            const datePills = document.querySelectorAll('.date-pill');
+            const timePills = document.querySelectorAll('.time-pill');
+            const customDateInput = document.getElementById('custom-date');
+            const customDateBtn = document.getElementById('custom-date-btn');
+            const hiddenDate = document.getElementById('selected-date');
+            const hiddenTime = document.getElementById('selected-time');
+            const timeError = document.getElementById('time-error');
+
+            const resetDatePills = () => {
+                datePills.forEach(p => {
+                    p.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
+                    p.classList.add('bg-white/70', 'text-gray-600');
+                });
+                customDateBtn.innerHTML = '<i class="fa-regular fa-calendar mr-1"></i> Pick Date';
+            };
+
+            datePills.forEach(pill => {
+                // Skip the fake button that sits under the invisible date input
+                if(pill.id === 'custom-date-btn') return;
+
+                pill.addEventListener('click', () => {
+                    resetDatePills();
+                    pill.classList.remove('bg-white/70', 'text-gray-600');
+                    pill.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
+                    hiddenDate.value = pill.dataset.value;
+                    customDateInput.value = ''; 
+                });
+            });
+
+            customDateInput.addEventListener('change', (e) => {
+                if(e.target.value) {
+                    resetDatePills();
+                    customDateBtn.classList.remove('bg-white/70', 'text-gray-600');
+                    customDateBtn.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
+                    
+                    // Format date nicely
+                    const d = new Date(e.target.value);
+                    const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    customDateBtn.innerHTML = formatted;
+                    
+                    hiddenDate.value = e.target.value;
+                }
+            });
+
+            timePills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    timePills.forEach(p => {
+                        p.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
+                        p.classList.add('bg-white/70', 'text-gray-600');
+                    });
+                    pill.classList.remove('bg-white/70', 'text-gray-600');
+                    pill.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
+                    hiddenTime.value = pill.dataset.value;
+                    timeError.classList.remove('show');
+                });
+            });
+
+
+            // 5. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
             const bookingForm = document.getElementById('booking-form');
             if (bookingForm) {
                 const bookingBtn = document.getElementById('booking-btn');
@@ -687,6 +764,12 @@
                             msg.classList.remove('show');
                         }
                     });
+
+                    // Validate Time Pill
+                    if (!hiddenTime.value) {
+                        timeError.classList.add('show');
+                        isValid = false;
+                    }
 
                     // Add shake animation to form if invalid
                     if (!isValid) {
@@ -729,6 +812,17 @@
                             feedbackWrapper.classList.add('open');
                             
                             bookingForm.reset();
+                            
+                            // Reset pills
+                            resetDatePills();
+                            datePills[0].classList.remove('bg-white/70', 'text-gray-600');
+                            datePills[0].classList.add('bg-navy-900', 'text-white', 'shadow-sm');
+                            hiddenDate.value = "Today";
+                            hiddenTime.value = "";
+                            timePills.forEach(p => {
+                                p.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
+                                p.classList.add('bg-white/70', 'text-gray-600');
+                            });
 
                             setTimeout(() => {
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
@@ -777,7 +871,7 @@
                 });
             }
 
-            // 5. Slider Logic
+            // 6. Slider Logic
             const track = document.getElementById('testimonial-track');
             const originalSlides = Array.from(document.querySelectorAll('.original-slide'));
             const dots = document.querySelectorAll('#slider-dots button');
@@ -911,7 +1005,7 @@
 
             startAutoPlay();
 
-            // 6. Insight Cards Two-Tap Logic
+            // 7. Insight Cards Two-Tap Logic
             const insightCards = document.querySelectorAll('.insight-card');
             insightCards.forEach(card => {
                 card.addEventListener('click', function(e) {
@@ -923,7 +1017,7 @@
                 });
             });
 
-            // 7. Right-Aligned Floating Menu Logic
+            // 8. Right-Aligned Floating Menu Logic
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuOverlay = document.getElementById('menu-overlay');
