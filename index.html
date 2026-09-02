@@ -103,10 +103,6 @@
             margin-top: 4px;
         }
 
-        /* Hide Scrollbar for iOS Date Swipe */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
         /* iOS Fluid Box Expansion */
         .expand-wrapper {
             display: grid;
@@ -156,6 +152,12 @@
             object-fit: cover;
             object-position: top;
         }
+
+        /* Custom Date/Time input styling to look clickable */
+        .select-trigger {
+            cursor: pointer;
+            caret-color: transparent;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -179,6 +181,46 @@
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Gallery</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Contact</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
+    </div>
+
+    <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close"></div>
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
+            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
+            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
+            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
+            
+            <div class="relative w-full mt-2">
+                <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
+                    <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
+                </button>
+            </div>
+            
+            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close"></div>
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
+            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
+            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
+                <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
+            </button>
+            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Afternoon (1 PM - 4 PM)">
+                <span>Afternoon</span> <span class="text-white/50 text-sm">1pm - 4pm</span>
+            </button>
+            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Evening (5 PM - 8 PM)">
+                <span>Evening</span> <span class="text-white/50 text-sm">5pm - 8pm</span>
+            </button>
+            
+            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
     </div>
 
     <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
@@ -363,32 +405,26 @@
                     <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your phone number.</p>
                 </div>
 
-                <input type="hidden" name="date" id="selected-date" value="Today">
-                <input type="hidden" name="time" id="selected-time" value="">
-
-                <div class="field-group pt-3">
-                    <label class="text-[10px] text-gray-500 font-bold mb-2 block uppercase tracking-widest pl-1">Select Date *</label>
-                    <div class="flex overflow-x-auto gap-2 pb-1 hide-scrollbar w-full" id="date-pills">
-                        <button type="button" class="date-pill shrink-0 px-5 py-2.5 rounded-full border border-gray-200 bg-navy-900 text-white text-sm font-medium transition-all shadow-sm" data-value="Today">Today</button>
-                        <button type="button" class="date-pill shrink-0 px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Tomorrow">Tomorrow</button>
-                        <div class="relative shrink-0">
-                            <input type="date" id="custom-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                            <button type="button" id="custom-date-btn" class="date-pill block px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all pointer-events-none">
-                                <i class="fa-regular fa-calendar mr-1"></i> Pick Date
-                            </button>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <div class="field-group relative">
+                        <input type="hidden" name="date" id="form-date-hidden">
+                        <div class="relative">
+                            <input type="text" id="display-date" readonly placeholder="Date *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent">
+                            <i class="fa-regular fa-calendar absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
                         </div>
+                        <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a date.</p>
+                    </div>
+                    
+                    <div class="field-group relative">
+                        <input type="hidden" name="time" id="form-time-hidden">
+                        <div class="relative">
+                            <input type="text" id="display-time" readonly placeholder="Time *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
+                            <i class="fa-regular fa-clock absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                        </div>
+                        <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a time.</p>
                     </div>
                 </div>
 
-                <div class="field-group pt-2">
-                    <label class="text-[10px] text-gray-500 font-bold mb-2 block uppercase tracking-widest pl-1">Select Time *</label>
-                    <div class="flex flex-wrap gap-2" id="time-pills">
-                        <button type="button" class="time-pill px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Morning">Morning</button>
-                        <button type="button" class="time-pill px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Afternoon">Afternoon</button>
-                        <button type="button" class="time-pill px-5 py-2.5 rounded-full border border-gray-200 bg-white/70 text-gray-600 hover:bg-white text-sm font-medium transition-all" data-value="Evening">Evening</button>
-                    </div>
-                    <p class="error-msg text-rose-400 text-xs pl-1" id="time-error">⚠ Please select a time slot.</p>
-                </div>
                 <div class="field-group pt-2">
                     <input type="text" name="reason" id="field-reason" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm">
                     <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your reason for visit.</p>
@@ -664,61 +700,85 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. iOS Pill Button Logic
-            const datePills = document.querySelectorAll('.date-pill');
-            const timePills = document.querySelectorAll('.time-pill');
-            const customDateInput = document.getElementById('custom-date');
-            const customDateBtn = document.getElementById('custom-date-btn');
-            const hiddenDate = document.getElementById('selected-date');
-            const hiddenTime = document.getElementById('selected-time');
-            const timeError = document.getElementById('time-error');
-
-            const resetDatePills = () => {
-                datePills.forEach(p => {
-                    p.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
-                    p.classList.add('bg-white/70', 'text-gray-600');
-                });
-                customDateBtn.innerHTML = '<i class="fa-regular fa-calendar mr-1"></i> Pick Date';
+            // 4. Frosted Glass Popup Logic for Date & Time
+            const displayDate = document.getElementById('display-date');
+            const displayTime = document.getElementById('display-time');
+            const hiddenDate = document.getElementById('form-date-hidden');
+            const hiddenTime = document.getElementById('form-time-hidden');
+            
+            const datePopup = document.getElementById('date-popup');
+            const datePopupCard = document.getElementById('date-popup-card');
+            const timePopup = document.getElementById('time-popup');
+            const timePopupCard = document.getElementById('time-popup-card');
+            
+            const closePopups = () => {
+                document.body.style.overflow = '';
+                
+                datePopup.classList.add('opacity-0', 'pointer-events-none');
+                datePopupCard.classList.remove('scale-100', 'opacity-100');
+                datePopupCard.classList.add('scale-90', 'opacity-0');
+                
+                timePopup.classList.add('opacity-0', 'pointer-events-none');
+                timePopupCard.classList.remove('scale-100', 'opacity-100');
+                timePopupCard.classList.add('scale-90', 'opacity-0');
             };
 
-            datePills.forEach(pill => {
-                // Skip the fake button that sits under the invisible date input
-                if(pill.id === 'custom-date-btn') return;
+            const openPopup = (wrapper, card) => {
+                document.body.style.overflow = 'hidden';
+                wrapper.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    card.classList.remove('scale-90', 'opacity-0');
+                    card.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            };
 
-                pill.addEventListener('click', () => {
-                    resetDatePills();
-                    pill.classList.remove('bg-white/70', 'text-gray-600');
-                    pill.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
-                    hiddenDate.value = pill.dataset.value;
-                    customDateInput.value = ''; 
+            // Trigger Popups
+            displayDate.addEventListener('click', () => openPopup(datePopup, datePopupCard));
+            displayTime.addEventListener('click', () => openPopup(timePopup, timePopupCard));
+
+            // Close on background click or X button
+            document.querySelectorAll('.popup-bg-close, .popup-close').forEach(el => {
+                el.addEventListener('click', closePopups);
+            });
+
+            // Date Selection
+            document.querySelectorAll('.date-select').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const val = e.target.dataset.value;
+                    displayDate.value = val;
+                    hiddenDate.value = val;
+                    displayDate.classList.remove('error');
+                    displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
+                    closePopups();
                 });
             });
 
-            customDateInput.addEventListener('change', (e) => {
-                if(e.target.value) {
-                    resetDatePills();
-                    customDateBtn.classList.remove('bg-white/70', 'text-gray-600');
-                    customDateBtn.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
-                    
-                    // Format date nicely
-                    const d = new Date(e.target.value);
-                    const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                    customDateBtn.innerHTML = formatted;
-                    
-                    hiddenDate.value = e.target.value;
-                }
-            });
+            // Native Custom Date Input
+            const nativeDate = document.getElementById('native-date');
+            if (nativeDate) {
+                nativeDate.addEventListener('change', (e) => {
+                    if (e.target.value) {
+                        const d = new Date(e.target.value);
+                        const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        displayDate.value = formatted;
+                        hiddenDate.value = e.target.value;
+                        displayDate.classList.remove('error');
+                        displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
+                        closePopups();
+                    }
+                });
+            }
 
-            timePills.forEach(pill => {
-                pill.addEventListener('click', () => {
-                    timePills.forEach(p => {
-                        p.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
-                        p.classList.add('bg-white/70', 'text-gray-600');
-                    });
-                    pill.classList.remove('bg-white/70', 'text-gray-600');
-                    pill.classList.add('bg-navy-900', 'text-white', 'shadow-sm');
-                    hiddenTime.value = pill.dataset.value;
-                    timeError.classList.remove('show');
+            // Time Selection
+            document.querySelectorAll('.time-select').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const el = e.target.closest('.time-select');
+                    const val = el.dataset.value;
+                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon", etc. in input
+                    hiddenTime.value = val; // Send full string to email
+                    displayTime.classList.remove('error');
+                    displayTime.closest('.field-group').querySelector('.error-msg').classList.remove('show');
+                    closePopups();
                 });
             });
 
@@ -735,8 +795,8 @@
                 const formError = document.getElementById('form-error');
                 const feedbackWrapper = document.getElementById('feedback-wrapper');
 
-                // Clear error on input
-                bookingForm.querySelectorAll('.custom-input').forEach(input => {
+                // Clear error on generic input
+                bookingForm.querySelectorAll('.custom-input:not(.select-trigger)').forEach(input => {
                     input.addEventListener('input', () => {
                         input.classList.remove('error');
                         const msg = input.closest('.field-group').querySelector('.error-msg');
@@ -746,6 +806,8 @@
 
                 const validateForm = () => {
                     let isValid = true;
+                    
+                    // Regular text fields
                     const fields = [
                         { id: 'field-name', check: v => v.trim().length >= 2 },
                         { id: 'field-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
@@ -765,9 +827,15 @@
                         }
                     });
 
-                    // Validate Time Pill
+                    // Validate Popups Grid
+                    if (!hiddenDate.value) {
+                        displayDate.classList.add('error');
+                        displayDate.closest('.field-group').querySelector('.error-msg').classList.add('show');
+                        isValid = false;
+                    }
                     if (!hiddenTime.value) {
-                        timeError.classList.add('show');
+                        displayTime.classList.add('error');
+                        displayTime.closest('.field-group').querySelector('.error-msg').classList.add('show');
                         isValid = false;
                     }
 
@@ -812,17 +880,11 @@
                             feedbackWrapper.classList.add('open');
                             
                             bookingForm.reset();
-                            
-                            // Reset pills
-                            resetDatePills();
-                            datePills[0].classList.remove('bg-white/70', 'text-gray-600');
-                            datePills[0].classList.add('bg-navy-900', 'text-white', 'shadow-sm');
-                            hiddenDate.value = "Today";
-                            hiddenTime.value = "";
-                            timePills.forEach(p => {
-                                p.classList.remove('bg-navy-900', 'text-white', 'shadow-sm');
-                                p.classList.add('bg-white/70', 'text-gray-600');
-                            });
+                            displayDate.value = '';
+                            displayTime.value = '';
+                            hiddenDate.value = '';
+                            hiddenTime.value = '';
+                            nativeDate.value = '';
 
                             setTimeout(() => {
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
