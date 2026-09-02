@@ -186,13 +186,13 @@
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
     </div>
 
-    <!-- Center Popup - DATE (Menu Style Glass Box, No BG Blur) -->
+    <!-- Center Popup - DATE -->
     <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <!-- Transparent/Light tint BG (NO BLUR) -->
+        <!-- Light tint BG -->
         <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
         
-        <!-- The Glass Box -->
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
+        <!-- Glass Box (GPU Accelerated) -->
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform-gpu scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity]" style="-webkit-backface-visibility: hidden; backface-visibility: hidden;" id="date-popup-card">
             <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
             <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
             <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
@@ -210,13 +210,13 @@
         </div>
     </div>
 
-    <!-- Center Popup - TIME (Menu Style Glass Box, No BG Blur) -->
+    <!-- Center Popup - TIME -->
     <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <!-- Transparent/Light tint BG (NO BLUR) -->
+        <!-- Light tint BG -->
         <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
         
-        <!-- The Glass Box -->
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
+        <!-- Glass Box (GPU Accelerated) -->
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform-gpu scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity]" style="-webkit-backface-visibility: hidden; backface-visibility: hidden;" id="time-popup-card">
             <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
             <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
                 <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
@@ -280,7 +280,6 @@
                 </button>
             </div>
             
-            <!-- Image with Glass Card Overlay -->
             <div class="rounded-3xl overflow-hidden reveal relative">
                 <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist treating patient" class="w-full h-80 sm:h-96 object-cover">
                 <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-black/30 backdrop-blur-xl border border-white/30 rounded-2xl p-5 sm:p-6 shadow-2xl">
