@@ -107,7 +107,7 @@
         .expand-wrapper {
             display: grid;
             grid-template-rows: 0fr;
-            transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .expand-wrapper.open {
             grid-template-rows: 1fr;
@@ -116,7 +116,7 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(-10px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .expand-wrapper.open .expand-inner {
             opacity: 1;
@@ -153,7 +153,6 @@
             object-position: top;
         }
 
-        /* Custom Date/Time input styling to look clickable */
         .select-trigger {
             cursor: pointer;
             caret-color: transparent;
@@ -181,46 +180,6 @@
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Gallery</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Contact</a>
         <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
-    </div>
-
-    <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="date-bg" class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close opacity-0 transition-opacity duration-500"></div>
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
-            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
-            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
-            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
-            
-            <div class="relative w-full mt-2">
-                <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
-                    <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
-                </button>
-            </div>
-            
-            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-        </div>
-    </div>
-
-    <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="time-bg" class="absolute inset-0 bg-black/20 backdrop-blur-sm popup-bg-close opacity-0 transition-opacity duration-500"></div>
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
-            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
-                <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
-            </button>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Afternoon (1 PM - 4 PM)">
-                <span>Afternoon</span> <span class="text-white/50 text-sm">1pm - 4pm</span>
-            </button>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Evening (5 PM - 8 PM)">
-                <span>Evening</span> <span class="text-white/50 text-sm">5pm - 8pm</span>
-            </button>
-            
-            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-        </div>
     </div>
 
     <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
@@ -406,11 +365,27 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 pt-2">
+                    
                     <div class="field-group relative">
                         <input type="hidden" name="date" id="form-date-hidden">
                         <div class="relative">
-                            <input type="text" id="display-date" readonly placeholder="Date *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent">
-                            <i class="fa-regular fa-calendar absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                            <input type="text" id="display-date" readonly placeholder="Date *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
+                            <i class="fa-solid fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none transition-transform duration-300" id="date-icon"></i>
+                        </div>
+                        
+                        <div id="date-dropdown" class="expand-wrapper mt-0 w-full absolute top-full left-0 z-20">
+                            <div class="expand-inner">
+                                <div class="mt-2 p-3 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex flex-col space-y-2">
+                                    <button type="button" class="date-select w-full py-2.5 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition" data-value="Today">Today</button>
+                                    <button type="button" class="date-select w-full py-2.5 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition" data-value="Tomorrow">Tomorrow</button>
+                                    <div class="relative w-full">
+                                        <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                                        <button type="button" class="w-full py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium transition flex items-center justify-center gap-2 pointer-events-none">
+                                            <i class="fa-regular fa-calendar-days"></i> Custom
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a date.</p>
                     </div>
@@ -419,10 +394,27 @@
                         <input type="hidden" name="time" id="form-time-hidden">
                         <div class="relative">
                             <input type="text" id="display-time" readonly placeholder="Time *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
-                            <i class="fa-regular fa-clock absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                            <i class="fa-solid fa-chevron-down absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none transition-transform duration-300" id="time-icon"></i>
+                        </div>
+                        
+                        <div id="time-dropdown" class="expand-wrapper mt-0 w-full absolute top-full left-0 z-30">
+                            <div class="expand-inner">
+                                <div class="mt-2 p-3 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex flex-col space-y-2">
+                                    <button type="button" class="time-select w-full py-2 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition flex flex-col items-center leading-tight" data-value="Morning (9 AM - 12 PM)">
+                                        <span>Morning</span> <span class="text-gray-500 text-[10px]">9am - 12pm</span>
+                                    </button>
+                                    <button type="button" class="time-select w-full py-2 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition flex flex-col items-center leading-tight" data-value="Afternoon (1 PM - 4 PM)">
+                                        <span>Afternoon</span> <span class="text-gray-500 text-[10px]">1pm - 4pm</span>
+                                    </button>
+                                    <button type="button" class="time-select w-full py-2 rounded-xl bg-white/50 hover:bg-white text-navy-900 text-sm font-medium transition flex flex-col items-center leading-tight" data-value="Evening (5 PM - 8 PM)">
+                                        <span>Evening</span> <span class="text-gray-500 text-[10px]">5pm - 8pm</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a time.</p>
                     </div>
+
                 </div>
 
                 <div class="field-group pt-2">
@@ -700,57 +692,52 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Frosted Glass Popup Logic for Date & Time
+            // 4. Fluid Inline Glass Dropdowns Logic
             const displayDate = document.getElementById('display-date');
             const displayTime = document.getElementById('display-time');
             const hiddenDate = document.getElementById('form-date-hidden');
             const hiddenTime = document.getElementById('form-time-hidden');
             
-            const datePopup = document.getElementById('date-popup');
-            const datePopupCard = document.getElementById('date-popup-card');
-            const timePopup = document.getElementById('time-popup');
-            const timePopupCard = document.getElementById('time-popup-card');
-            
-            const closePopups = () => {
-                document.body.style.overflow = '';
-                
-                // Smoothly fade out the backgrounds first
-                document.getElementById('date-bg').classList.add('opacity-0');
-                document.getElementById('time-bg').classList.add('opacity-0');
+            const dateDropdown = document.getElementById('date-dropdown');
+            const timeDropdown = document.getElementById('time-dropdown');
+            const dateIcon = document.getElementById('date-icon');
+            const timeIcon = document.getElementById('time-icon');
 
-                datePopupCard.classList.remove('scale-100', 'opacity-100');
-                datePopupCard.classList.add('scale-90', 'opacity-0');
-                
-                timePopupCard.classList.remove('scale-100', 'opacity-100');
-                timePopupCard.classList.add('scale-90', 'opacity-0');
-
-                // Wait for fade out to finish before hiding the wrapper
-                setTimeout(() => {
-                    datePopup.classList.add('opacity-0', 'pointer-events-none');
-                    timePopup.classList.add('opacity-0', 'pointer-events-none');
-                }, 300);
+            const closeDropdowns = () => {
+                dateDropdown.classList.remove('open');
+                timeDropdown.classList.remove('open');
+                dateIcon.classList.remove('rotate-180');
+                timeIcon.classList.remove('rotate-180');
             };
 
-            const openPopup = (wrapper, card, bgId) => {
-                document.body.style.overflow = 'hidden';
-                wrapper.classList.remove('opacity-0', 'pointer-events-none');
-                
-                // Smoothly fade in the background and scale the card
-                setTimeout(() => {
-                    document.getElementById(bgId).classList.remove('opacity-0');
-                    card.classList.remove('scale-90', 'opacity-0');
-                    card.classList.add('scale-100', 'opacity-100');
-                }, 10);
-            };
-
-            // Trigger Popups
-            displayDate.addEventListener('click', () => openPopup(datePopup, datePopupCard, 'date-bg'));
-            displayTime.addEventListener('click', () => openPopup(timePopup, timePopupCard, 'time-bg'));
-
-            // Close on background click or X button
-            document.querySelectorAll('.popup-bg-close, .popup-close').forEach(el => {
-                el.addEventListener('click', closePopups);
+            displayDate.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (dateDropdown.classList.contains('open')) {
+                    closeDropdowns();
+                } else {
+                    closeDropdowns();
+                    dateDropdown.classList.add('open');
+                    dateIcon.classList.add('rotate-180');
+                }
             });
+
+            displayTime.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (timeDropdown.classList.contains('open')) {
+                    closeDropdowns();
+                } else {
+                    closeDropdowns();
+                    timeDropdown.classList.add('open');
+                    timeIcon.classList.add('rotate-180');
+                }
+            });
+
+            // Prevent closing when clicking inside the dropdown
+            dateDropdown.addEventListener('click', (e) => e.stopPropagation());
+            timeDropdown.addEventListener('click', (e) => e.stopPropagation());
+            
+            // Close when clicking anywhere outside
+            document.addEventListener('click', closeDropdowns);
 
             // Date Selection
             document.querySelectorAll('.date-select').forEach(btn => {
@@ -760,7 +747,7 @@
                     hiddenDate.value = val;
                     displayDate.classList.remove('error');
                     displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                    closePopups();
+                    closeDropdowns();
                 });
             });
 
@@ -775,7 +762,7 @@
                         hiddenDate.value = e.target.value;
                         displayDate.classList.remove('error');
                         displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                        closePopups();
+                        closeDropdowns();
                     }
                 });
             }
@@ -785,16 +772,16 @@
                 btn.addEventListener('click', (e) => {
                     const el = e.target.closest('.time-select');
                     const val = el.dataset.value;
-                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon", etc. in input
-                    hiddenTime.value = val; // Send full string to email
+                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon" etc
+                    hiddenTime.value = val;
                     displayTime.classList.remove('error');
                     displayTime.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                    closePopups();
+                    closeDropdowns();
                 });
             });
 
 
-            // 5. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
+            // 5. Booking Form - Web3Forms + Validation
             const bookingForm = document.getElementById('booking-form');
             if (bookingForm) {
                 const bookingBtn = document.getElementById('booking-btn');
@@ -806,7 +793,6 @@
                 const formError = document.getElementById('form-error');
                 const feedbackWrapper = document.getElementById('feedback-wrapper');
 
-                // Clear error on generic input
                 bookingForm.querySelectorAll('.custom-input:not(.select-trigger)').forEach(input => {
                     input.addEventListener('input', () => {
                         input.classList.remove('error');
@@ -818,7 +804,6 @@
                 const validateForm = () => {
                     let isValid = true;
                     
-                    // Regular text fields
                     const fields = [
                         { id: 'field-name', check: v => v.trim().length >= 2 },
                         { id: 'field-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
@@ -838,7 +823,7 @@
                         }
                     });
 
-                    // Validate Popups Grid
+                    // Dropdown Validation
                     if (!hiddenDate.value) {
                         displayDate.classList.add('error');
                         displayDate.closest('.field-group').querySelector('.error-msg').classList.add('show');
@@ -850,7 +835,6 @@
                         isValid = false;
                     }
 
-                    // Add shake animation to form if invalid
                     if (!isValid) {
                         bookingForm.classList.add('shake');
                         setTimeout(() => bookingForm.classList.remove('shake'), 300);
@@ -887,7 +871,6 @@
                             formError.classList.add('hidden');
                             formError.classList.remove('flex');
                             
-                            // Trigger fluid iOS expansion
                             feedbackWrapper.classList.add('open');
                             
                             bookingForm.reset();
@@ -895,7 +878,7 @@
                             displayTime.value = '';
                             hiddenDate.value = '';
                             hiddenTime.value = '';
-                            nativeDate.value = '';
+                            if(nativeDate) nativeDate.value = '';
 
                             setTimeout(() => {
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
@@ -903,7 +886,6 @@
                                 btnText.classList.remove('opacity-0');
                                 bookingBtn.disabled = false;
                                 
-                                // Close fluid wrapper first, then hide elements
                                 feedbackWrapper.classList.remove('open');
                                 setTimeout(() => {
                                     formSuccess.classList.add('hidden');
@@ -924,7 +906,6 @@
                         formSuccess.classList.add('hidden');
                         formSuccess.classList.remove('flex');
 
-                        // Trigger fluid iOS expansion
                         feedbackWrapper.classList.add('open');
 
                         setTimeout(() => {
@@ -933,7 +914,6 @@
                             btnText.classList.remove('opacity-0');
                             bookingBtn.disabled = false;
                             
-                            // Close fluid wrapper first, then hide elements
                             feedbackWrapper.classList.remove('open');
                             setTimeout(() => {
                                 formError.classList.add('hidden');
@@ -1106,7 +1086,6 @@
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
                     
-                    // Hide overlay to stop blocking clicks
                     menuOverlay.classList.add('hidden', 'pointer-events-none');
                     menuOverlay.classList.remove('pointer-events-auto');
                     
@@ -1125,7 +1104,6 @@
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-xmark');
                     
-                    // Show overlay to absorb all background clicks
                     menuOverlay.classList.remove('hidden', 'pointer-events-none');
                     menuOverlay.classList.add('pointer-events-auto');
                     
@@ -1140,14 +1118,12 @@
                     });
                 };
 
-                // Toggle menu on button click
                 menuBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (menuOpen) closeMenu();
                     else openMenu();
                 });
 
-                // Clicking the invisible overlay closes the menu and ABSORBS the click
                 menuOverlay.addEventListener('click', (e) => {
                     e.stopPropagation();
                     e.preventDefault();
