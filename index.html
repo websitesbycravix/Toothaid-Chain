@@ -191,8 +191,8 @@
         <!-- Light tint BG -->
         <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
         
-        <!-- Glass Box (GPU Accelerated) -->
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform-gpu scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity]" style="-webkit-backface-visibility: hidden; backface-visibility: hidden;" id="date-popup-card">
+        <!-- Glass Box (Pure Fade & Subtle Slide-up) -->
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform translate-y-4 opacity-0 transition-all duration-500 ease-out bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
             <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
             <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
             <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
@@ -215,8 +215,8 @@
         <!-- Light tint BG -->
         <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
         
-        <!-- Glass Box (GPU Accelerated) -->
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform-gpu scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity]" style="-webkit-backface-visibility: hidden; backface-visibility: hidden;" id="time-popup-card">
+        <!-- Glass Box (Pure Fade & Subtle Slide-up) -->
+        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform translate-y-4 opacity-0 transition-all duration-500 ease-out bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
             <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
             <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
                 <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
@@ -715,7 +715,7 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Center Popups Logic for Date & Time
+            // 4. Center Popups Logic for Date & Time (Smooth Fade/Slide)
             const displayDate = document.getElementById('display-date');
             const displayTime = document.getElementById('display-time');
             const hiddenDate = document.getElementById('form-date-hidden');
@@ -729,31 +729,31 @@
             const closePopups = () => {
                 document.body.style.overflow = '';
                 
-                // Shrink and fade the glass cards
+                // Slide down and fade out
                 if (datePopupCard) {
-                    datePopupCard.classList.remove('scale-100', 'opacity-100');
-                    datePopupCard.classList.add('scale-90', 'opacity-0');
+                    datePopupCard.classList.remove('translate-y-0', 'opacity-100');
+                    datePopupCard.classList.add('translate-y-4', 'opacity-0');
                 }
                 if (timePopupCard) {
-                    timePopupCard.classList.remove('scale-100', 'opacity-100');
-                    timePopupCard.classList.add('scale-90', 'opacity-0');
+                    timePopupCard.classList.remove('translate-y-0', 'opacity-100');
+                    timePopupCard.classList.add('translate-y-4', 'opacity-0');
                 }
 
                 // Hide wrappers after card transition
                 setTimeout(() => {
                     if (datePopup) datePopup.classList.add('opacity-0', 'pointer-events-none');
                     if (timePopup) timePopup.classList.add('opacity-0', 'pointer-events-none');
-                }, 300);
+                }, 400);
             };
 
             const openPopup = (wrapper, card) => {
                 document.body.style.overflow = 'hidden';
                 wrapper.classList.remove('opacity-0', 'pointer-events-none');
                 
-                // Scale and fade in the glass card smoothly
+                // Slide up and fade in smoothly
                 setTimeout(() => {
-                    card.classList.remove('scale-90', 'opacity-0');
-                    card.classList.add('scale-100', 'opacity-100');
+                    card.classList.remove('translate-y-4', 'opacity-0');
+                    card.classList.add('translate-y-0', 'opacity-100');
                 }, 10);
             };
 
@@ -808,7 +808,7 @@
             });
 
 
-            // 5. Booking Form - Web3Forms + Validation + Fluid iOS Expansion
+            // 5. Booking Form - Web3Forms + Validation
             const bookingForm = document.getElementById('booking-form');
             if (bookingForm) {
                 const bookingBtn = document.getElementById('booking-btn');
@@ -820,7 +820,6 @@
                 const formError = document.getElementById('form-error');
                 const feedbackWrapper = document.getElementById('feedback-wrapper');
 
-                // Clear error on generic input
                 bookingForm.querySelectorAll('.custom-input:not(.select-trigger)').forEach(input => {
                     input.addEventListener('input', () => {
                         input.classList.remove('error');
@@ -832,7 +831,6 @@
                 const validateForm = () => {
                     let isValid = true;
                     
-                    // Regular text fields
                     const fields = [
                         { id: 'field-name', check: v => v.trim().length >= 2 },
                         { id: 'field-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
@@ -864,7 +862,6 @@
                         isValid = false;
                     }
 
-                    // Add shake animation to form if invalid
                     if (!isValid) {
                         bookingForm.classList.add('shake');
                         setTimeout(() => bookingForm.classList.remove('shake'), 300);
@@ -901,7 +898,6 @@
                             formError.classList.add('hidden');
                             formError.classList.remove('flex');
                             
-                            // Trigger fluid iOS expansion
                             feedbackWrapper.classList.add('open');
                             
                             bookingForm.reset();
@@ -917,7 +913,6 @@
                                 btnText.classList.remove('opacity-0');
                                 bookingBtn.disabled = false;
                                 
-                                // Close fluid wrapper first, then hide elements
                                 feedbackWrapper.classList.remove('open');
                                 setTimeout(() => {
                                     formSuccess.classList.add('hidden');
@@ -938,7 +933,6 @@
                         formSuccess.classList.add('hidden');
                         formSuccess.classList.remove('flex');
 
-                        // Trigger fluid iOS expansion
                         feedbackWrapper.classList.add('open');
 
                         setTimeout(() => {
@@ -947,7 +941,6 @@
                             btnText.classList.remove('opacity-0');
                             bookingBtn.disabled = false;
                             
-                            // Close fluid wrapper first, then hide elements
                             feedbackWrapper.classList.remove('open');
                             setTimeout(() => {
                                 formError.classList.add('hidden');
@@ -1120,7 +1113,6 @@
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
                     
-                    // Hide overlay to stop blocking clicks
                     menuOverlay.classList.add('hidden', 'pointer-events-none');
                     menuOverlay.classList.remove('pointer-events-auto');
                     
@@ -1139,7 +1131,6 @@
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-xmark');
                     
-                    // Show overlay to absorb all background clicks
                     menuOverlay.classList.remove('hidden', 'pointer-events-none');
                     menuOverlay.classList.add('pointer-events-auto');
                     
@@ -1154,14 +1145,12 @@
                     });
                 };
 
-                // Toggle menu on button click
                 menuBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (menuOpen) closeMenu();
                     else openMenu();
                 });
 
-                // Clicking the invisible overlay closes the menu and ABSORBS the click
                 menuOverlay.addEventListener('click', (e) => {
                     e.stopPropagation();
                     e.preventDefault();
