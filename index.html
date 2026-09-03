@@ -191,22 +191,28 @@
         <!-- Light tint BG -->
         <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
         
-        <!-- Glass Box (Pure Fade & Subtle Slide-up) -->
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform translate-y-4 opacity-0 transition-all duration-500 ease-out bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="date-popup-card">
-            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
-            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
-            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
-            
-            <div class="relative w-full mt-2">
-                <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
-                    <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
+        <!-- Parent Wrapper for 2-Layer Fix -->
+        <div class="relative w-[320px] h-auto">
+            <!-- LAYER 1: STATIC BLUR (No scale animation, prevents instant cut glitch) -->
+            <div class="absolute inset-0 bg-navy-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] pointer-events-none"></div>
+
+            <!-- LAYER 2: ANIMATING CONTENT (Scale and fade in) -->
+            <div id="date-popup-card" class="relative z-10 flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
+                <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
+                <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
+                
+                <div class="relative w-full mt-2">
+                    <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                    <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
+                        <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
+                    </button>
+                </div>
+                
+                <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
+                    <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
-            
-            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
         </div>
     </div>
 
@@ -215,22 +221,28 @@
         <!-- Light tint BG -->
         <div class="absolute inset-0 bg-black/10 popup-bg-close"></div>
         
-        <!-- Glass Box (Pure Fade & Subtle Slide-up) -->
-        <div class="relative w-[320px] flex flex-col space-y-3 py-8 px-6 text-white transform translate-y-4 opacity-0 transition-all duration-500 ease-out bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)]" id="time-popup-card">
-            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
-                <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
-            </button>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Afternoon (1 PM - 4 PM)">
-                <span>Afternoon</span> <span class="text-white/50 text-sm">1pm - 4pm</span>
-            </button>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Evening (5 PM - 8 PM)">
-                <span>Evening</span> <span class="text-white/50 text-sm">5pm - 8pm</span>
-            </button>
-            
-            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+        <!-- Parent Wrapper for 2-Layer Fix -->
+        <div class="relative w-[320px] h-auto">
+            <!-- LAYER 1: STATIC BLUR -->
+            <div class="absolute inset-0 bg-navy-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] pointer-events-none"></div>
+
+            <!-- LAYER 2: ANIMATING CONTENT -->
+            <div id="time-popup-card" class="relative z-10 flex flex-col space-y-3 py-8 px-6 text-white transform scale-90 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
+                <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
+                    <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
+                </button>
+                <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Afternoon (1 PM - 4 PM)">
+                    <span>Afternoon</span> <span class="text-white/50 text-sm">1pm - 4pm</span>
+                </button>
+                <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Evening (5 PM - 8 PM)">
+                    <span>Evening</span> <span class="text-white/50 text-sm">5pm - 8pm</span>
+                </button>
+                
+                <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -418,7 +430,7 @@
                     <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your phone number.</p>
                 </div>
 
-                <!-- SLEEK DATE & TIME GRID (Opens center popups) -->
+                <!-- SLEEK DATE & TIME GRID -->
                 <div class="grid grid-cols-2 gap-4 pt-2">
                     <div class="field-group relative">
                         <input type="hidden" name="date" id="form-date-hidden">
@@ -715,7 +727,7 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Center Popups Logic for Date & Time (Smooth Fade/Slide)
+            // 4. Center Popups Logic (2-Layer Smooth Blur)
             const displayDate = document.getElementById('display-date');
             const displayTime = document.getElementById('display-time');
             const hiddenDate = document.getElementById('form-date-hidden');
@@ -729,31 +741,31 @@
             const closePopups = () => {
                 document.body.style.overflow = '';
                 
-                // Slide down and fade out
+                // Shrink and fade content layer
                 if (datePopupCard) {
-                    datePopupCard.classList.remove('translate-y-0', 'opacity-100');
-                    datePopupCard.classList.add('translate-y-4', 'opacity-0');
+                    datePopupCard.classList.remove('scale-100', 'opacity-100');
+                    datePopupCard.classList.add('scale-90', 'opacity-0');
                 }
                 if (timePopupCard) {
-                    timePopupCard.classList.remove('translate-y-0', 'opacity-100');
-                    timePopupCard.classList.add('translate-y-4', 'opacity-0');
+                    timePopupCard.classList.remove('scale-100', 'opacity-100');
+                    timePopupCard.classList.add('scale-90', 'opacity-0');
                 }
 
-                // Hide wrappers after card transition
-                setTimeout(() => {
-                    if (datePopup) datePopup.classList.add('opacity-0', 'pointer-events-none');
-                    if (timePopup) timePopup.classList.add('opacity-0', 'pointer-events-none');
-                }, 400);
+                // Instantly start fading out the entire wrapper (including static blur)
+                if (datePopup) datePopup.classList.add('opacity-0', 'pointer-events-none');
+                if (timePopup) timePopup.classList.add('opacity-0', 'pointer-events-none');
             };
 
             const openPopup = (wrapper, card) => {
                 document.body.style.overflow = 'hidden';
+                
+                // 1. Fade in the whole wrapper (Blur appears instantly without scaling)
                 wrapper.classList.remove('opacity-0', 'pointer-events-none');
                 
-                // Slide up and fade in smoothly
+                // 2. Scale and fade in the content slightly after
                 setTimeout(() => {
-                    card.classList.remove('translate-y-4', 'opacity-0');
-                    card.classList.add('translate-y-0', 'opacity-100');
+                    card.classList.remove('scale-90', 'opacity-0');
+                    card.classList.add('scale-100', 'opacity-100');
                 }, 10);
             };
 
