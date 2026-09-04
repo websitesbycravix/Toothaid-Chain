@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -186,7 +189,7 @@
     <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none hidden">
         <div id="date-bg" class="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-300 popup-bg-close pointer-events-auto"></div>
         <div class="relative w-[320px] h-auto">
-            <div class="absolute inset-0 bg-navy-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] pointer-events-none"></div>
+            <div id="date-blur-box" class="absolute inset-0 bg-navy-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] opacity-0 transition-opacity duration-[500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"></div>
 
             <div id="date-popup-card" class="relative z-10 flex flex-col space-y-3 py-8 px-6 text-white transform scale-75 opacity-0 transition-all duration-[500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto">
                 <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
@@ -194,8 +197,8 @@
                 <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
                 
                 <div class="relative w-full mt-2">
-                    <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                    <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
+                    <input type="text" id="flatpickr-input" class="hidden" />
+                    <button type="button" id="flatpickr-btn" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2">
                         <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
                     </button>
                 </div>
@@ -209,7 +212,7 @@
     <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none hidden">
         <div id="time-bg" class="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-300 popup-bg-close pointer-events-auto"></div>
         <div class="relative w-[320px] h-auto">
-            <div class="absolute inset-0 bg-navy-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] pointer-events-none"></div>
+            <div id="time-blur-box" class="absolute inset-0 bg-navy-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.4)] opacity-0 transition-opacity duration-[500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-none"></div>
 
             <div id="time-popup-card" class="relative z-10 flex flex-col space-y-3 py-8 px-6 text-white transform scale-75 opacity-0 transition-all duration-[500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto">
                 <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
@@ -765,32 +768,39 @@
                 
                 const dateBg = document.getElementById('date-bg');
                 const timeBg = document.getElementById('time-bg');
+                const dateBlurBox = document.getElementById('date-blur-box');
+                const timeBlurBox = document.getElementById('time-blur-box');
+
                 if(dateBg) dateBg.classList.add('opacity-0');
                 if(timeBg) timeBg.classList.add('opacity-0');
+                if(dateBlurBox) dateBlurBox.classList.add('opacity-0');
+                if(timeBlurBox) timeBlurBox.classList.add('opacity-0');
 
                 setTimeout(() => {
                     if(datePopup) datePopup.classList.add('hidden');
                     if(timePopup) timePopup.classList.add('hidden');
-                }, 500);
+                }, 500); // Matches the 500ms duration
             };
 
-            const openPopup = (wrapperId, cardId, bgId) => {
+            const openPopup = (wrapperId, cardId, bgId, blurId) => {
                 const wrapper = document.getElementById(wrapperId);
                 const card = document.getElementById(cardId);
                 const bg = document.getElementById(bgId);
+                const blurBox = document.getElementById(blurId);
 
                 document.body.style.overflow = 'hidden';
                 wrapper.classList.remove('hidden');
                 
                 setTimeout(() => {
                     bg.classList.remove('opacity-0');
+                    blurBox.classList.remove('opacity-0');
                     card.classList.remove('scale-75', 'opacity-0');
                     card.classList.add('scale-100', 'opacity-100');
                 }, 10);
             };
 
-            displayDate.addEventListener('click', () => openPopup('date-popup', 'date-popup-card', 'date-bg'));
-            displayTime.addEventListener('click', () => openPopup('time-popup', 'time-popup-card', 'time-bg'));
+            displayDate.addEventListener('click', () => openPopup('date-popup', 'date-popup-card', 'date-bg', 'date-blur-box'));
+            displayTime.addEventListener('click', () => openPopup('time-popup', 'time-popup-card', 'time-bg', 'time-blur-box'));
 
             document.querySelectorAll('.popup-bg-close, .popup-close').forEach(el => {
                 el.addEventListener('click', closePopups);
@@ -807,18 +817,26 @@
                 });
             });
 
-            const nativeDate = document.getElementById('native-date');
-            if (nativeDate) {
-                nativeDate.addEventListener('change', (e) => {
-                    if (e.target.value) {
-                        const d = new Date(e.target.value);
-                        const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                        displayDate.value = formatted;
-                        hiddenDate.value = e.target.value;
-                        displayDate.classList.remove('error');
-                        displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                        closePopups();
+            // FLATPICKR INITIALIZATION
+            const fpInput = document.getElementById('flatpickr-input');
+            if (fpInput) {
+                const fp = flatpickr(fpInput, {
+                    disableMobile: true, // Forces flatpickr UI instead of Android/iOS native
+                    onChange: function(selectedDates, dateStr, instance) {
+                        if (selectedDates.length > 0) {
+                            const d = selectedDates[0];
+                            const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                            displayDate.value = formatted;
+                            hiddenDate.value = dateStr;
+                            displayDate.classList.remove('error');
+                            displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
+                            closePopups();
+                        }
                     }
+                });
+
+                document.getElementById('flatpickr-btn').addEventListener('click', () => {
+                    fp.open();
                 });
             }
 
@@ -931,7 +949,9 @@
                             displayTime.value = '';
                             hiddenDate.value = '';
                             hiddenTime.value = '';
-                            if(nativeDate) nativeDate.value = '';
+                            
+                            // Reset flatpickr if it exists
+                            if(fpInput && fpInput._flatpickr) fpInput._flatpickr.clear();
 
                             setTimeout(() => {
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
@@ -1139,6 +1159,7 @@
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
                     
+                    // Hide overlay to stop blocking clicks
                     menuOverlay.classList.add('hidden', 'pointer-events-none');
                     menuOverlay.classList.remove('pointer-events-auto');
                     
@@ -1157,6 +1178,7 @@
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-xmark');
                     
+                    // Show overlay to absorb all background clicks
                     menuOverlay.classList.remove('hidden', 'pointer-events-none');
                     menuOverlay.classList.add('pointer-events-auto');
                     
@@ -1171,12 +1193,14 @@
                     });
                 };
 
+                // Toggle menu on button click
                 menuBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (menuOpen) closeMenu();
                     else openMenu();
                 });
 
+                // Clicking the invisible overlay closes the menu and ABSORBS the click
                 menuOverlay.addEventListener('click', (e) => {
                     e.stopPropagation();
                     e.preventDefault();
