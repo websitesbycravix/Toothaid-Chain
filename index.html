@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Flatpickr CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -293,7 +297,7 @@
 
         <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
             <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center text-navy-900 text-4xl">
-                <i class="fa-solid fa-user-doctor"></i>
+                <i class="fa-solid fa-file-contract"></i>
             </div>
             <p class="text-navy-900 font-medium mb-4">Certified by the Indian Dental Association</p>
             <a href="#" class="text-blue-600 font-semibold text-sm flex items-center justify-center gap-2 border-b border-blue-600 pb-1 inline-flex hover:opacity-70 transition">
@@ -745,7 +749,7 @@
                 teamObserver.observe(teamGrid);
             }
 
-            // 4. Center Popups Logic (Synchronized Single-Layer Animation)
+            // 4. Center Popups Logic
             const displayDate = document.getElementById('display-date');
             const displayTime = document.getElementById('display-time');
             const hiddenDate = document.getElementById('form-date-hidden');
@@ -787,7 +791,6 @@
                 document.body.style.overflow = 'hidden';
                 wrapper.classList.remove('hidden');
                 
-                // Box, blur and text scale & fade synchronously
                 setTimeout(() => {
                     bg.classList.remove('opacity-0');
                     card.classList.remove('scale-75', 'opacity-0');
@@ -832,8 +835,8 @@
                 btn.addEventListener('click', (e) => {
                     const el = e.target.closest('.time-select');
                     const val = el.dataset.value;
-                    displayTime.value = val.split(' ')[0];
-                    hiddenTime.value = val;
+                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon", etc. in input
+                    hiddenTime.value = val; // Send full string to email
                     displayTime.classList.remove('error');
                     displayTime.closest('.field-group').querySelector('.error-msg').classList.remove('show');
                     closePopups();
@@ -937,6 +940,7 @@
                             displayTime.value = '';
                             hiddenDate.value = '';
                             hiddenTime.value = '';
+                            if(nativeDate) nativeDate.value = '';
 
                             setTimeout(() => {
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
