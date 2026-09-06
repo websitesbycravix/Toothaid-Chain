@@ -10,10 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Flatpickr CSS & JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -199,8 +195,8 @@
             <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
             
             <div class="relative w-full mt-2">
-                <input type="text" id="flatpickr-input" class="hidden" />
-                <button type="button" id="flatpickr-btn" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2">
+                <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
                     <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
                 </button>
             </div>
@@ -297,9 +293,9 @@
 
         <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
             <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center text-navy-900 text-4xl">
-                <i class="fa-solid fa-file-contract"></i>
+                <i class="fa-solid fa-user-doctor"></i>
             </div>
-            <p class="text-navy-900 font-medium mb-4">Certified by the American Dental Association</p>
+            <p class="text-navy-900 font-medium mb-4">Certified by the Indian Dental Association</p>
             <a href="#" class="text-blue-600 font-semibold text-sm flex items-center justify-center gap-2 border-b border-blue-600 pb-1 inline-flex hover:opacity-70 transition">
                 Schedule Your Visit <i class="fa-solid fa-arrow-right -rotate-45"></i>
             </a>
@@ -817,26 +813,18 @@
                 });
             });
 
-            // FLATPICKR INITIALIZATION
-            const fpInput = document.getElementById('flatpickr-input');
-            if (fpInput) {
-                const fp = flatpickr(fpInput, {
-                    disableMobile: true,
-                    onChange: function(selectedDates, dateStr, instance) {
-                        if (selectedDates.length > 0) {
-                            const d = selectedDates[0];
-                            const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                            displayDate.value = formatted;
-                            hiddenDate.value = dateStr;
-                            displayDate.classList.remove('error');
-                            displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                            closePopups();
-                        }
+            const nativeDate = document.getElementById('native-date');
+            if (nativeDate) {
+                nativeDate.addEventListener('change', (e) => {
+                    if (e.target.value) {
+                        const d = new Date(e.target.value);
+                        const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        displayDate.value = formatted;
+                        hiddenDate.value = e.target.value;
+                        displayDate.classList.remove('error');
+                        displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
+                        closePopups();
                     }
-                });
-
-                document.getElementById('flatpickr-btn').addEventListener('click', () => {
-                    fp.open();
                 });
             }
 
@@ -949,8 +937,6 @@
                             displayTime.value = '';
                             hiddenDate.value = '';
                             hiddenTime.value = '';
-                            
-                            if (fpInput && fpInput._flatpickr) fpInput._flatpickr.clear();
 
                             setTimeout(() => {
                                 btnSuccess.classList.remove('opacity-100', 'scale-100');
@@ -1158,6 +1144,7 @@
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
                     
+                    // Hide overlay to stop blocking clicks
                     menuOverlay.classList.add('hidden', 'pointer-events-none');
                     menuOverlay.classList.remove('pointer-events-auto');
                     
@@ -1176,6 +1163,7 @@
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-xmark');
                     
+                    // Show overlay to absorb all background clicks
                     menuOverlay.classList.remove('hidden', 'pointer-events-none');
                     menuOverlay.classList.add('pointer-events-auto');
                     
@@ -1190,12 +1178,14 @@
                     });
                 };
 
+                // Toggle menu on button click
                 menuBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (menuOpen) closeMenu();
                     else openMenu();
                 });
 
+                // Clicking the invisible overlay closes the menu and ABSORBS the click
                 menuOverlay.addEventListener('click', (e) => {
                     e.stopPropagation();
                     e.preventDefault();
