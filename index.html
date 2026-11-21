@@ -41,6 +41,27 @@
       overflow-x: hidden;
     }
 
+    /* Fixed grid that stays stationary while content scrolls over it, fading out on the lower screen */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(199, 154, 43, 0.085) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(199, 154, 43, 0.085) 1px, transparent 1px);
+      background-size: 72px 72px;
+      background-position: center top;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.75) 48%, rgba(0, 0, 0, 0) 82%);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.75) 48%, rgba(0, 0, 0, 0) 82%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > *:not(.drawer-backdrop):not(.drawer-panel):not(.floating-stack):not(.modal-overlay) {
+      position: relative;
+      z-index: 1;
+    }
+
     a {
       text-decoration: none;
       color: inherit;
@@ -372,30 +393,8 @@
     .hero {
       position: relative;
       padding: 22px 0 36px;
-      background: radial-gradient(circle at 50% 0%, #FFF9E6 0%, var(--bg-cream) 68%);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 249, 230, 0.85) 0%, rgba(250, 248, 243, 0.35) 68%);
       text-align: center;
-      overflow: hidden;
-    }
-
-    /* Larger grid behind the 3-image circle that fades smoothly into plain cream below */
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(to right, rgba(199, 154, 43, 0.085) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(199, 154, 43, 0.085) 1px, transparent 1px);
-      background-size: 72px 72px;
-      background-position: center top;
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 42%, rgba(0, 0, 0, 0) 76%);
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 42%, rgba(0, 0, 0, 0) 76%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero > .container {
-      position: relative;
-      z-index: 1;
     }
 
     .hero-grid {
@@ -405,7 +404,7 @@
       gap: 28px;
     }
 
-    /* Floating 3-Card Collage (Larger Ring, Wider Non-Attracting Motion, ~4-5 Cycle Convergence) */
+    /* Floating 3-Card Collage (Larger Ring, Butter-Smooth Motion, ~4-5 Cycle Convergence) */
     .hero-collage {
       position: relative;
       width: 100%;
@@ -492,15 +491,25 @@
       mix-blend-mode: multiply;
     }
 
+    /* Butter-smooth continuous loops: Main = 3 loops (6s), Laptop = 5 loops (3.6s), Yellow = 4 loops (4.5s) -> aligned every 18s */
     @keyframes floatMain {
       0%, 100% {
         transform: translate3d(-50%, 0px, 0) rotate(0deg);
       }
-      25% {
-        transform: translate3d(-52%, -11px, 0) rotate(-1.5deg);
+      16.6% {
+        transform: translate3d(-50.8%, -4.5px, 0) rotate(-0.55deg);
       }
-      75% {
-        transform: translate3d(-48%, 7px, 0) rotate(1.3deg);
+      33.3% {
+        transform: translate3d(-51.6%, -8.5px, 0) rotate(-1.1deg);
+      }
+      50% {
+        transform: translate3d(-50.4%, -4px, 0) rotate(-0.3deg);
+      }
+      66.6% {
+        transform: translate3d(-48.8%, 2.5px, 0) rotate(0.65deg);
+      }
+      83.3% {
+        transform: translate3d(-48.4%, 4.5px, 0) rotate(0.95deg);
       }
     }
 
@@ -508,11 +517,20 @@
       0%, 100% {
         transform: translate3d(0px, 0px, 0) rotate(0deg);
       }
-      30% {
-        transform: translate3d(7px, -12px, 0) rotate(2.3deg);
+      18% {
+        transform: translate3d(3px, -5px, 0) rotate(0.95deg);
       }
-      70% {
-        transform: translate3d(3px, 8px, 0) rotate(-1.4deg);
+      36% {
+        transform: translate3d(6px, -9.5px, 0) rotate(1.85deg);
+      }
+      54% {
+        transform: translate3d(5px, -3.5px, 0) rotate(0.65deg);
+      }
+      72% {
+        transform: translate3d(3.5px, 3.5px, 0) rotate(-0.6deg);
+      }
+      88% {
+        transform: translate3d(2.5px, 5.5px, 0) rotate(-0.95deg);
       }
     }
 
@@ -520,11 +538,20 @@
       0%, 100% {
         transform: translate3d(0px, 0px, 0) rotate(0deg);
       }
-      35% {
-        transform: translate3d(-7px, 11px, 0) rotate(-2.4deg);
+      18% {
+        transform: translate3d(-3px, 4.5px, 0) rotate(-0.95deg);
       }
-      75% {
-        transform: translate3d(-3px, -9px, 0) rotate(1.5deg);
+      36% {
+        transform: translate3d(-6px, 8.5px, 0) rotate(-1.85deg);
+      }
+      54% {
+        transform: translate3d(-5px, 2px, 0) rotate(-0.55deg);
+      }
+      72% {
+        transform: translate3d(-3.5px, -5.5px, 0) rotate(0.75deg);
+      }
+      88% {
+        transform: translate3d(-2.5px, -7.5px, 0) rotate(1.15deg);
       }
     }
 
@@ -682,7 +709,7 @@
     }
 
     .section-alt {
-      background: var(--bg-cream-alt);
+      background: rgba(246, 242, 232, 0.82);
     }
 
     .section-head {
@@ -1420,14 +1447,14 @@
         display: flex;
       }
 
-      .hero {
-        padding: 46px 0 54px;
+      body::before {
+        background-size: 84px 84px;
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.78) 54%, rgba(0, 0, 0, 0) 86%);
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.78) 54%, rgba(0, 0, 0, 0) 86%);
       }
 
-      .hero::before {
-        background-size: 84px 84px;
-        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 55%, rgba(0, 0, 0, 0) 92%);
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 55%, rgba(0, 0, 0, 0) 92%);
+      .hero {
+        padding: 46px 0 54px;
       }
 
       .hero-grid {
