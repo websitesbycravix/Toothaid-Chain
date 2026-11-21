@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,7 +22,7 @@
       --dark-strip: #1E242B;
       --whatsapp: #25D366;
       --shadow-soft: 0 12px 32px -8px rgba(20, 23, 31, 0.07), 0 2px 6px -1px rgba(20, 23, 31, 0.04);
-      --shadow-hover: 0 20px 40px -10px rgba(199, 154, 43, 0.18), 0 4px 12px -2px rgba(20, 23, 31, 0.06);
+      --shadow-hover: 0 18px 34px -10px rgba(20, 23, 31, 0.11), 0 4px 10px -2px rgba(20, 23, 31, 0.05);
     }
 
     * {
@@ -167,11 +167,15 @@
       justify-content: center;
       gap: 5px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
     }
 
+    .hamburger-btn:hover,
+    .hamburger-btn.is-pressed,
     .hamburger-btn:active {
-      transform: scale(0.94);
+      transform: scale(0.95);
+      background-color: #FAF6EC;
+      border-color: rgba(199, 154, 43, 0.45);
     }
 
     .hamburger-btn span {
@@ -194,11 +198,6 @@
       transition: opacity 0.28s ease;
     }
 
-    .drawer-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
     .drawer-panel {
       position: fixed;
       top: 0;
@@ -215,10 +214,7 @@
       padding: 20px 22px 26px;
       box-shadow: -16px 0 40px rgba(0, 0, 0, 0.15);
       overflow-y: auto;
-    }
-
-    .drawer-panel.open {
-      transform: translateX(0);
+      pointer-events: none;
     }
 
     .drawer-header {
@@ -334,7 +330,7 @@
       padding: 14px 28px;
       border-radius: 999px;
       box-shadow: 0 10px 24px -6px rgba(184, 136, 30, 0.48);
-      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     }
 
     .btn-gold:hover {
@@ -343,7 +339,8 @@
       filter: brightness(1.03);
     }
 
-    .btn-gold:active {
+    .btn-gold:active,
+    .btn-gold.is-pressed {
       transform: scale(0.97);
     }
 
@@ -360,13 +357,20 @@
       border-radius: 999px;
       border: 1.5px solid #E5DFD0;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
-      transition: all 0.22s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
     }
 
     .btn-outline:hover {
       border-color: var(--gold-main);
       background: #FFFDF7;
       transform: translateY(-2px);
+    }
+
+    .btn-outline:active,
+    .btn-outline.is-pressed {
+      transform: scale(0.97);
+      border-color: var(--gold-main);
+      background: #FFFDF7;
     }
 
     .btn-whatsapp {
@@ -381,12 +385,17 @@
       padding: 14px 28px;
       border-radius: 999px;
       box-shadow: 0 10px 24px -6px rgba(37, 211, 102, 0.45);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn-whatsapp:hover {
       transform: translateY(-2px);
       box-shadow: 0 14px 28px -6px rgba(37, 211, 102, 0.55);
+    }
+
+    .btn-whatsapp:active,
+    .btn-whatsapp.is-pressed {
+      transform: scale(0.97);
     }
 
     /* ================= HERO SECTION ================= */
@@ -697,7 +706,7 @@
       line-height: 1.6;
     }
 
-    /* ================= CATEGORY & PROMISE CARDS ================= */
+    /* ================= CATEGORY & PROMISE CARDS (SMOOTH, NO FLICKER, NO GLOW) ================= */
     .cards-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -710,13 +719,12 @@
       padding: 24px 22px;
       border: 1px solid rgba(231, 217, 183, 0.55);
       box-shadow: var(--shadow-soft);
-      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
-      cursor: pointer;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
     }
 
     .feature-card:hover,
     .feature-card.is-active {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
       border-color: rgba(199, 154, 43, 0.45);
     }
@@ -725,20 +733,19 @@
       width: 52px;
       height: 52px;
       border-radius: 14px;
-      background: #F4EFE2;
+      background-color: #F4EFE2;
       color: #9A7418;
       display: grid;
       place-items: center;
       margin-bottom: 18px;
-      transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: background-color 0.24s ease, color 0.24s ease, transform 0.24s ease;
     }
 
     .feature-card:hover .icon-tile,
     .feature-card.is-active .icon-tile {
-      background: linear-gradient(135deg, #DDB347 0%, #B8881E 100%);
+      background-color: #C79A2B;
       color: #FFFFFF;
-      transform: rotate(-8deg) scale(1.06);
-      box-shadow: 0 10px 20px -4px rgba(184, 136, 30, 0.42);
+      transform: rotate(-5deg);
     }
 
     .feature-card h3 {
@@ -759,7 +766,7 @@
       text-align: center;
     }
 
-    /* ================= FEATURED PICKS ================= */
+    /* ================= FEATURED PICKS (HOVER EFFECT, NO GLOW) ================= */
     .pick-card {
       background: #FFFFFF;
       border-radius: 24px;
@@ -768,12 +775,14 @@
       box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
     }
 
-    .pick-card:hover {
-      transform: translateY(-4px);
+    .pick-card:hover,
+    .pick-card.is-active {
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
+      border-color: rgba(199, 154, 43, 0.45);
     }
 
     .pick-media {
@@ -787,11 +796,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.45s ease;
+      transition: transform 0.35s ease;
     }
 
     .pick-card:hover .pick-media img {
-      transform: scale(1.04);
+      transform: scale(1.03);
     }
 
     .status-badge {
@@ -875,7 +884,6 @@
       align-items: center;
     }
 
-    /* Ring circle behind the setup image, no border on the image itself */
     .story-image::before {
       content: "";
       position: absolute;
@@ -959,7 +967,7 @@
       font-weight: 500;
     }
 
-    /* ================= EXPERT SERVICES ================= */
+    /* ================= EXPERT SERVICES (HOVER EFFECT, NO GLOW) ================= */
     .service-card {
       background: #FFFFFF;
       border-radius: 24px;
@@ -968,6 +976,14 @@
       box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+    }
+
+    .service-card:hover,
+    .service-card.is-active {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(199, 154, 43, 0.45);
     }
 
     .service-media {
@@ -1043,7 +1059,7 @@
       font-size: 13.5px;
       font-weight: 700;
       color: #374151;
-      transition: all 0.22s ease;
+      transition: all 0.2s ease;
     }
 
     .filter-chip:hover {
@@ -1065,6 +1081,14 @@
       box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+    }
+
+    .catalog-card:hover,
+    .catalog-card.is-active {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(199, 154, 43, 0.45);
     }
 
     .catalog-card.hidden {
@@ -1128,12 +1152,17 @@
       border: none;
       box-shadow: none;
       border-radius: 0;
-      transition: color 0.2s ease, gap 0.22s ease;
+      transition: color 0.2s ease, gap 0.22s ease, transform 0.18s ease;
     }
 
     .view-more-arrow:hover {
       color: var(--ink-dark);
       gap: 13px;
+    }
+
+    .view-more-arrow:active,
+    .view-more-arrow.is-pressed {
+      transform: scale(0.96);
     }
 
     .view-more-arrow .arrow-glyph {
@@ -1143,7 +1172,7 @@
       transition: transform 0.22s ease;
     }
 
-    /* ================= TESTIMONIALS ================= */
+    /* ================= TESTIMONIALS (HOVER EFFECT, NO GLOW) ================= */
     .review-card {
       background: #FFFFFF;
       border-radius: 22px;
@@ -1151,6 +1180,14 @@
       border: 1px solid rgba(231, 217, 183, 0.55);
       box-shadow: var(--shadow-soft);
       position: relative;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+    }
+
+    .review-card:hover,
+    .review-card.is-active {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(199, 154, 43, 0.45);
     }
 
     .review-top {
@@ -1219,6 +1256,14 @@
       box-shadow: var(--shadow-soft);
       max-width: 540px;
       margin: 0 auto;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+    }
+
+    .store-card:hover,
+    .store-card.is-active {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(199, 154, 43, 0.45);
     }
 
     .store-meta {
@@ -1313,13 +1358,18 @@
       color: #14171F;
       font-weight: 700;
       font-size: 13px;
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
     }
 
     .social-btn:hover {
       background: var(--gold-main);
       color: #FFFFFF;
       border-color: var(--gold-main);
+    }
+
+    .social-btn:active,
+    .social-btn.is-pressed {
+      transform: scale(0.95);
     }
 
     .footer h4 {
@@ -1368,16 +1418,17 @@
       display: grid;
       place-items: center;
       box-shadow: 0 10px 22px rgba(184, 136, 30, 0.42);
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: all 0.25s ease;
+      opacity: 0.92;
+      transition: transform 0.2s ease;
     }
 
-    .fab-top.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+    .fab-top:hover {
+      transform: translateY(-2px);
+    }
+
+    .fab-top:active,
+    .fab-top.is-pressed {
+      transform: scale(0.95);
     }
 
     .fab-wa {
@@ -1389,11 +1440,16 @@
       display: grid;
       place-items: center;
       box-shadow: 0 12px 26px rgba(37, 211, 102, 0.46);
-      transition: transform 0.22s ease;
+      transition: transform 0.2s ease;
     }
 
     .fab-wa:hover {
-      transform: scale(1.07);
+      transform: scale(1.05);
+    }
+
+    .fab-wa:active,
+    .fab-wa.is-pressed {
+      transform: scale(0.95);
     }
 
     /* ================= QUOTE MODAL ================= */
@@ -1408,10 +1464,6 @@
       padding: 20px;
     }
 
-    .modal-overlay.open {
-      display: grid;
-    }
-
     .modal-box {
       background: #FFFFFF;
       width: 100%;
@@ -1420,12 +1472,6 @@
       padding: 26px 22px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
       position: relative;
-      animation: popIn 0.25s ease;
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.94); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
     }
 
     .modal-close {
@@ -1465,13 +1511,6 @@
       font-size: 14px;
       background: #FAF8F3;
       outline: none;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--gold-main);
-      background: #FFFFFF;
     }
 
     /* ================= DESKTOP RESPONSIVE ================= */
@@ -1604,9 +1643,9 @@
     </div>
   </header>
 
-  <!-- ================= SLIDE-OUT DRAWER ================= -->
+  <!-- ================= SLIDE-OUT DRAWER (DEMO: PRESSABLE ONLY, DOES NOT OPEN) ================= -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <aside class="drawer-panel" id="drawerPanel" aria-label="Mobile Navigation">
+  <aside class="drawer-panel" id="drawerPanel" aria-label="Mobile Navigation" aria-hidden="true">
     <div>
       <div class="drawer-header">
         <a href="#home" class="brand-logo drawer-nav-item">
@@ -2165,7 +2204,7 @@
               <li><span class="check-icon">&#10003;</span> ASUS TUF Motherboard &bull; 1TB NVMe SSD</li>
               <li><span class="check-icon">&#10003;</span> Airflow ARGB Cabinet &bull; 1440p ready</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Shubh Apex RTX 4070 Gaming Rig">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="Shubh Apex RTX 4070 Gaming Rig">Enquire Now</button>
           </div>
         </article>
 
@@ -2182,7 +2221,7 @@
               <li><span class="check-icon">&#10003;</span> PCIe 5.0 M.2 &amp; Wi-Fi 6E</li>
               <li><span class="check-icon">&#10003;</span> Heavy VRM heatsink armor</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="ASUS TUF Gaming B650 Motherboard">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="ASUS TUF Gaming B650 Motherboard">Enquire Now</button>
           </div>
         </article>
 
@@ -2199,7 +2238,7 @@
               <li><span class="check-icon">&#10003;</span> Braided cable &amp; anti-ghosting</li>
               <li><span class="check-icon">&#10003;</span> Daily typing &amp; gaming value</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Zebronics Mechanical Keyboard">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="Zebronics Mechanical Keyboard">Enquire Now</button>
           </div>
         </article>
 
@@ -2224,7 +2263,7 @@
               <li><span class="check-icon">&#10003;</span> Silent clicks &amp; ergonomic grip</li>
               <li><span class="check-icon">&#10003;</span> Clean desk &amp; travel ready</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Portronics Wireless Mouse & Keyboard">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="Portronics Wireless Mouse & Keyboard">Enquire Now</button>
           </div>
         </article>
 
@@ -2241,7 +2280,7 @@
               <li><span class="check-icon">&#10003;</span> Adaptive-Sync &amp; vibrant colors</li>
               <li><span class="check-icon">&#10003;</span> Gaming, editing &amp; dual-screen work</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="27-inch 180Hz Gaming Monitor">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="27-inch 180Hz Gaming Monitor">Enquire Now</button>
           </div>
         </article>
 
@@ -2258,7 +2297,7 @@
               <li><span class="check-icon">&#10003;</span> Supports 360mm radiator &amp; long GPUs</li>
               <li><span class="check-icon">&#10003;</span> Clean PSU shroud &amp; cable routing</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Mesh Airflow ARGB PC Cabinet">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="Mesh Airflow ARGB PC Cabinet">Enquire Now</button>
           </div>
         </article>
 
@@ -2275,7 +2314,7 @@
               <li><span class="check-icon">&#10003;</span> XMP 3.0 &amp; AMD EXPO ready</li>
               <li><span class="check-icon">&#10003;</span> Smooth multitasking &amp; rendering</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="32GB DDR5 6000MHz RAM Kit">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="32GB DDR5 6000MHz RAM Kit">Enquire Now</button>
           </div>
         </article>
 
@@ -2292,7 +2331,7 @@
               <li><span class="check-icon">&#10003;</span> M.2 2280 form factor &bull; heatsink option</li>
               <li><span class="check-icon">&#10003;</span> Official brand warranty</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="1TB / 2TB PCIe Gen4 NVMe SSD">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="1TB / 2TB PCIe Gen4 NVMe SSD">Enquire Now</button>
           </div>
         </article>
 
@@ -2309,7 +2348,7 @@
               <li><span class="check-icon">&#10003;</span> Coding, college &amp; portable gaming</li>
               <li><span class="check-icon">&#10003;</span> Sealed box with full warranty</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="ASUS / HP / Lenovo Gaming Laptop">Enquire Now &#9993;</button>
+            <button class="btn-gold enquire-item" data-item="ASUS / HP / Lenovo Gaming Laptop">Enquire Now</button>
           </div>
         </article>
       </div>
@@ -2394,7 +2433,7 @@
       </div>
 
       <div class="store-card" style="margin-bottom: 44px;">
-        <div class="icon-tile" style="margin-bottom: 14px; background: linear-gradient(135deg, #DFB649, #B8881E); color: #FFF;">
+        <div class="icon-tile" style="margin-bottom: 14px; background-color: #C79A2B; color: #FFF;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
         <h3 style="font-size:20px; font-weight:800;">PC by Shubh — Main Studio</h3>
@@ -2412,7 +2451,7 @@
             Mon–Sat: 10:30 AM – 8:30 PM
           </li>
         </ul>
-        <a href="https://maps.google.com/?q=Main+Road+Ranchi" target="_blank" rel="noopener" class="know-more">
+        <a href="#contact" class="know-more">
           Get directions <span>&rarr;</span>
         </a>
       </div>
@@ -2427,7 +2466,7 @@
             Get a Free Quote
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
-          <a href="https://wa.me/919876543210?text=Hi%20Shubh!%20I%20want%20to%20build%20a%20custom%20PC.%20Can%20you%20help%20me%20with%20a%20quote?" target="_blank" rel="noopener" class="btn-whatsapp">
+          <a href="#contact" class="btn-whatsapp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
             WhatsApp Us
           </a>
@@ -2452,7 +2491,7 @@
             <a href="#contact" class="social-btn" aria-label="Instagram">IG</a>
             <a href="#contact" class="social-btn" aria-label="YouTube">YT</a>
             <a href="#contact" class="social-btn" aria-label="Facebook">FB</a>
-            <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp">WA</a>
+            <a href="#contact" class="social-btn" aria-label="WhatsApp">WA</a>
           </div>
         </div>
 
@@ -2499,25 +2538,25 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
     </button>
 
-    <a href="https://wa.me/919876543210?text=Hi%20PC%20by%20Shubh!%20I%20have%20an%20enquiry." target="_blank" rel="noopener" class="fab-wa" aria-label="Chat on WhatsApp">
+    <a href="#contact" class="fab-wa" aria-label="Chat on WhatsApp">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     </a>
   </div>
 
-  <!-- ================= CUSTOM BUILD QUOTE MODAL ================= -->
-  <div class="modal-overlay" id="quoteModal">
+  <!-- ================= CUSTOM BUILD QUOTE MODAL (DEMO: PRESSABLE ONLY, DOES NOT OPEN) ================= -->
+  <div class="modal-overlay" id="quoteModal" aria-hidden="true">
     <div class="modal-box">
       <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
       <span class="eyebrow-pill" style="margin-bottom:10px;">PC BY SHUBH</span>
       <h3 style="font-size:21px; font-weight:800; margin-bottom:6px;">Get a Free PC Build Quote</h3>
       <p style="font-size:13.5px; color:var(--ink-muted); margin-bottom:16px;">
-        Fill in your preferences and send directly to Shubh on WhatsApp.
+        Demo preview mode.
       </p>
 
       <form id="quoteForm">
         <div class="form-group">
           <label for="qName">Your Name</label>
-          <input type="text" id="qName" placeholder="e.g. Rohan Kumar" required>
+          <input type="text" id="qName" placeholder="e.g. Rohan Kumar">
         </div>
 
         <div class="form-group">
@@ -2547,7 +2586,7 @@
         </div>
 
         <button type="submit" class="btn-gold" style="width:100%;">
-          Send Quote Request on WhatsApp &rarr;
+          Send Quote Request
         </button>
       </form>
     </div>
@@ -2555,31 +2594,7 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    const openDrawerBtn = document.getElementById('openDrawer');
-    const closeDrawerBtn = document.getElementById('closeDrawer');
-    const drawerPanel = document.getElementById('drawerPanel');
-    const drawerBackdrop = document.getElementById('drawerBackdrop');
-    const drawerNavItems = document.querySelectorAll('.drawer-nav-item');
-
-    function openDrawer() {
-      drawerPanel.classList.add('open');
-      drawerBackdrop.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeDrawer() {
-      drawerPanel.classList.remove('open');
-      drawerBackdrop.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    openDrawerBtn.addEventListener('click', openDrawer);
-    closeDrawerBtn.addEventListener('click', closeDrawer);
-    drawerBackdrop.addEventListener('click', closeDrawer);
-    drawerNavItems.forEach(item => item.addEventListener('click', closeDrawer));
-
     const navbar = document.getElementById('navbar');
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 40) {
@@ -2587,64 +2602,45 @@
       } else {
         navbar.classList.remove('scrolled');
       }
-
-      if (window.scrollY > 360) {
-        scrollTopBtn.classList.add('visible');
-      } else {
-        scrollTopBtn.classList.remove('visible');
-      }
     }, { passive: true });
 
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.querySelectorAll('.tilt-card').forEach(card => {
+    // Card press/hover state across all card types without glow or flicker
+    document.querySelectorAll('.feature-card, .pick-card, .service-card, .catalog-card, .review-card, .store-card').forEach(card => {
       card.addEventListener('touchstart', () => {
-        document.querySelectorAll('.tilt-card').forEach(c => c.classList.remove('is-active'));
         card.classList.add('is-active');
+      }, { passive: true });
+
+      card.addEventListener('touchend', () => {
+        setTimeout(() => card.classList.remove('is-active'), 220);
       }, { passive: true });
     });
 
-    const filterChips = document.querySelectorAll('.filter-chip');
+    // Reading-revealed arrow prompt after 3rd card (shows first 3 cards initially)
     const catalogCards = Array.from(document.querySelectorAll('.catalog-card'));
     const viewMoreArrowWrap = document.getElementById('viewMoreArrowWrap');
     const toggleMoreBtn = document.getElementById('toggleMoreProducts');
     const viewMoreLabel = document.getElementById('viewMoreLabel');
     const viewMoreArrowGlyph = document.getElementById('viewMoreArrowGlyph');
 
-    let currentFilter = 'all';
     let expandedAllView = false;
 
     function updateCatalogView() {
-      const matchingCards = catalogCards.filter(card =>
-        currentFilter === 'all' || card.dataset.category === currentFilter
-      );
-
-      catalogCards.forEach(card => card.classList.add('hidden'));
-
-      const shouldShowArrow = currentFilter === 'all' && matchingCards.length > 3;
-      const visibleLimit = (currentFilter === 'all' && !expandedAllView) ? 3 : matchingCards.length;
-
-      matchingCards.forEach((card, index) => {
-        if (index < visibleLimit) {
+      catalogCards.forEach((card, index) => {
+        if (!expandedAllView && index >= 3) {
+          card.classList.add('hidden');
+        } else {
           card.classList.remove('hidden');
         }
       });
 
-      if (shouldShowArrow) {
-        viewMoreArrowWrap.classList.remove('is-hidden');
-        if (expandedAllView) {
-          viewMoreLabel.textContent = 'Show Less';
-          viewMoreArrowGlyph.innerHTML = '&uarr;';
-          toggleMoreBtn.setAttribute('aria-expanded', 'true');
-        } else {
-          viewMoreLabel.textContent = 'View More';
-          viewMoreArrowGlyph.innerHTML = '&rarr;';
-          toggleMoreBtn.setAttribute('aria-expanded', 'false');
-        }
+      if (expandedAllView) {
+        viewMoreLabel.textContent = 'Show Less';
+        viewMoreArrowGlyph.innerHTML = '&uarr;';
+        toggleMoreBtn.setAttribute('aria-expanded', 'true');
       } else {
-        viewMoreArrowWrap.classList.add('is-hidden');
+        viewMoreLabel.textContent = 'View More';
+        viewMoreArrowGlyph.innerHTML = '&rarr;';
+        toggleMoreBtn.setAttribute('aria-expanded', 'false');
       }
     }
 
@@ -2664,76 +2660,35 @@
 
     readingObserver.observe(viewMoreArrowWrap);
 
-    toggleMoreBtn.addEventListener('click', () => {
+    toggleMoreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       expandedAllView = !expandedAllView;
       updateCatalogView();
     });
 
-    function applyProductFilter(filterValue) {
-      currentFilter = filterValue;
-      filterChips.forEach(chip => {
-        chip.classList.toggle('active', chip.dataset.filter === filterValue);
-      });
-      updateCatalogView();
-    }
-
-    filterChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        applyProductFilter(chip.dataset.filter);
-      });
-    });
-
-    document.querySelectorAll('[data-filter-target]').forEach(catCard => {
-      catCard.addEventListener('click', () => {
-        const targetFilter = catCard.dataset.filterTarget;
-        applyProductFilter(targetFilter);
-        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
     updateCatalogView();
 
-    const quoteModal = document.getElementById('quoteModal');
-    const closeModalBtn = document.getElementById('closeModal');
-    const qNotesField = document.getElementById('qNotes');
+    // Demo mode: buttons, menu, filter chips, and links feel pressed when clicked, but do not navigate/scroll/open panels
+    document.querySelectorAll('button, a').forEach(el => {
+      el.addEventListener('pointerdown', () => {
+        el.classList.add('is-pressed');
+      }, { passive: true });
 
-    function openQuoteModal(prefillText = '') {
-      closeDrawer();
-      if (prefillText) {
-        qNotesField.value = `Interested in: ${prefillText}`;
-      }
-      quoteModal.classList.add('open');
-    }
-
-    function closeQuoteModal() {
-      quoteModal.classList.remove('open');
-    }
-
-    document.querySelectorAll('.open-quote-modal').forEach(btn => {
-      btn.addEventListener('click', () => openQuoteModal());
-    });
-
-    document.querySelectorAll('.enquire-item').forEach(btn => {
-      btn.addEventListener('click', () => {
-        openQuoteModal(btn.dataset.item || '');
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(evt => {
+        el.addEventListener(evt, () => {
+          setTimeout(() => el.classList.remove('is-pressed'), 160);
+        }, { passive: true });
       });
-    });
 
-    closeModalBtn.addEventListener('click', closeQuoteModal);
-    quoteModal.addEventListener('click', (e) => {
-      if (e.target === quoteModal) closeQuoteModal();
+      if (el.id !== 'toggleMoreProducts') {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+        });
+      }
     });
 
     document.getElementById('quoteForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('qName').value.trim();
-      const use = document.getElementById('qUse').value;
-      const budget = document.getElementById('qBudget').value;
-      const notes = document.getElementById('qNotes').value.trim();
-
-      const message = `Hi PC by Shubh!%0A*Name:* ${encodeURIComponent(name)}%0A*Requirement:* ${encodeURIComponent(use)}%0A*Budget:* ${encodeURIComponent(budget)}${notes ? `%0A*Notes:* ${encodeURIComponent(notes)}` : ''}`;
-      window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
-      closeQuoteModal();
     });
   </script>
 </body>
