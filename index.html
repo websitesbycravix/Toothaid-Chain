@@ -1,1202 +1,2510 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApexCare - Dental Centre</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Flatpickr CSS & JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PC by Shubh — Custom Gaming PCs, Laptops & IT Hardware</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FAF8F3;
+      --bg-cream-alt: #F6F2E8;
+      --card-white: #FFFFFF;
+      --ink-dark: #14171F;
+      --ink-muted: #5F6673;
+      --gold-light: #DFB649;
+      --gold-main: #C79A2B;
+      --gold-dark: #A67C19;
+      --pill-bg: #F3ECDA;
+      --pill-border: #E7D9B7;
+      --dark-strip: #1E242B;
+      --whatsapp: #25D366;
+      --shadow-soft: 0 12px 32px -8px rgba(20, 23, 31, 0.07), 0 2px 6px -1px rgba(20, 23, 31, 0.04);
+      --shadow-hover: 0 20px 40px -10px rgba(199, 154, 43, 0.18), 0 4px 12px -2px rgba(20, 23, 31, 0.06);
+    }
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        navy: {
-                            900: '#111836',
-                            800: '#1a2347',
-                        },
-                        brand: {
-                            blue: '#e0e7ff',
-                            dark: '#0f172a'
-                        }
-                    },
-                    animation: {
-                        'spin-slow': 'spin 12s linear infinite',
-                    }
-                }
-            }
-        }
-    </script>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    <style>
-        html { 
-            scroll-behavior: smooth; 
-            background-color: #f8fafc; 
-        }
-        body { 
-            background-color: #f8fafc; 
-            color: #0f172a; 
-            overflow-x: hidden; 
-        }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--ink-dark);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-        .custom-input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #cbd5e1;
-            border-radius: 0;
-            padding: 12px 0;
-            width: 100%;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .custom-input:focus { 
-            border-bottom-color: #3b82f6; 
-            box-shadow: 0 1px 0 0 #3b82f6; 
-        }
-        .custom-input.error {
-            border-bottom-color: #fb7185;
-            box-shadow: 0 1px 0 0 #fb7185;
-        }
-        .custom-input.error::placeholder {
-            color: #fda4af;
-        }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
 
-        /* Form Shake and Smooth Errors */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
-        }
-        .shake {
-            animation: shake 0.3s ease-in-out;
-        }
-        .error-msg {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .error-msg.show {
-            max-height: 24px;
-            opacity: 1;
-            margin-top: 4px;
-        }
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-        /* iOS Fluid Box Expansion */
-        .expand-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .expand-wrapper.open {
-            grid-template-rows: 1fr;
-        }
-        .expand-inner {
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .expand-wrapper.open .expand-inner {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* ================= HEADER ================= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(250, 248, 243, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(231, 217, 183, 0.55);
+      transition: box-shadow 0.25s ease;
+    }
 
-        .hero-gradient { background: linear-gradient(180deg, #ffffff 0%, #c7d2fe 100%); }
-        .booking-gradient { background: linear-gradient(180deg, #ffffff 0%, #e0e7ff 100%); }
-        .footer-bg { background-color: #0b112c; }
+    .navbar.scrolled {
+      box-shadow: 0 6px 24px rgba(20, 23, 31, 0.06);
+    }
 
-        .slider-track {
-            display: flex;
-            will-change: transform;
-            user-select: none; 
-            -webkit-user-select: none;
-            touch-action: pan-y;
-        }
-        .slider-item {
-            flex: 0 0 100%;
-            width: 100%;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-        .slider-item img {
-            pointer-events: none;
-        }
-        .grabbing { cursor: grabbing !important; }
-        .grab { cursor: grab; }
-        
-        .doctor-img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            object-position: top;
-        }
+    .nav-inner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        /* Custom Date/Time input styling to look clickable */
-        .select-trigger {
-            cursor: pointer;
-            caret-color: transparent;
-        }
-    </style>
+    .brand-logo {
+      display: inline-flex;
+      flex-direction: column;
+      background: #FFFFFF;
+      border: 1.5px solid #14171F;
+      border-radius: 6px;
+      padding: 5px 10px 4px;
+      box-shadow: 2px 2px 0px #C79A2B;
+      line-height: 1;
+    }
+
+    .brand-logo .top {
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      color: #14171F;
+    }
+
+    .brand-logo .top span {
+      color: var(--gold-main);
+    }
+
+    .brand-logo .sub {
+      font-size: 7.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      margin-top: 3px;
+      text-align: center;
+    }
+
+    .desktop-nav {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink-dark);
+    }
+
+    .desktop-nav a:hover {
+      color: var(--gold-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hamburger-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #FFFFFF;
+      border: 1px solid rgba(20, 23, 31, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .hamburger-btn:active {
+      transform: scale(0.94);
+    }
+
+    .hamburger-btn span {
+      width: 20px;
+      height: 2px;
+      background: #14171F;
+      border-radius: 2px;
+      display: block;
+    }
+
+    /* ================= SLIDE-OUT DRAWER ================= */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 18, 24, 0.52);
+      backdrop-filter: blur(3px);
+      z-index: 120;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(84vw, 350px);
+      background: #FFFFFF;
+      z-index: 130;
+      transform: translateX(102%);
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 22px 26px;
+      box-shadow: -16px 0 40px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+    }
+
+    .drawer-panel.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #F0ECE1;
+    }
+
+    .drawer-close {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #F4F4F5;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      color: #14171F;
+      transition: background 0.2s;
+    }
+
+    .drawer-close:hover {
+      background: #E9DFC3;
+    }
+
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 15.5px;
+      color: #272B33;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-link .d-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #F7F4EC;
+      color: var(--gold-main);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .drawer-link.active,
+    .drawer-link:hover {
+      background: #FBF6E9;
+      color: #14171F;
+    }
+
+    .drawer-link.active .d-icon {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-main));
+      color: #FFFFFF;
+    }
+
+    .drawer-footer {
+      border-top: 1px solid #F0ECE1;
+      padding-top: 18px;
+    }
+
+    .drawer-info {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--ink-muted);
+    }
+
+    .drawer-info div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ================= BUTTONS & PILLS ================= */
+    .eyebrow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      color: #8E6A14;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      padding: 7px 15px;
+      border-radius: 999px;
+    }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: linear-gradient(135deg, #D9AE43 0%, #B8881E 100%);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px -6px rgba(184, 136, 30, 0.48);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -6px rgba(184, 136, 30, 0.58);
+      filter: brightness(1.03);
+    }
+
+    .btn-gold:active {
+      transform: scale(0.97);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: #FFFFFF;
+      color: #14171F;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 26px;
+      border-radius: 999px;
+      border: 1.5px solid #E5DFD0;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      transition: all 0.22s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold-main);
+      background: #FFFDF7;
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: #25D366;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      box-shadow: 0 10px 24px -6px rgba(37, 211, 102, 0.45);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -6px rgba(37, 211, 102, 0.55);
+    }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      padding: 22px 0 36px;
+      background: radial-gradient(circle at 50% 0%, #FFF9E6 0%, var(--bg-cream) 65%);
+      text-align: center;
+    }
+
+    .hero-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    /* Floating 3-Card Collage (Exact Video Replica) */
+    .hero-collage {
+      position: relative;
+      width: 100%;
+      max-width: 390px;
+      height: 315px;
+      margin: 0 auto;
+    }
+
+    .collage-main {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72%;
+      height: 285px;
+      border-radius: 26px;
+      overflow: hidden;
+      background: #0B1220;
+      box-shadow: 0 24px 48px -12px rgba(11, 18, 32, 0.35);
+      border: 3px solid #FFFFFF;
+      z-index: 1;
+    }
+
+    .collage-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .collage-laptop {
+      position: absolute;
+      top: 18px;
+      right: 0;
+      width: 47%;
+      height: 122px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #EFECE6;
+      border: 3.5px solid #FFFFFF;
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.18);
+      z-index: 2;
+      animation: floatSlow 5s ease-in-out infinite;
+    }
+
+    .collage-laptop img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .collage-yellow {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 46%;
+      height: 152px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #FCE34D;
+      border: 3.5px solid #FFFFFF;
+      box-shadow: 0 18px 34px -8px rgba(199, 154, 43, 0.28);
+      z-index: 3;
+      animation: floatSlow 5s ease-in-out infinite reverse;
+    }
+
+    .collage-yellow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: multiply;
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: clamp(2.15rem, 6.2vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin: 16px 0 14px;
+      color: var(--ink-dark);
+    }
+
+    .hero-title .gold-text {
+      background: linear-gradient(135deg, #D5A83A 0%, #B48317 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 15.5px;
+      color: var(--ink-muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-ctas .btn-gold,
+    .hero-ctas .btn-outline {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .scroll-indicator {
+      margin-top: 28px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #8A8F99;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .scroll-mouse {
+      width: 24px;
+      height: 38px;
+      border: 1.8px solid #D5CEBE;
+      border-radius: 999px;
+      display: flex;
+      justify-content: center;
+      padding-top: 7px;
+      background: #FFFFFF;
+    }
+
+    .scroll-dot {
+      width: 4px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--gold-main);
+      animation: scrollBounce 1.8s infinite;
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(10px); opacity: 0.35; }
+    }
+
+    /* ================= BRAND MARQUEE & TRUST STRIP ================= */
+    .brand-marquee {
+      background: #FFFFFF;
+      border-top: 1px solid #EFECE2;
+      border-bottom: 1px solid #EFECE2;
+      padding: 18px 0;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 48px;
+      animation: marqueeScroll 22s linear infinite;
+      align-items: center;
+    }
+
+    .brand-item {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      color: #9CA3AF;
+      text-transform: uppercase;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .trust-strip {
+      background: var(--dark-strip);
+      color: #F9FAFB;
+      padding: 22px 0;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #E5E7EB;
+    }
+
+    .trust-item strong {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .trust-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(217, 174, 67, 0.14);
+      color: var(--gold-light);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    /* ================= SECTION HEADERS ================= */
+    .section {
+      padding: 64px 0;
+    }
+
+    .section-alt {
+      background: var(--bg-cream-alt);
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4.8vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      margin: 14px 0 12px;
+      color: var(--ink-dark);
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    /* ================= CATEGORY & PROMISE CARDS (WITH VIDEO TILT) ================= */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--card-white);
+      border-radius: 22px;
+      padding: 24px 22px;
+      border: 1px solid rgba(231, 217, 183, 0.55);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+      cursor: pointer;
+    }
+
+    .feature-card:hover,
+    .feature-card.is-active {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(199, 154, 43, 0.45);
+    }
+
+    .icon-tile {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #F4EFE2;
+      color: #9A7418;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Exact gold rotated icon tile animation from the video */
+    .feature-card:hover .icon-tile,
+    .feature-card.is-active .icon-tile {
+      background: linear-gradient(135deg, #DDB347 0%, #B8881E 100%);
+      color: #FFFFFF;
+      transform: rotate(-8deg) scale(1.06);
+      box-shadow: 0 10px 20px -4px rgba(184, 136, 30, 0.42);
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink-dark);
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+
+    .section-cta {
+      margin-top: 32px;
+      text-align: center;
+    }
+
+    /* ================= FEATURED PICKS ================= */
+    .pick-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(231, 217, 183, 0.55);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .pick-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .pick-media {
+      position: relative;
+      height: 225px;
+      background: #F2EFE9;
+      overflow: hidden;
+    }
+
+    .pick-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .pick-card:hover .pick-media img {
+      transform: scale(1.04);
+    }
+
+    .status-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: linear-gradient(135deg, #DFB649, #B9891E);
+      color: #FFFFFF;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 5px 12px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    }
+
+    .pick-body {
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pick-cat {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-main);
+      margin-bottom: 6px;
+    }
+
+    .pick-title {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--ink-dark);
+    }
+
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .check-icon {
+      color: var(--gold-main);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .pick-body .btn-outline {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    /* ================= WHY US & DARK STATS BANNER ================= */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .story-image {
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 22px 44px -12px rgba(20, 23, 31, 0.22);
+      border: 4px solid #FFFFFF;
+    }
+
+    .story-image img {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .story-checks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin: 22px 0 26px;
+    }
+
+    .story-checks li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #2B303A;
+    }
+
+    .round-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #F4ECD6;
+      color: var(--gold-main);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .stats-banner {
+      background: linear-gradient(135deg, #1E2229 0%, #2C271E 100%);
+      color: #FFFFFF;
+      padding: 44px 20px;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 26px;
+    }
+
+    .stat-num {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #D1D5DB;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ================= EXPERT SERVICES ================= */
+    .service-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(231, 217, 183, 0.55);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-media {
+      position: relative;
+      height: 205px;
+    }
+
+    .service-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-float-icon {
+      position: absolute;
+      bottom: -18px;
+      left: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #DFB649, #B8881E);
+      color: #FFFFFF;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 18px rgba(184, 136, 30, 0.4);
+      border: 2.5px solid #FFFFFF;
+    }
+
+    .service-body {
+      padding: 28px 22px 22px;
+    }
+
+    .service-body h3 {
+      font-size: 18.5px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .service-body p {
+      font-size: 14px;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+
+    .know-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #9A7418;
+      transition: gap 0.2s ease;
+    }
+
+    .know-more:hover {
+      gap: 10px;
+    }
+
+    /* ================= FILTERABLE PRODUCTS CATALOG ================= */
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filter-chip {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1px solid #E5DEC9;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #374151;
+      transition: all 0.22s ease;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--gold-main);
+    }
+
+    .filter-chip.active {
+      background: linear-gradient(135deg, #D9AE43, #B8881E);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 8px 18px -4px rgba(184, 136, 30, 0.45);
+    }
+
+    .catalog-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(231, 217, 183, 0.55);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .catalog-card.hidden {
+      display: none;
+    }
+
+    .catalog-img {
+      height: 220px;
+      background: #11161F;
+      overflow: hidden;
+    }
+
+    .catalog-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .catalog-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .catalog-body .btn-gold {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    /* ================= TESTIMONIALS ================= */
+    .review-card {
+      background: #FFFFFF;
+      border-radius: 22px;
+      padding: 24px 22px;
+      border: 1px solid rgba(231, 217, 183, 0.55);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .stars {
+      color: #E2A929;
+      letter-spacing: 2px;
+      font-size: 16px;
+    }
+
+    .quote-mark {
+      font-size: 34px;
+      line-height: 1;
+      color: #EFE9D8;
+      font-weight: 800;
+    }
+
+    .review-text {
+      font-size: 14.5px;
+      color: #374151;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #F4ECD6;
+      color: #8E6A14;
+      font-weight: 800;
+      font-size: 14px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .reviewer-name {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--ink-dark);
+    }
+
+    .reviewer-city {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+    }
+
+    /* ================= VISIT US & DREAM SETUP CTA ================= */
+    .store-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 26px 22px;
+      border: 1px solid rgba(231, 217, 183, 0.65);
+      box-shadow: var(--shadow-soft);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .store-meta {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin: 14px 0 18px;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .store-meta li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cta-box {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 36px 24px;
+      text-align: center;
+      border: 1px solid rgba(231, 217, 183, 0.7);
+      box-shadow: var(--shadow-soft);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.65rem, 4.5vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .cta-box h2 span {
+      color: var(--gold-main);
+    }
+
+    .cta-box p {
+      color: var(--ink-muted);
+      font-size: 15px;
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cta-buttons .btn-gold,
+    .cta-buttons .btn-whatsapp {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      background: #F4EFE4;
+      border-top: 1px solid #E6DEC8;
+      padding: 48px 0 28px;
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #E3DAC3;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid #E4DCC6;
+      display: grid;
+      place-items: center;
+      color: #14171F;
+      font-weight: 700;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--gold-main);
+      color: #FFFFFF;
+      border-color: var(--gold-main);
+    }
+
+    .footer h4 {
+      color: var(--ink-dark);
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-main);
+    }
+
+    .footer-bottom {
+      padding-top: 22px;
+      text-align: center;
+      font-size: 13px;
+      color: #7A808C;
+    }
+
+    /* ================= FLOATING ACTION BUTTONS ================= */
+    .floating-stack {
+      position: fixed;
+      right: 18px;
+      bottom: 20px;
+      z-index: 85;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .fab-top {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #DFB649, #B8881E);
+      color: #FFFFFF;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 22px rgba(184, 136, 30, 0.42);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: all 0.25s ease;
+    }
+
+    .fab-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .fab-wa {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #FFFFFF;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 26px rgba(37, 211, 102, 0.46);
+      transition: transform 0.22s ease;
+    }
+
+    .fab-wa:hover {
+      transform: scale(1.07);
+    }
+
+    /* ================= QUOTE MODAL ================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 18, 24, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 150;
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: grid;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 24px;
+      padding: 26px 22px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      position: relative;
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.94); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #F3F4F6;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1.5px solid #E5DEC9;
+      font-family: inherit;
+      font-size: 14px;
+      background: #FAF8F3;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold-main);
+      background: #FFFFFF;
+    }
+
+    /* ================= DESKTOP RESPONSIVE ================= */
+    @media (min-width: 768px) {
+      .desktop-nav {
+        display: flex;
+      }
+
+      .hero {
+        padding: 46px 0 54px;
+      }
+
+      .hero-grid {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+        gap: 44px;
+      }
+
+      .hero-copy {
+        order: 1;
+        margin: 0;
+      }
+
+      .hero-collage {
+        order: 2;
+        max-width: 440px;
+        height: 360px;
+        margin: 0;
+      }
+
+      .collage-main {
+        height: 325px;
+      }
+
+      .hero-ctas {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      .hero-ctas .btn-gold,
+      .hero-ctas .btn-outline {
+        width: auto;
+      }
+
+      .trust-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cards-grid.three-col {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .story-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 44px;
+      }
+
+      .story-image img {
+        height: 380px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr 1.1fr;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .cards-grid.four-col {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Navigation -->
-    <nav class="flex items-center justify-between p-6 bg-white sticky top-0 z-[60] shadow-sm reveal active relative">
-        <div class="flex items-center gap-2">
-            <i class="fa-solid fa-asterisk text-blue-500 text-2xl"></i>
-            <span class="text-xl font-bold text-navy-900 tracking-tight">ApexCare</span>
-        </div>
-        <button id="menu-btn" class="w-10 h-10 bg-navy-900 text-white rounded flex items-center justify-center hover:bg-navy-800 transition relative z-[60]">
-            <i class="fa-solid fa-bars"></i>
+  <!-- ================= STICKY HEADER ================= -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="brand-logo" aria-label="PC by Shubh Home">
+        <span class="top">PC BY <span>SHUBH</span></span>
+        <span class="sub">Custom Rigs &bull; IT Hardware</span>
+      </a>
+
+      <nav class="desktop-nav">
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#products">Products</a>
+        <a href="#why-us">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="hamburger-btn" id="openDrawer" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
-    </nav>
+      </div>
+    </div>
+  </header>
 
-    <!-- Invisible Overlay for Menu -->
-    <div id="menu-overlay" class="fixed inset-0 z-40 hidden pointer-events-none"></div>
+  <!-- ================= SLIDE-OUT DRAWER (EXACT VIDEO REPLICA) ================= -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer-panel" id="drawerPanel" aria-label="Mobile Navigation">
+    <div>
+      <div class="drawer-header">
+        <a href="#home" class="brand-logo drawer-nav-item">
+          <span class="top">PC BY <span>SHUBH</span></span>
+          <span class="sub">Custom Rigs &bull; IT Hardware</span>
+        </a>
+        <button class="drawer-close" id="closeDrawer" aria-label="Close menu">&times;</button>
+      </div>
 
-    <!-- Right-Aligned Floating Spring Menu -->
-    <div id="mobile-menu" class="fixed right-4 top-24 w-[320px] z-50 flex flex-col items-center justify-center space-y-6 py-10 px-6 text-white origin-top-right transform -translate-y-12 scale-75 opacity-0 transition-all duration-[600ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] bg-navy-900/30 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] will-change-[transform,opacity] pointer-events-none">
-        <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Home</a>
-        <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">About Us</a>
-        <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Services</a>
-        <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Gallery</a>
-        <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-xl font-medium hover:text-blue-300 will-change-[transform,opacity]">Contact</a>
-        <a href="#" class="menu-link opacity-0 translate-y-3 transition-all duration-300 ease-out text-sm font-bold tracking-wide bg-white text-navy-900 px-8 py-3.5 rounded-full hover:scale-105 mt-6 shadow-lg will-change-[transform,opacity]">Book Appointment</a>
+      <nav class="drawer-links">
+        <a href="#home" class="drawer-link active drawer-nav-item">
+          <span class="d-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          Home
+        </a>
+        <a href="#why-us" class="drawer-link drawer-nav-item">
+          <span class="d-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </span>
+          About
+        </a>
+        <a href="#products" class="drawer-link drawer-nav-item">
+          <span class="d-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </span>
+          Products
+        </a>
+        <a href="#services" class="drawer-link drawer-nav-item">
+          <span class="d-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </span>
+          Services
+        </a>
+        <a href="#featured" class="drawer-link drawer-nav-item">
+          <span class="d-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </span>
+          Gallery
+        </a>
+        <a href="#contact" class="drawer-link drawer-nav-item">
+          <span class="d-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          Contact
+        </a>
+      </nav>
     </div>
 
-    <!-- Center Popup - DATE (Single-Layer Sync Animation) -->
-    <div id="date-popup" class="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none hidden">
-        <div id="date-bg" class="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-300 popup-bg-close pointer-events-auto"></div>
-        <div id="date-popup-card" class="relative z-10 w-[320px] flex flex-col space-y-3 py-8 px-6 text-white bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] transform scale-75 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto">
-            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Date</h3>
-            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Today">Today</button>
-            <button type="button" class="date-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5" data-value="Tomorrow">Tomorrow</button>
-            
-            <div class="relative w-full mt-2">
-                <input type="date" id="native-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                <button type="button" class="w-full py-3 rounded-2xl bg-blue-500/80 hover:bg-blue-500 transition font-medium tracking-wide border border-blue-400/30 flex items-center justify-center gap-2 pointer-events-none">
-                    <i class="fa-regular fa-calendar-days"></i> Pick Custom Date
-                </button>
-            </div>
-            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+    <div class="drawer-footer">
+      <button class="btn-gold open-quote-modal" style="width:100%;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Get a Quote
+      </button>
+
+      <div class="drawer-info">
+        <div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C79A2B" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 98765 43210
         </div>
+        <div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C79A2B" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          hello@pcbyshubh.in
+        </div>
+        <div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C79A2B" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Main Road, Ranchi, Jharkhand
+        </div>
+      </div>
     </div>
+  </aside>
 
-    <!-- Center Popup - TIME (Single-Layer Sync Animation) -->
-    <div id="time-popup" class="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none hidden">
-        <div id="time-bg" class="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-300 popup-bg-close pointer-events-auto"></div>
-        <div id="time-popup-card" class="relative z-10 w-[320px] flex flex-col space-y-3 py-8 px-6 text-white bg-navy-900/40 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.4)] transform scale-75 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] pointer-events-auto">
-            <h3 class="text-lg font-medium text-center mb-4 border-b border-white/10 pb-2">Select Time Slot</h3>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Morning (9 AM - 12 PM)">
-                <span>Morning</span> <span class="text-white/50 text-sm">9am - 12pm</span>
-            </button>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Afternoon (1 PM - 4 PM)">
-                <span>Afternoon</span> <span class="text-white/50 text-sm">1pm - 4pm</span>
-            </button>
-            <button type="button" class="time-select w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition font-medium tracking-wide border border-white/5 flex justify-between px-6" data-value="Evening (5 PM - 8 PM)">
-                <span>Evening</span> <span class="text-white/50 text-sm">5pm - 8pm</span>
-            </button>
-            <button type="button" class="absolute top-4 right-5 text-white/50 hover:text-white transition popup-close">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Floating 3-Card Collage -->
+        <div class="hero-collage">
+          <div class="collage-main">
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" alt="Custom Blue RGB Gaming PC Build">
+          </div>
+          <div class="collage-laptop">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80" alt="Sleek Laptop on Desk">
+          </div>
+          <div class="collage-yellow">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Studio Headphones">
+          </div>
         </div>
-    </div>
 
-    <!-- Main Content Starts -->
-    <header class="hero-gradient px-6 pt-12 pb-16 text-center rounded-b-[40px] relative">
-        <div class="reveal">
-            <span class="inline-block bg-white px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 tracking-wider mb-6 shadow-sm">DENTAL CLINIC</span>
-        </div>
-        
-        <h1 class="text-4xl md:text-6xl font-medium text-navy-900 leading-tight mb-8 reveal" style="transition-delay: 100ms;">
-            Brighten your smile <br> with <span class="font-serif italic text-navy-800">expert dental care</span>
-        </h1>
-        
-        <div class="flex justify-center mb-8 reveal" style="transition-delay: 200ms;">
-            <button class="bg-navy-900 text-white pl-6 pr-2 py-2 rounded-full flex items-center gap-4 hover:scale-105 transition-transform shadow-lg group">
-                <span class="font-medium">Schedule Your Visit</span>
-                <div class="bg-white text-navy-900 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-gray-100 transition-colors">
-                    <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                </div>
-            </button>
-        </div>
-    </header>
+        <!-- Hero Copy -->
+        <div class="hero-copy">
+          <span class="eyebrow-pill">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#C79A2B"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            TRUSTED PC BUILDER &bull; CUSTOM RIGS &amp; IT
+          </span>
 
-    <main class="px-4 -mt-10 space-y-12 pb-8 max-w-md mx-auto md:max-w-4xl overflow-hidden">
-        
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <h3 class="text-lg font-semibold text-navy-900 mb-2">Caring Dentists</h3>
-            <p class="text-gray-600 text-sm mb-4">Your health and safety are our top priority</p>
-            <a href="#" class="text-navy-900 font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-70 transition">
-                Explore More <i class="fa-solid fa-arrow-right -rotate-45"></i>
+          <h1 class="hero-title">
+            Powering Your
+            <span class="gold-text">Digital World</span>
+          </h1>
+
+          <p class="hero-desc">
+            Custom gaming PCs, creator workstations, laptops, peripherals &amp; IT hardware from leading brands — 100% genuine parts, competitive pricing and dependable after-sales support at <strong>PC by Shubh</strong>.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#products" class="btn-gold">
+              Explore Products
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
+            <button class="btn-outline open-quote-modal">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Talk to Expert
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <a href="#categories" class="scroll-indicator">
+        <span>SCROLL</span>
+        <div class="scroll-mouse">
+          <div class="scroll-dot"></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= BRAND MARQUEE ================= -->
+  <div class="brand-marquee" aria-label="Partner Brands">
+    <div class="marquee-track">
+      <span class="brand-item">ASUS ROG</span>
+      <span class="brand-item">CORSAIR</span>
+      <span class="brand-item">NVIDIA</span>
+      <span class="brand-item">AMD RYZEN</span>
+      <span class="brand-item">INTEL</span>
+      <span class="brand-item">MSI</span>
+      <span class="brand-item">ACER</span>
+      <span class="brand-item">SAMSUNG</span>
+      <span class="brand-item">LOGITECH G</span>
+      <span class="brand-item">GIGABYTE</span>
+      <!-- Duplicated for seamless loop -->
+      <span class="brand-item">ASUS ROG</span>
+      <span class="brand-item">CORSAIR</span>
+      <span class="brand-item">NVIDIA</span>
+      <span class="brand-item">AMD RYZEN</span>
+      <span class="brand-item">INTEL</span>
+      <span class="brand-item">MSI</span>
+      <span class="brand-item">ACER</span>
+      <span class="brand-item">SAMSUNG</span>
+      <span class="brand-item">LOGITECH G</span>
+      <span class="brand-item">GIGABYTE</span>
+    </div>
+  </div>
+
+  <!-- ================= DARK TRUST STRIP ================= -->
+  <div class="trust-strip">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <span class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </span>
+        <span>Best Service &amp; Price <strong>Guaranteed</strong></span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <span>100% Genuine <strong>Spare Parts</strong></span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </span>
+        <span>Fast Doorstep <strong>Delivery</strong></span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        </span>
+        <span>Expert After-Sales <strong>Support</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SHOP BY CATEGORY ================= -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">SHOP BY CATEGORY</span>
+        <h2 class="section-title">Everything Tech, Beautifully Curated</h2>
+        <p class="section-sub">
+          Custom desktops, laptops, GPUs, peripherals, networking, storage and gaming accessories from leading global brands.
+        </p>
+      </div>
+
+      <div class="cards-grid four-col">
+        <div class="feature-card tilt-card" data-filter-target="gaming">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Desktops &amp; Custom PCs</h3>
+          <p>Office, gaming &amp; high-FPS performance rigs.</p>
         </div>
 
-        <!-- About Section -->
-        <div class="text-center pt-2 pb-4 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># About ApexCare</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-4">Your trusted partners in<br>dental care</h2>
-            <p class="text-gray-600 text-sm leading-relaxed mb-8 px-2">
-                At ApexCare, we believe that a healthy smile is a happy smile. Our dedicated team of professionals combines years of experience, cutting-edge technology, and a warm, caring atmosphere to ensure you get the best dental care possible.
-            </p>
-            <div class="flex justify-center mb-10">
-                <button class="bg-navy-900 text-white pl-6 pr-2 py-2 rounded-full flex items-center gap-4 hover:scale-105 transition-transform shadow-lg group">
-                    <span class="font-medium text-sm">Meet a Doctor</span>
-                    <div class="bg-white text-navy-900 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-gray-100 transition-colors">
-                        <i class="fa-solid fa-arrow-right -rotate-45"></i>
-                    </div>
-                </button>
-            </div>
-            
-            <div class="rounded-3xl overflow-hidden reveal relative">
-                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist treating patient" class="w-full h-80 sm:h-96 object-cover">
-                <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-black/30 backdrop-blur-xl border border-white/30 rounded-2xl p-5 sm:p-6 shadow-2xl">
-                    <p class="text-[10px] sm:text-xs tracking-widest text-white/90 uppercase font-semibold mb-3">Prioritize your dental health</p>
-                    <div class="flex items-center justify-between gap-4">
-                        <span class="text-white font-medium text-lg sm:text-xl">Call Us:</span>
-                        <a href="tel:+917667292499" class="border border-white/50 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm sm:text-base font-medium py-2 px-4 sm:py-2.5 sm:px-5 rounded-[0.85rem] backdrop-blur-md whitespace-nowrap">
-                            +91 7667292499
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="feature-card tilt-card" data-filter-target="laptops">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
+          </div>
+          <h3>Laptops</h3>
+          <p>Student, business &amp; RTX gaming notebooks.</p>
         </div>
 
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Why Choose Us</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-8">The top reasons our<br>patients love us</h2>
+        <div class="feature-card tilt-card" data-filter-target="accessories">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+          </div>
+          <h3>Peripherals &amp; Accessories</h3>
+          <p>Mechanical keyboards, mice, gaming gear &amp; more.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center text-navy-900 text-4xl">
-                <i class="fa-solid fa-file-contract"></i>
-            </div>
-            <p class="text-navy-900 font-medium mb-4">Certified by the Indian Dental Association</p>
-            <a href="#" class="text-blue-600 font-semibold text-sm flex items-center justify-center gap-2 border-b border-blue-600 pb-1 inline-flex hover:opacity-70 transition">
-                Schedule Your Visit <i class="fa-solid fa-arrow-right -rotate-45"></i>
-            </a>
+        <div class="feature-card tilt-card" data-filter-target="components">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          </div>
+          <h3>PC Components</h3>
+          <p>GPUs, processors, motherboards &amp; liquid coolers.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fa-solid fa-tooth text-blue-600 text-xl"></i>
-            </div>
-            <h3 class="text-navy-900 font-semibold mb-3">Experienced & Caring Dentists</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">
-                With over 25 years of experience, our team provides expert care with a gentle touch, ensuring a comfortable and effective experience every time.
-            </p>
+        <div class="feature-card tilt-card" data-filter-target="displays">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Gaming Monitors</h3>
+          <p>144Hz–240Hz IPS &amp; OLED color-accurate displays.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal">
-            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fa-solid fa-calendar-day text-blue-600 text-xl"></i>
-            </div>
-            <h3 class="text-navy-900 font-semibold mb-3">Same-Day Appointments</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">
-                We respect your time. Flexible scheduling including emergency same-day visits available.
-            </p>
+        <div class="feature-card tilt-card" data-filter-target="all">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          </div>
+          <h3>Networking</h3>
+          <p>Wi-Fi 6 routers, switches &amp; low-latency LAN setups.</p>
         </div>
 
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Services</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-8">Comprehensive dental care for your smile</h2>
+        <div class="feature-card tilt-card" data-filter-target="storage">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <h3>Storage Devices</h3>
+          <p>Gen4 NVMe SSDs, HDDs &amp; high-speed backup drives.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mb-8">
-            <ul class="space-y-4" id="services-list">
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">01</span>
-                        <span class="text-navy-900 font-medium">Teeth Cleaning</span>
-                    </div>
-                    <button aria-label="Learn more about Teeth Cleaning" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">02</span>
-                        <span class="text-navy-900 font-medium">Teeth Whitening</span>
-                    </div>
-                    <button aria-label="Learn more about Teeth Whitening" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">03</span>
-                        <span class="text-navy-900 font-medium">Orthodontics</span>
-                    </div>
-                    <button aria-label="Learn more about Orthodontics" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">04</span>
-                        <span class="text-navy-900 font-medium">Dental Implants</span>
-                    </div>
-                    <button aria-label="Learn more about Dental Implants" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between border-b border-gray-100 pb-4 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">05</span>
-                        <span class="text-navy-900 font-medium">Emergency Care</span>
-                    </div>
-                    <button aria-label="Learn more about Emergency Care" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
-                <li class="stagger-item opacity-0 transform translate-y-4 flex items-center justify-between pt-1 transition-all duration-500">
-                    <div class="flex items-center gap-4">
-                        <span class="font-serif italic text-gray-400 text-lg w-8 shrink-0 text-center relative -top-[2px]">06</span>
-                        <span class="text-navy-900 font-medium">Fillings & Restorations</span>
-                    </div>
-                    <button aria-label="Learn more about Fillings & Restorations" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                    </button>
-                </li>
+        <div class="feature-card tilt-card open-quote-modal">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>Custom IT Solutions</h3>
+          <p>Tailored PC setups &amp; studio rigs for every budget.</p>
+        </div>
+      </div>
+
+      <div class="section-cta">
+        <a href="#products" class="btn-gold">
+          View All Products
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED PICKS ================= -->
+  <section class="section section-alt" id="featured">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">FEATURED PICKS</span>
+        <h2 class="section-title">Handpicked Tech Our Customers Love</h2>
+        <p class="section-sub">
+          A glimpse of the builds and hardware we craft — genuine components from leading brands with full stress-testing and support.
+        </p>
+      </div>
+
+      <div class="cards-grid three-col">
+        <!-- Pick 1 -->
+        <article class="pick-card">
+          <div class="pick-media">
+            <span class="status-badge">POPULAR</span>
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80" alt="Premium Laptops">
+          </div>
+          <div class="pick-body">
+            <div class="pick-cat">LAPTOPS</div>
+            <h3 class="pick-title">Premium Laptops</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> ASUS &bull; HP &bull; Dell &bull; Lenovo</li>
+              <li><span class="check-icon">&#10003;</span> Student to RTX gaming grade</li>
             </ul>
+            <button class="btn-outline enquire-item" data-item="Premium Laptops (ASUS / HP / Dell / Lenovo)">View Details</button>
+          </div>
+        </article>
+
+        <!-- Pick 2 -->
+        <article class="pick-card">
+          <div class="pick-media">
+            <span class="status-badge">BEST SELLER</span>
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" alt="Desktop and Custom PCs">
+          </div>
+          <div class="pick-body">
+            <div class="pick-cat">DESKTOPS</div>
+            <h3 class="pick-title">Desktop &amp; Custom PCs</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> Office &amp; high-FPS gaming builds</li>
+              <li><span class="check-icon">&#10003;</span> Clean cable management &amp; stress-tested</li>
+            </ul>
+            <button class="btn-outline enquire-item" data-item="Custom Desktop & Gaming PC Build">View Details</button>
+          </div>
+        </article>
+
+        <!-- Pick 3 -->
+        <article class="pick-card">
+          <div class="pick-media">
+            <span class="status-badge">NEW</span>
+            <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80" alt="Premium Accessories">
+          </div>
+          <div class="pick-body">
+            <div class="pick-cat">ACCESSORIES</div>
+            <h3 class="pick-title">Premium Accessories</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> Keyboards &bull; mice &bull; studio audio</li>
+              <li><span class="check-icon">&#10003;</span> Trusted global gaming brands</li>
+            </ul>
+            <button class="btn-outline enquire-item" data-item="Premium Gaming Accessories & Peripherals">View Details</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHY PC BY SHUBH ================= -->
+  <section class="section" id="why-us">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-image">
+          <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=900&q=80" alt="Custom Gaming Setup by PC by Shubh">
         </div>
 
-        <div class="booking-gradient rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] reveal text-center relative overflow-hidden">
-            <span class="inline-block bg-white border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase relative z-10"># Appointment Booking</span>
-            <h2 class="text-2xl font-medium text-navy-900 leading-tight mb-8 relative z-10">Easy & quick appointment booking</h2>
-            
-            <form id="booking-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4 text-left relative z-10" novalidate>
-                <input type="hidden" name="access_key" value="524e4687-5adc-45c4-938c-8601a3ab6d23">
-                <input type="hidden" name="subject" value="New Appointment Booking - ApexCare">
-                <input type="hidden" name="from_name" value="ApexCare Website">
-                <input type="checkbox" name="botcheck" style="display:none;">
+        <div>
+          <span class="eyebrow-pill">WHY PC BY SHUBH</span>
+          <h2 class="section-title">A Standard of Trust You Can Feel</h2>
+          <p class="section-sub">
+            At <strong>PC by Shubh</strong>, we help gamers, video editors, students, and businesses get the exact machine they need — zero bottleneck parts, transparent GST billing, and thermal-tested builds ready out of the box.
+          </p>
 
-                <div class="field-group">
-                    <input type="text" name="name" id="field-name" placeholder="Full name *" class="custom-input text-sm">
-                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your full name.</p>
-                </div>
+          <ul class="story-checks">
+            <li>
+              <span class="round-check">&#10003;</span>
+              <span>100% sealed-box genuine components from leading global brands</span>
+            </li>
+            <li>
+              <span class="round-check">&#10003;</span>
+              <span>Competitive pricing &amp; bottleneck-free part pairing</span>
+            </li>
+            <li>
+              <span class="round-check">&#10003;</span>
+              <span>Clean cable routing, BIOS tuning &amp; thermal benchmarking</span>
+            </li>
+            <li>
+              <span class="round-check">&#10003;</span>
+              <span>Dedicated warranty assistance &amp; after-sales support</span>
+            </li>
+          </ul>
 
-                <div class="field-group">
-                    <input type="email" name="email" id="field-email" placeholder="Email *" class="custom-input text-sm">
-                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter a valid email address.</p>
-                </div>
+          <button class="btn-outline open-quote-modal">
+            More About Us
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <div class="field-group">
-                    <input type="tel" name="phone" id="field-phone" placeholder="Phone number *" class="custom-input text-sm">
-                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your phone number.</p>
-                </div>
+  <!-- ================= DARK STATS STRIP ================= -->
+  <section class="stats-banner">
+    <div class="container stats-grid">
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Custom PCs Built &amp; Tuned</div>
+      </div>
+      <div>
+        <div class="stat-num">19+</div>
+        <div class="stat-label">Trusted Hardware Brands</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Genuine Sealed Components</div>
+      </div>
+    </div>
+  </section>
 
-                <div class="grid grid-cols-2 gap-4 pt-2">
-                    <div class="field-group relative">
-                        <input type="hidden" name="date" id="form-date-hidden">
-                        <div class="relative">
-                            <input type="text" id="display-date" readonly placeholder="Date *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
-                            <i class="fa-regular fa-calendar absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-                        </div>
-                        <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a date.</p>
-                    </div>
-                    
-                    <div class="field-group relative">
-                        <input type="hidden" name="time" id="form-time-hidden">
-                        <div class="relative">
-                            <input type="text" id="display-time" readonly placeholder="Time *" class="custom-input text-sm select-trigger pr-8 text-navy-900 font-medium bg-transparent overflow-hidden text-ellipsis whitespace-nowrap">
-                            <i class="fa-regular fa-clock absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-                        </div>
-                        <p class="error-msg text-rose-400 text-xs pl-1">⚠ Select a time.</p>
-                    </div>
-                </div>
+  <!-- ================= OUR PROMISE ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">OUR PROMISE</span>
+        <h2 class="section-title">Why Customers Choose Us</h2>
+      </div>
 
-                <div class="field-group pt-2">
-                    <input type="text" name="reason" id="field-reason" placeholder="Reason for visit (e.g., toothache, cleaning) *" class="custom-input text-sm">
-                    <p class="error-msg text-rose-400 text-xs pl-1">⚠ Please enter your reason for visit.</p>
-                </div>
-                
-                <div class="flex justify-start relative pt-2">
-                    <button type="submit" id="booking-btn" class="relative bg-navy-900 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-colors duration-500 hover:shadow-[0_8px_20px_rgba(17,24,54,0.3)] active:scale-95 w-max mt-4 shadow-lg flex items-center justify-center min-w-[180px] h-[52px]">
-                        <span id="btn-text" class="transition-opacity duration-300 absolute">Reserve Your Spot</span>
-                        <i id="btn-spinner" class="fa-solid fa-circle-notch fa-spin absolute hidden text-lg"></i>
-                        <div id="btn-success" class="absolute flex items-center gap-2 opacity-0 scale-90 transition-all duration-500 pointer-events-none">
-                            <i class="fa-solid fa-check text-lg"></i>
-                            <span class="font-bold tracking-wide">Sent!</span>
-                        </div>
-                        <div id="btn-error" class="absolute flex items-center gap-2 opacity-0 scale-90 transition-all duration-500 pointer-events-none">
-                            <i class="fa-solid fa-xmark text-lg"></i>
-                            <span class="font-bold tracking-wide">Try Again</span>
-                        </div>
-                    </button>
-                </div>
-
-                <!-- Fluid Expansion Wrapper for Alerts -->
-                <div id="feedback-wrapper" class="expand-wrapper mt-0">
-                    <div class="expand-inner">
-                        <div id="form-success" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-blue-100 rounded-2xl shadow-sm items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-check text-blue-600"></i>
-                            </div>
-                            <p class="text-navy-900 text-sm font-medium">Booking confirmed! We'll contact you shortly.</p>
-                        </div>
-                        
-                        <div id="form-error" class="hidden mt-6 p-4 bg-white/80 backdrop-blur-md border border-rose-100 rounded-2xl shadow-sm items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-xmark text-rose-500"></i>
-                            </div>
-                            <p class="text-rose-900 text-sm font-medium">Something went wrong. Please try again.</p>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <i class="fa-solid fa-quote-left absolute -bottom-4 -left-2 text-8xl text-blue-100 opacity-50 z-0"></i>
+      <div class="cards-grid three-col">
+        <div class="feature-card tilt-card">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <h3>Genuine Products</h3>
+          <p>Authentic IT hardware with official brand warranty you can trust.</p>
         </div>
 
-        <div class="reveal relative overflow-hidden -mx-4 px-4 pb-4">
-            <div class="slider-track grab" id="testimonial-track">
-                <!-- Slide 1 -->
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                The staff made me feel so comfortable and cared for. Pain-free treatment, friendly service, and a brighter smile—couldn't ask for better care!
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Anjali Sharma">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Anjali Sharma</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                I've always dreaded visiting the dentist, but ApexCare changed that completely. The procedure was incredibly smooth and the recovery was fast.
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Rahul Desai">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Rahul Desai</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                State-of-the-art clinic with a very warm environment. The doctors explained every step of the process patiently. Highly recommended!
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Priya Patel">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Priya Patel</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Slide 4 -->
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                I had a severe toothache and got a same-day appointment. The doctor was incredibly gentle, and the clinic is spotless. Best dental experience!
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Vikram Singh">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Vikram Singh</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Slide 5 -->
-                <div class="slider-item original-slide">
-                    <div class="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full flex flex-col justify-between border border-gray-50 pointer-events-none">
-                        <div>
-                            <i class="fa-solid fa-quote-left text-5xl text-blue-100 mb-4"></i>
-                            <p class="font-serif italic text-navy-900 text-lg leading-relaxed mb-6">
-                                Got my teeth whitening done here before my wedding. The results are phenomenal! I finally have the confidence to smile fully. Highly recommend.
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-auto">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100" class="w-12 h-12 rounded-full object-cover" alt="Neha Kapoor">
-                            <div>
-                                <h4 class="text-navy-900 font-semibold text-sm">Neha Kapoor</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="feature-card tilt-card">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          </div>
+          <h3>Competitive Pricing</h3>
+          <p>Honest, transparent quotes tailored to maximize FPS per rupee.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          </div>
+          <h3>Expert Guidance</h3>
+          <p>Builders who stay updated with the latest CPUs, GPUs and thermals.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>After-Sales Support</h3>
+          <p>Dependable care, driver support and warranty help long after delivery.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+          </div>
+          <h3>Customized PC Solutions</h3>
+          <p>Setups tailored for gamers, creators, students and studios.</p>
+        </div>
+
+        <div class="feature-card tilt-card">
+          <div class="icon-tile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Complete Satisfaction</h3>
+          <p>Neat cable management, stress-tested stability and zero shortcuts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXPERT SERVICES ================= -->
+  <section class="section section-alt" id="services">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">OUR SERVICES</span>
+        <h2 class="section-title">Expert Services You Can Rely On</h2>
+        <p class="section-sub">
+          From bespoke PC assembly to upgrades and diagnostics — our technicians keep your machine running at peak performance.
+        </p>
+      </div>
+
+      <div class="cards-grid three-col">
+        <article class="service-card">
+          <div class="service-media">
+            <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=80" alt="Laptop & Desktop Repair">
+            <div class="service-float-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
-            
-            <div class="flex justify-center items-center gap-2 mt-6" id="slider-dots">
-                <button class="w-2.5 h-2.5 rounded-full bg-navy-900 transition-colors duration-300"></button>
-                <button class="w-2.5 h-2.5 rounded-full bg-gray-200 transition-colors duration-300"></button>
-                <button class="w-2.5 h-2.5 rounded-full bg-gray-200 transition-colors duration-300"></button>
-                <button class="w-2.5 h-2.5 rounded-full bg-gray-200 transition-colors duration-300"></button>
-                <button class="w-2.5 h-2.5 rounded-full bg-gray-200 transition-colors duration-300"></button>
+          </div>
+          <div class="service-body">
+            <h3>Laptop &amp; Desktop Repair</h3>
+            <p>Screens, batteries, motherboards, SSD/RAM upgrades and diagnostics for all brands.</p>
+            <button class="know-more enquire-item" data-item="Laptop & Desktop Repair Service">
+              Know more <span>&rarr;</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-media">
+            <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=800&q=80" alt="Custom PC Assembly & Tuning">
+            <div class="service-float-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-        </div>
+          </div>
+          <div class="service-body">
+            <h3>Custom PC Build &amp; Tuning</h3>
+            <p>Precision assembly, AIO liquid cooling, XMP/EXPO profiling and thermal stress testing.</p>
+            <button class="know-more enquire-item" data-item="Custom PC Assembly & BIOS Tuning">
+              Know more <span>&rarr;</span>
+            </button>
+          </div>
+        </article>
 
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Our Team</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-6">Your trusted dental professionals</h2>
-        </div>
-
-        <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal mb-8">
-            <div class="stagger-item-team opacity-0 transform translate-y-4 bg-white rounded-3xl p-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
-                <div class="rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600" alt="Dr. Shubham Sharma" class="doctor-img group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <h3 class="text-navy-900 font-semibold mb-1">Dr. Shubham Sharma</h3>
-                <p class="text-gray-500 text-sm pb-2">Orthodontist</p>
+        <article class="service-card">
+          <div class="service-media">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Deep Cleaning & Thermal Repasting">
+            <div class="service-float-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             </div>
+          </div>
+          <div class="service-body">
+            <h3>Deep Cleaning &amp; Repasting</h3>
+            <p>Dust removal, premium thermal paste replacement and airflow optimization for cooler temps.</p>
+            <button class="know-more enquire-item" data-item="PC Deep Cleaning & Thermal Repasting">
+              Know more <span>&rarr;</span>
+            </button>
+          </div>
+        </article>
+      </div>
 
-            <div class="stagger-item-team opacity-0 transform translate-y-4 bg-white rounded-3xl p-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
-                <div class="rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="https://i.ibb.co/1tZJcWx2/Untitled38-20260321165556.jpg" alt="Dr. Abhishek Khanna" class="doctor-img group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <h3 class="text-navy-900 font-semibold mb-1">Dr. Abhishek Khanna</h3>
-                <p class="text-gray-500 text-sm pb-2">Oral Surgeon</p>
+      <div class="section-cta">
+        <button class="btn-gold open-quote-modal">
+          All Services
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTS WE DEAL (FILTERABLE CATALOG FROM 1:03–1:15) ================= -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">OUR PRODUCTS</span>
+        <h2 class="section-title">Products We Deal</h2>
+        <p class="section-sub">
+          Desktops, custom gaming rigs, laptops, GPUs, monitors, storage and gaming accessories — for gamers, creators, students and offices.
+        </p>
+      </div>
+
+      <!-- Filter Chips -->
+      <div class="filter-pills" id="productFilters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="gaming">Gaming PCs</button>
+        <button class="filter-chip" data-filter="laptops">Laptops</button>
+        <button class="filter-chip" data-filter="components">Components</button>
+        <button class="filter-chip" data-filter="displays">Displays</button>
+        <button class="filter-chip" data-filter="accessories">Accessories</button>
+        <button class="filter-chip" data-filter="storage">Storage</button>
+      </div>
+
+      <div class="cards-grid three-col" id="catalogGrid">
+        <!-- Item 1 -->
+        <article class="catalog-card" data-category="gaming">
+          <div class="catalog-img">
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" alt="Shubh Apex RTX 4070 Gaming Rig">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">GAMING PC</div>
+            <h3 class="pick-title">Shubh Apex RTX 4070 Rig</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> Ryzen 7 7800X3D &bull; 32GB DDR5</li>
+              <li><span class="check-icon">&#10003;</span> 1TB Gen4 NVMe &bull; 360mm AIO</li>
+              <li><span class="check-icon">&#10003;</span> 1440p Ultra 165+ FPS ready</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="Shubh Apex RTX 4070 Gaming Rig">Enquire Now &#9993;</button>
+          </div>
+        </article>
+
+        <!-- Item 2 -->
+        <article class="catalog-card" data-category="laptops">
+          <div class="catalog-img">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80" alt="Aurora Pro 16 Laptop">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">LAPTOP</div>
+            <h3 class="pick-title">Aurora Pro 16"</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> 240Hz OLED display</li>
+              <li><span class="check-icon">&#10003;</span> Ryzen 9 &bull; RTX 4070</li>
+              <li><span class="check-icon">&#10003;</span> Creator &amp; esports tuned</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="Aurora Pro 16 Laptop">Enquire Now &#9993;</button>
+          </div>
+        </article>
+
+        <!-- Item 3 (Exact GPU card from 1:12) -->
+        <article class="catalog-card" data-category="components">
+          <div class="catalog-img">
+            <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=800&q=80" alt="Blaze RTX 4070 GPU">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">COMPONENT</div>
+            <h3 class="pick-title">Blaze RTX 4070 GPU</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> Triple-fan cooling</li>
+              <li><span class="check-icon">&#10003;</span> OC edition</li>
+              <li><span class="check-icon">&#10003;</span> Ray tracing &amp; DLSS 3 ready</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="Blaze RTX 4070 GPU">Enquire Now &#9993;</button>
+          </div>
+        </article>
+
+        <!-- Item 4 (Exact Mouse card from 1:14) -->
+        <article class="catalog-card" data-category="accessories">
+          <div class="catalog-img">
+            <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80" alt="Vortex Wireless Mouse">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">ACCESSORY</div>
+            <h3 class="pick-title">Vortex Wireless Mouse</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> 26K DPI optical sensor</li>
+              <li><span class="check-icon">&#10003;</span> 90h battery life</li>
+              <li><span class="check-icon">&#10003;</span> 54g ultralight shell</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="Vortex Wireless Mouse">Enquire Now &#9993;</button>
+          </div>
+        </article>
+
+        <!-- Item 5 (Exact Headphones card from 1:15) -->
+        <article class="catalog-card" data-category="accessories">
+          <div class="catalog-img" style="background:#FCE34D;">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Echo Surround Headphones">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">AUDIO</div>
+            <h3 class="pick-title">Echo Surround Headphones</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> 7.1 spatial surround sound</li>
+              <li><span class="check-icon">&#10003;</span> Memory-foam ear cushions</li>
+              <li><span class="check-icon">&#10003;</span> Detachable noise-canceling mic</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="Echo Surround Headphones">Enquire Now &#9993;</button>
+          </div>
+        </article>
+
+        <!-- Item 6 -->
+        <article class="catalog-card" data-category="displays">
+          <div class="catalog-img">
+            <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80" alt="27-inch 180Hz Fast IPS Monitor">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">DISPLAY</div>
+            <h3 class="pick-title">27" QHD 180Hz Fast IPS Monitor</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> 2560&times;1440 QHD &bull; 1ms GtG</li>
+              <li><span class="check-icon">&#10003;</span> 99% sRGB &amp; G-Sync compatible</li>
+              <li><span class="check-icon">&#10003;</span> Height &amp; tilt adjustable stand</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="27-inch QHD 180Hz Gaming Monitor">Enquire Now &#9993;</button>
+          </div>
+        </article>
+
+        <!-- Item 7 -->
+        <article class="catalog-card" data-category="storage">
+          <div class="catalog-img">
+            <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=80" alt="2TB PCIe Gen4 NVMe SSD">
+          </div>
+          <div class="catalog-body">
+            <div class="pick-cat">STORAGE</div>
+            <h3 class="pick-title">2TB PCIe Gen4 NVMe SSD</h3>
+            <ul class="check-list">
+              <li><span class="check-icon">&#10003;</span> Up to 7,400 MB/s read speed</li>
+              <li><span class="check-icon">&#10003;</span> Graphene heatsink included</li>
+              <li><span class="check-icon">&#10003;</span> 5-Year official brand warranty</li>
+            </ul>
+            <button class="btn-gold enquire-item" data-item="2TB PCIe Gen4 NVMe SSD">Enquire Now &#9993;</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">TESTIMONIALS</span>
+        <h2 class="section-title">Loved by Gamers &amp; Creators</h2>
+        <p class="section-sub">
+          Real words from people and studios who trust <strong>PC by Shubh</strong> with their setups.
+        </p>
+      </div>
+
+      <div class="cards-grid three-col">
+        <article class="review-card">
+          <div class="review-top">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-mark">&rdquo;</div>
+          </div>
+          <p class="review-text">
+            "Got my 4K video editing &amp; gaming PC built by Shubh. Cable management is spotless, temps stay super low under full render load, and every part came with a sealed box and GST bill!"
+          </p>
+          <div class="reviewer">
+            <div class="avatar-circle">AV</div>
+            <div>
+              <div class="reviewer-name">Aarav Verma</div>
+              <div class="reviewer-city">Ranchi</div>
             </div>
-        </div>
+          </div>
+        </article>
 
-        <div class="text-center pt-10 reveal">
-            <span class="inline-block border border-gray-200 px-4 py-1.5 rounded-full text-xs font-semibold text-navy-900 mb-6 uppercase"># Insights</span>
-            <h2 class="text-3xl font-medium text-navy-900 leading-tight mb-6">From our blog: tips & insights for healthy smiles</h2>
-        </div>
-
-        <div class="space-y-8">
-            <a href="#" class="insight-card block reveal group cursor-pointer bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 [&.hover-activated]:-translate-y-1 transition-transform duration-300 overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="https://i.ibb.co/rGBKt04w/image-1.jpg" alt="Teeth Cleaning" class="w-full h-56 object-cover group-hover:scale-105 group-[.hover-activated]:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-xl font-medium text-navy-900">5 Tips to Keep Your Teeth Healthy</h3>
-                    <p class="text-gray-600 text-sm">Learn simple daily habits that keep your teeth clean and strong</p>
-                    <div class="flex items-center justify-end">
-                        <div class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-blue-50 group-[.hover-activated]:bg-blue-50 group-hover:text-blue-600 group-[.hover-activated]:text-blue-600 transition-colors duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="insight-card block reveal group cursor-pointer bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 [&.hover-activated]:-translate-y-1 transition-transform duration-300 overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&q=80&w=800" alt="Dental Clinic" class="w-full h-56 object-cover group-hover:scale-105 group-[.hover-activated]:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-xl font-medium text-navy-900">How to Choose the Right Toothbrush</h3>
-                    <p class="text-gray-600 text-sm">Find out what toothbrush suits your dental needs best</p>
-                    <div class="flex items-center justify-end">
-                        <div class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-blue-50 group-[.hover-activated]:bg-blue-50 group-hover:text-blue-600 group-[.hover-activated]:text-blue-600 transition-colors duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="insight-card block reveal group cursor-pointer bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 [&.hover-activated]:-translate-y-1 transition-transform duration-300 overflow-hidden">
-                <div class="overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="Coffee cup" class="w-full h-56 object-cover group-hover:scale-105 group-[.hover-activated]:scale-105 transition-transform duration-700">
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-xl font-medium text-navy-900">Top 5 Foods That Secretly Stain Your Teeth</h3>
-                    <p class="text-gray-600 text-sm">Coffee, tea, and berries can dull your smile over time. Learn how to enjoy your favorite foods while protecting your enamel.</p>
-                    <div class="flex items-center justify-end">
-                        <div class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-blue-50 group-[.hover-activated]:bg-blue-50 group-hover:text-blue-600 group-[.hover-activated]:text-blue-600 transition-colors duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </main>
-
-    <footer class="footer-bg rounded-t-[40px] px-6 pt-16 pb-10 text-white relative mt-8 max-w-md mx-auto md:max-w-4xl">
-        <div class="reveal">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-                <div>
-                    <div class="flex items-center gap-2 mb-6">
-                        <i class="fa-solid fa-asterisk text-blue-400 text-2xl"></i>
-                        <span class="text-2xl font-bold tracking-tight">ApexCare</span>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">SV Road,<br>Andheri West, Mumbai</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-sm text-white bg-[#313a60] px-5 py-2.5 rounded-full hover:bg-blue-500 transition-colors w-max shadow-md">
-                        <i class="fa-solid fa-location-dot"></i> Get Directions
-                    </a>
-                </div>
-
-                <div>
-                    <h4 class="font-medium text-gray-300 mb-6 text-sm uppercase tracking-wider">Clinic Hours</h4>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li class="flex justify-between border-b border-[#313a60] pb-2"><span>Mon - Fri</span> <span class="text-white">8:00 AM - 8:00 PM</span></li>
-                        <li class="flex justify-between border-b border-[#313a60] pb-2"><span>Saturday</span> <span class="text-white">9:00 AM - 4:00 PM</span></li>
-                        <li class="flex justify-between pb-2"><span>Sunday</span> <span class="text-blue-400 font-medium">Emergency Only</span></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <div class="bg-white text-navy-900 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
-                        <div class="absolute -right-4 -top-4 text-blue-50 group-hover:scale-110 transition-transform duration-500 text-6xl">
-                            <i class="fa-solid fa-truck-medical"></i>
-                        </div>
-                        <p class="text-xs font-bold text-red-500 uppercase mb-2 tracking-wider relative z-10">Emergency 24/7</p>
-                        <p class="text-sm mb-4 text-gray-600 relative z-10">Need urgent dental care? Call us immediately.</p>
-                        <p class="text-2xl font-bold mb-1 relative z-10">+91 7667292499</p>
-                        <a href="mailto:info@apexcare.com" class="text-sm font-medium border-b-2 border-blue-200 hover:border-blue-600 transition-colors relative z-10">info@apexcare.com</a>
-                    </div>
-                </div>
+        <article class="review-card">
+          <div class="review-top">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-mark">&rdquo;</div>
+          </div>
+          <p class="review-text">
+            "Honest advice and genuine products every single time. Shubh built a custom PC exactly to my budget without pushing unnecessary parts, and it runs Valorant and Cyberpunk flawlessly."
+          </p>
+          <div class="reviewer">
+            <div class="avatar-circle">RS</div>
+            <div>
+              <div class="reviewer-name">Rahul Sharma</div>
+              <div class="reviewer-city">Jamshedpur</div>
             </div>
+          </div>
+        </article>
 
-            <div class="pt-8 border-t border-[#313a60] flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-facebook-f text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-[#1e2548] flex items-center justify-center hover:bg-blue-500 transition-colors"><i class="fa-brands fa-pinterest-p text-sm"></i></a>
-                </div>
-                <div class="text-center md:text-right">
-                    <p class="text-gray-500 text-xs mb-1">&copy; 2026 ApexCare. All Rights Reserved.</p>
-                </div>
+        <article class="review-card">
+          <div class="review-top">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-mark">&rdquo;</div>
+          </div>
+          <p class="review-text">
+            "We ordered 6 workstation desktops for our design studio from PC by Shubh. Fair pricing, clean Windows &amp; driver setup, and super quick support whenever we need help."
+          </p>
+          <div class="reviewer">
+            <div class="avatar-circle">PK</div>
+            <div>
+              <div class="reviewer-name">Priya Kumari</div>
+              <div class="reviewer-city">Dhanbad</div>
             </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VISIT US & READY TO BUILD CTA ================= -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-pill">VISIT US</span>
+        <h2 class="section-title">Drop By Our Studio</h2>
+        <p class="section-sub">
+          Visit <strong>PC by Shubh</strong> for hands-on build consultations, component advice and instant upgrades.
+        </p>
+      </div>
+
+      <div class="store-card" style="margin-bottom: 44px;">
+        <div class="icon-tile" style="margin-bottom: 14px; background: linear-gradient(135deg, #DFB649, #B8881E); color: #FFF;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
-    </footer>
+        <h3 style="font-size:20px; font-weight:800;">PC by Shubh — Main Studio</h3>
+        <ul class="store-meta">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C79A2B" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Main Road, Near Firayalal Chowk, Ranchi
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C79A2B" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +91 98765 43210
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C79A2B" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Mon–Sat: 10:30 AM – 8:30 PM
+          </li>
+        </ul>
+        <a href="https://maps.google.com/?q=Main+Road+Ranchi" target="_blank" rel="noopener" class="know-more">
+          Get directions <span>&rarr;</span>
+        </a>
+      </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+      <!-- Ready to Build Your Dream Setup? -->
+      <div class="cta-box">
+        <h2>Ready to Build Your <span>Dream Setup?</span></h2>
+        <p>
+          Tell us your budget and use-case — <strong>PC by Shubh</strong> will design the perfect custom PC or workstation for you.
+        </p>
+        <div class="cta-buttons">
+          <button class="btn-gold open-quote-modal">
+            Get a Free Quote
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <a href="https://wa.me/919876543210?text=Hi%20Shubh!%20I%20want%20to%20build%20a%20custom%20PC.%20Can%20you%20help%20me%20with%20a%20quote?" target="_blank" rel="noopener" class="btn-whatsapp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            WhatsApp Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            // 1. Scroll Reveal
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.15 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" class="brand-logo" style="margin-bottom:14px;">
+            <span class="top">PC BY <span>SHUBH</span></span>
+            <span class="sub">Custom Rigs &bull; IT Hardware</span>
+          </a>
+          <p style="margin-top:10px; line-height:1.6;">
+            A trusted destination for custom gaming PCs, creator workstations, laptops &amp; genuine computer hardware — expert guidance and dependable after-sales support.
+          </p>
+          <div class="social-row">
+            <a href="#contact" class="social-btn" aria-label="Instagram">IG</a>
+            <a href="#contact" class="social-btn" aria-label="YouTube">YT</a>
+            <a href="#contact" class="social-btn" aria-label="Facebook">FB</a>
+            <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp">WA</a>
+          </div>
+        </div>
 
-            // 2. Services List Stagger
-            const servicesList = document.getElementById('services-list');
-            const staggerItems = document.querySelectorAll('.stagger-item');
-            if (servicesList) {
-                const listObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        staggerItems.forEach((item, index) => {
-                            setTimeout(() => {
-                                item.classList.remove('opacity-0', 'translate-y-4');
-                                item.classList.add('opacity-100', 'translate-y-0');
-                            }, item.dataset.staggerDelay || index * 100);
-                        });
-                        listObserver.unobserve(servicesList);
-                    }
-                }, { threshold: 0.2 });
-                listObserver.observe(servicesList);
-            }
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#why-us">About</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
 
-            // 3. Team Stagger
-            const teamGrid = document.getElementById('team-grid');
-            const teamStaggerItems = document.querySelectorAll('.stagger-item-team');
-            if (teamGrid) {
-                const teamObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        teamStaggerItems.forEach((item, index) => {
-                            setTimeout(() => {
-                                item.classList.remove('opacity-0', 'translate-y-4');
-                                item.classList.add('opacity-100', 'translate-y-0');
-                            }, index * 150);
-                        });
-                        teamObserver.unobserve(teamGrid);
-                    }
-                }, { threshold: 0.2 });
-                teamObserver.observe(teamGrid);
-            }
+        <div>
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="#products">Custom Gaming PCs</a></li>
+            <li><a href="#products">Laptops</a></li>
+            <li><a href="#products">GPUs &amp; Components</a></li>
+            <li><a href="#products">Monitors &amp; Peripherals</a></li>
+          </ul>
+        </div>
 
-            // 4. Center Popups Logic
-            const displayDate = document.getElementById('display-date');
-            const displayTime = document.getElementById('display-time');
-            const hiddenDate = document.getElementById('form-date-hidden');
-            const hiddenTime = document.getElementById('form-time-hidden');
-            
-            const datePopup = document.getElementById('date-popup');
-            const datePopupCard = document.getElementById('date-popup-card');
-            const timePopup = document.getElementById('time-popup');
-            const timePopupCard = document.getElementById('time-popup-card');
-            
-            const closePopups = () => {
-                document.body.style.overflow = '';
-                
-                if (datePopupCard) {
-                    datePopupCard.classList.remove('scale-100', 'opacity-100');
-                    datePopupCard.classList.add('scale-75', 'opacity-0');
-                }
-                if (timePopupCard) {
-                    timePopupCard.classList.remove('scale-100', 'opacity-100');
-                    timePopupCard.classList.add('scale-75', 'opacity-0');
-                }
-                
-                const dateBg = document.getElementById('date-bg');
-                const timeBg = document.getElementById('time-bg');
-                if (dateBg) dateBg.classList.add('opacity-0');
-                if (timeBg) timeBg.classList.add('opacity-0');
+        <div>
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li>+91 98765 43210</li>
+            <li>hello@pcbyshubh.in</li>
+            <li>Main Road, Ranchi, Jharkhand</li>
+          </ul>
+        </div>
+      </div>
 
-                setTimeout(() => {
-                    if (datePopup) datePopup.classList.add('hidden');
-                    if (timePopup) timePopup.classList.add('hidden');
-                }, 400);
-            };
+      <div class="footer-bottom">
+        &copy; 2026 PC by Shubh. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
-            const openPopup = (wrapperId, cardId, bgId) => {
-                const wrapper = document.getElementById(wrapperId);
-                const card = document.getElementById(cardId);
-                const bg = document.getElementById(bgId);
+  <!-- ================= FLOATING ACTION BUTTONS (SCROLL TOP + WHATSAPP) ================= -->
+  <div class="floating-stack">
+    <button class="fab-top" id="scrollTopBtn" aria-label="Scroll to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
 
-                document.body.style.overflow = 'hidden';
-                wrapper.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    bg.classList.remove('opacity-0');
-                    card.classList.remove('scale-75', 'opacity-0');
-                    card.classList.add('scale-100', 'opacity-100');
-                }, 10);
-            };
+    <a href="https://wa.me/919876543210?text=Hi%20PC%20by%20Shubh!%20I%20have%20an%20enquiry." target="_blank" rel="noopener" class="fab-wa" aria-label="Chat on WhatsApp">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    </a>
+  </div>
 
-            displayDate.addEventListener('click', () => openPopup('date-popup', 'date-popup-card', 'date-bg'));
-            displayTime.addEventListener('click', () => openPopup('time-popup', 'time-popup-card', 'time-bg'));
+  <!-- ================= CUSTOM BUILD QUOTE MODAL ================= -->
+  <div class="modal-overlay" id="quoteModal">
+    <div class="modal-box">
+      <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
+      <span class="eyebrow-pill" style="margin-bottom:10px;">PC BY SHUBH</span>
+      <h3 style="font-size:21px; font-weight:800; margin-bottom:6px;">Get a Free PC Build Quote</h3>
+      <p style="font-size:13.5px; color:var(--ink-muted); margin-bottom:16px;">
+        Fill in your preferences and send directly to Shubh on WhatsApp.
+      </p>
 
-            document.querySelectorAll('.popup-bg-close, .popup-close').forEach(el => {
-                el.addEventListener('click', closePopups);
-            });
+      <form id="quoteForm">
+        <div class="form-group">
+          <label for="qName">Your Name</label>
+          <input type="text" id="qName" placeholder="e.g. Rohan Kumar" required>
+        </div>
 
-            document.querySelectorAll('.date-select').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const val = e.target.dataset.value;
-                    displayDate.value = val;
-                    hiddenDate.value = val;
-                    displayDate.classList.remove('error');
-                    displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                    closePopups();
-                });
-            });
+        <div class="form-group">
+          <label for="qUse">Primary Use / Product</label>
+          <select id="qUse">
+            <option value="Custom Gaming PC">Custom Gaming PC</option>
+            <option value="Video Editing / 3D Workstation">Video Editing / 3D Workstation</option>
+            <option value="Office / Home Desktop">Office / Home Desktop</option>
+            <option value="Gaming / Student Laptop">Gaming / Student Laptop</option>
+            <option value="PC Upgrade / Repair">PC Upgrade / Repair</option>
+          </select>
+        </div>
 
-            const nativeDate = document.getElementById('native-date');
-            if (nativeDate) {
-                nativeDate.addEventListener('change', (e) => {
-                    if (e.target.value) {
-                        const d = new Date(e.target.value);
-                        const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                        displayDate.value = formatted;
-                        hiddenDate.value = e.target.value;
-                        displayDate.classList.remove('error');
-                        displayDate.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                        closePopups();
-                    }
-                });
-            }
+        <div class="form-group">
+          <label for="qBudget">Estimated Budget (₹)</label>
+          <select id="qBudget">
+            <option value="Under ₹45,000">Under ₹45,000</option>
+            <option value="₹45,000 – ₹75,000" selected>₹45,000 – ₹75,000</option>
+            <option value="₹75,000 – ₹1,20,000">₹75,000 – ₹1,20,000</option>
+            <option value="₹1,20,000+ Enthusiast">₹1,20,000+ Enthusiast</option>
+          </select>
+        </div>
 
-            document.querySelectorAll('.time-select').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const el = e.target.closest('.time-select');
-                    const val = el.dataset.value;
-                    displayTime.value = val.split(' ')[0]; // Show just "Morning", "Afternoon", etc. in input
-                    hiddenTime.value = val; // Send full string to email
-                    displayTime.classList.remove('error');
-                    displayTime.closest('.field-group').querySelector('.error-msg').classList.remove('show');
-                    closePopups();
-                });
-            });
+        <div class="form-group">
+          <label for="qNotes">Preferred Parts / Notes (Optional)</label>
+          <textarea id="qNotes" rows="2" placeholder="e.g. RTX 4060 / Ryzen 5, white cabinet, monitor needed..."></textarea>
+        </div>
 
+        <button type="submit" class="btn-gold" style="width:100%;">
+          Send Quote Request on WhatsApp &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
 
-            // 5. Booking Form - Web3Forms + Validation
-            const bookingForm = document.getElementById('booking-form');
-            if (bookingForm) {
-                const bookingBtn = document.getElementById('booking-btn');
-                const btnText = document.getElementById('btn-text');
-                const btnSpinner = document.getElementById('btn-spinner');
-                const btnSuccess = document.getElementById('btn-success');
-                const btnError = document.getElementById('btn-error');
-                const formSuccess = document.getElementById('form-success');
-                const formError = document.getElementById('form-error');
-                const feedbackWrapper = document.getElementById('feedback-wrapper');
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // 1. Slide-out Drawer Controls
+    const openDrawerBtn = document.getElementById('openDrawer');
+    const closeDrawerBtn = document.getElementById('closeDrawer');
+    const drawerPanel = document.getElementById('drawerPanel');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const drawerNavItems = document.querySelectorAll('.drawer-nav-item');
 
-                bookingForm.querySelectorAll('.custom-input:not(.select-trigger)').forEach(input => {
-                    input.addEventListener('input', () => {
-                        input.classList.remove('error');
-                        const msg = input.closest('.field-group').querySelector('.error-msg');
-                        if (msg) msg.classList.remove('show');
-                    });
-                });
+    function openDrawer() {
+      drawerPanel.classList.add('open');
+      drawerBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-                const validateForm = () => {
-                    let isValid = true;
-                    
-                    const fields = [
-                        { id: 'field-name', check: v => v.trim().length >= 2 },
-                        { id: 'field-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-                        { id: 'field-phone', check: v => v.trim().length >= 6 },
-                        { id: 'field-reason', check: v => v.trim().length >= 3 },
-                    ];
-                    fields.forEach(({ id, check }) => {
-                        const input = document.getElementById(id);
-                        const msg = input.closest('.field-group').querySelector('.error-msg');
-                        if (!check(input.value)) {
-                            input.classList.add('error');
-                            msg.classList.add('show');
-                            isValid = false;
-                        } else {
-                            input.classList.remove('error');
-                            msg.classList.remove('show');
-                        }
-                    });
+    function closeDrawer() {
+      drawerPanel.classList.remove('open');
+      drawerBackdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
 
-                    if (!hiddenDate.value) {
-                        displayDate.classList.add('error');
-                        displayDate.closest('.field-group').querySelector('.error-msg').classList.add('show');
-                        isValid = false;
-                    }
-                    if (!hiddenTime.value) {
-                        displayTime.classList.add('error');
-                        displayTime.closest('.field-group').querySelector('.error-msg').classList.add('show');
-                        isValid = false;
-                    }
+    openDrawerBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    drawerBackdrop.addEventListener('click', closeDrawer);
+    drawerNavItems.forEach(item => item.addEventListener('click', closeDrawer));
 
-                    if (!isValid) {
-                        bookingForm.classList.add('shake');
-                        setTimeout(() => bookingForm.classList.remove('shake'), 300);
-                    }
-                    
-                    return isValid;
-                };
+    // 2. Sticky Navbar Shadow & Floating Scroll-to-Top Button
+    const navbar = document.getElementById('navbar');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
 
-                bookingForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    if (!validateForm()) return;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
 
-                    btnText.classList.add('opacity-0');
-                    btnSpinner.classList.remove('hidden');
-                    bookingBtn.disabled = true;
+      if (window.scrollY > 360) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    }, { passive: true });
 
-                    const formData = new FormData(bookingForm);
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-                    try {
-                        const response = await fetch('https://api.web3forms.com/submit', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        const data = await response.json();
-                        
-                        btnSpinner.classList.add('hidden');
+    // 3. Mobile Touch Feedback for Tilted Gold Icon Cards (Matches Video 0:06–0:32)
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('touchstart', () => {
+        document.querySelectorAll('.tilt-card').forEach(c => c.classList.remove('is-active'));
+        card.classList.add('is-active');
+      }, { passive: true });
+    });
 
-                        if (data.success) {
-                            btnSuccess.classList.remove('opacity-0', 'scale-90');
-                            btnSuccess.classList.add('opacity-100', 'scale-100');
-                            
-                            formSuccess.classList.remove('hidden');
-                            formSuccess.classList.add('flex');
-                            formError.classList.add('hidden');
-                            formError.classList.remove('flex');
-                            
-                            feedbackWrapper.classList.add('open');
-                            
-                            bookingForm.reset();
-                            displayDate.value = '';
-                            displayTime.value = '';
-                            hiddenDate.value = '';
-                            hiddenTime.value = '';
-                            if(nativeDate) nativeDate.value = '';
+    // 4. Product Filter Chips + Category Card Jump
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const catalogCards = document.querySelectorAll('.catalog-card');
 
-                            setTimeout(() => {
-                                btnSuccess.classList.remove('opacity-100', 'scale-100');
-                                btnSuccess.classList.add('opacity-0', 'scale-90');
-                                btnText.classList.remove('opacity-0');
-                                bookingBtn.disabled = false;
-                                
-                                feedbackWrapper.classList.remove('open');
-                                setTimeout(() => {
-                                    formSuccess.classList.add('hidden');
-                                    formSuccess.classList.remove('flex');
-                                }, 600);
-                            }, 4000);
-                        } else {
-                            throw new Error('Failed');
-                        }
-                    } catch (err) {
-                        btnSpinner.classList.add('hidden');
-                        
-                        btnError.classList.remove('opacity-0', 'scale-90');
-                        btnError.classList.add('opacity-100', 'scale-100');
-                        
-                        formError.classList.remove('hidden');
-                        formError.classList.add('flex');
-                        formSuccess.classList.add('hidden');
-                        formSuccess.classList.remove('flex');
+    function applyProductFilter(filterValue) {
+      filterChips.forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.filter === filterValue);
+      });
 
-                        feedbackWrapper.classList.add('open');
+      catalogCards.forEach(card => {
+        if (filterValue === 'all' || card.dataset.category === filterValue) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
 
-                        setTimeout(() => {
-                            btnError.classList.remove('opacity-100', 'scale-100');
-                            btnError.classList.add('opacity-0', 'scale-90');
-                            btnText.classList.remove('opacity-0');
-                            bookingBtn.disabled = false;
-                            
-                            feedbackWrapper.classList.remove('open');
-                            setTimeout(() => {
-                                formError.classList.add('hidden');
-                                formError.classList.remove('flex');
-                            }, 600);
-                        }, 4000);
-                    }
-                });
-            }
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        applyProductFilter(chip.dataset.filter);
+      });
+    });
 
-            // 6. Slider Logic
-            const track = document.getElementById('testimonial-track');
-            const originalSlides = Array.from(document.querySelectorAll('.original-slide'));
-            const dots = document.querySelectorAll('#slider-dots button');
+    document.querySelectorAll('[data-filter-target]').forEach(catCard => {
+      catCard.addEventListener('click', () => {
+        const targetFilter = catCard.dataset.filterTarget;
+        applyProductFilter(targetFilter);
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
 
-            const firstClone = originalSlides[0].cloneNode(true);
-            const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
-            firstClone.id = 'first-clone'; lastClone.id = 'last-clone';
-            track.appendChild(firstClone); track.insertBefore(lastClone, originalSlides[0]);
+    // 5. Quote Modal & Direct Product Enquiry
+    const quoteModal = document.getElementById('quoteModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const qNotesField = document.getElementById('qNotes');
 
-            const allSlides = document.querySelectorAll('.slider-item');
-            let currentIndex = 1;
-            let isDragging = false;
-            let isScrolling = false;
-            let startPosX = 0, startPosY = 0;
-            let currentTranslate = 0, prevTranslate = 0;
-            let animationID, autoPlayInterval;
+    function openQuoteModal(prefillText = '') {
+      closeDrawer();
+      if (prefillText) {
+        qNotesField.value = `Interested in: ${prefillText}`;
+      }
+      quoteModal.classList.add('open');
+    }
 
-            const getValidIndex = (index) => {
-                if (index < 0) return 0;
-                if (index > allSlides.length - 1) return allSlides.length - 1;
-                return index;
-            };
+    function closeQuoteModal() {
+      quoteModal.classList.remove('open');
+    }
 
-            const updatePosition = (animate = true) => {
-                currentIndex = getValidIndex(currentIndex);
-                const slideWidth = allSlides[0].offsetWidth;
-                track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
-                currentTranslate = currentIndex * -slideWidth;
-                track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
+    document.querySelectorAll('.open-quote-modal').forEach(btn => {
+      btn.addEventListener('click', () => openQuoteModal());
+    });
 
-                let activeDotIndex = currentIndex - 1;
-                if (currentIndex === 0) activeDotIndex = originalSlides.length - 1;
-                if (currentIndex === allSlides.length - 1) activeDotIndex = 0;
+    document.querySelectorAll('.enquire-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        openQuoteModal(btn.dataset.item || '');
+      });
+    });
 
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('bg-navy-900', index === activeDotIndex);
-                    dot.classList.toggle('bg-gray-200', index !== activeDotIndex);
-                });
-            };
+    closeModalBtn.addEventListener('click', closeQuoteModal);
+    quoteModal.addEventListener('click', (e) => {
+      if (e.target === quoteModal) closeQuoteModal();
+    });
 
-            updatePosition(false);
+    // 6. WhatsApp Quote Submission
+    document.getElementById('quoteForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('qName').value.trim();
+      const use = document.getElementById('qUse').value;
+      const budget = document.getElementById('qBudget').value;
+      const notes = document.getElementById('qNotes').value.trim();
 
-            track.addEventListener('transitionend', () => {
-                if (allSlides[currentIndex].id === 'first-clone') { currentIndex = 1; updatePosition(false); }
-                if (allSlides[currentIndex].id === 'last-clone') { currentIndex = originalSlides.length; updatePosition(false); }
-            });
-
-            const startAutoPlay = () => {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = setInterval(() => {
-                    if (!document.hidden) { currentIndex++; updatePosition(true); }
-                }, 3000);
-            };
-
-            document.addEventListener("visibilitychange", () => {
-                if (document.hidden) clearInterval(autoPlayInterval);
-                else startAutoPlay();
-            });
-
-            const touchStart = (event) => {
-                clearInterval(autoPlayInterval);
-                if (currentIndex === 0) { currentIndex = originalSlides.length; updatePosition(false); }
-                else if (currentIndex === allSlides.length - 1) { currentIndex = 1; updatePosition(false); }
-                isDragging = true; isScrolling = false;
-                startPosX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                startPosY = event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
-                currentTranslate = currentIndex * -allSlides[0].offsetWidth;
-                prevTranslate = currentTranslate;
-                track.style.transition = 'none';
-                track.classList.add('grabbing');
-                animationID = requestAnimationFrame(animation);
-            };
-
-            const touchMove = (event) => {
-                if (!isDragging) return;
-                const currentPosX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                const currentPosY = event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
-                const diffX = currentPosX - startPosX;
-                const diffY = currentPosY - startPosY;
-                if (!isScrolling) {
-                    if (Math.abs(diffY) > Math.abs(diffX)) {
-                        isScrolling = true; isDragging = false;
-                        track.classList.remove('grabbing');
-                        cancelAnimationFrame(animationID); return;
-                    }
-                }
-                if (!isScrolling) currentTranslate = prevTranslate + diffX;
-            };
-
-            const touchEnd = () => {
-                if (!isDragging && !isScrolling) { startAutoPlay(); return; }
-                if (isDragging) {
-                    isDragging = false;
-                    cancelAnimationFrame(animationID);
-                    track.classList.remove('grabbing');
-                    const movedBy = currentTranslate - prevTranslate;
-                    if (movedBy < -30) currentIndex++;
-                    else if (movedBy > 30) currentIndex--;
-                    updatePosition(true);
-                }
-                startAutoPlay();
-            };
-
-            const animation = () => {
-                track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
-                if (isDragging) requestAnimationFrame(animation);
-            };
-
-            track.addEventListener('touchstart', touchStart, { passive: true });
-            track.addEventListener('touchmove', touchMove, { passive: true });
-            track.addEventListener('touchend', touchEnd);
-            track.addEventListener('mousedown', touchStart);
-            track.addEventListener('mousemove', touchMove);
-            track.addEventListener('mouseup', touchEnd);
-            track.addEventListener('mouseleave', () => { if (isDragging) touchEnd(); startAutoPlay(); });
-
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => updatePosition(false), 100);
-            });
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    clearInterval(autoPlayInterval);
-                    currentIndex = index + 1;
-                    updatePosition(true);
-                    startAutoPlay();
-                });
-            });
-
-            startAutoPlay();
-
-            // 7. Insight Cards Two-Tap Logic
-            const insightCards = document.querySelectorAll('.insight-card');
-            insightCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (!this.classList.contains('hover-activated')) {
-                        e.preventDefault();
-                        insightCards.forEach(c => c.classList.remove('hover-activated'));
-                        this.classList.add('hover-activated');
-                    }
-                });
-            });
-
-            // 8. Right-Aligned Floating Menu Logic
-            const menuBtn = document.getElementById('menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuOverlay = document.getElementById('menu-overlay');
-            
-            if (menuBtn && mobileMenu && menuOverlay) {
-                const icon = menuBtn.querySelector('i');
-                const menuLinks = document.querySelectorAll('.menu-link');
-                let menuOpen = false;
-
-                const closeMenu = () => {
-                    menuOpen = false;
-                    document.body.style.overflow = '';
-                    icon.classList.remove('fa-xmark');
-                    icon.classList.add('fa-bars');
-                    
-                    // Hide overlay to stop blocking clicks
-                    menuOverlay.classList.add('hidden', 'pointer-events-none');
-                    menuOverlay.classList.remove('pointer-events-auto');
-                    
-                    mobileMenu.classList.remove('translate-y-0', 'scale-100', 'opacity-100', 'pointer-events-auto');
-                    mobileMenu.classList.add('-translate-y-12', 'scale-75', 'opacity-0', 'pointer-events-none');
-                    
-                    menuLinks.forEach(link => {
-                        link.classList.add('opacity-0', 'translate-y-3');
-                        link.classList.remove('opacity-100', 'translate-y-0');
-                    });
-                };
-
-                const openMenu = () => {
-                    menuOpen = true;
-                    document.body.style.overflow = 'hidden';
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-xmark');
-                    
-                    // Show overlay to absorb all background clicks
-                    menuOverlay.classList.remove('hidden', 'pointer-events-none');
-                    menuOverlay.classList.add('pointer-events-auto');
-                    
-                    mobileMenu.classList.remove('-translate-y-12', 'scale-75', 'opacity-0', 'pointer-events-none');
-                    mobileMenu.classList.add('translate-y-0', 'scale-100', 'opacity-100', 'pointer-events-auto');
-                    
-                    menuLinks.forEach((link, index) => {
-                        setTimeout(() => {
-                            link.classList.remove('opacity-0', 'translate-y-3');
-                            link.classList.add('opacity-100', 'translate-y-0');
-                        }, 100 + (index * 40));
-                    });
-                };
-
-                // Toggle menu on button click
-                menuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (menuOpen) closeMenu();
-                    else openMenu();
-                });
-
-                // Clicking the invisible overlay closes the menu and ABSORBS the click
-                menuOverlay.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    closeMenu();
-                });
-            }
-        });
-    </script>
+      const message = `Hi PC by Shubh!%0A*Name:* ${encodeURIComponent(name)}%0A*Requirement:* ${encodeURIComponent(use)}%0A*Budget:* ${encodeURIComponent(budget)}${notes ? `%0A*Notes:* ${encodeURIComponent(notes)}` : ''}`;
+      window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+      closeQuoteModal();
+    });
+  </script>
 </body>
 </html>
