@@ -867,16 +867,37 @@
     }
 
     .story-image {
+      position: relative;
       border-radius: 26px;
-      overflow: hidden;
-      box-shadow: 0 22px 44px -12px rgba(20, 23, 31, 0.22);
-      border: 4px solid #FFFFFF;
+      overflow: visible;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Ring circle behind the setup image, no border on the image itself */
+    .story-image::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 340px;
+      height: 340px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1.5px solid rgba(204, 184, 142, 0.55);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .story-image img {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 290px;
       object-fit: cover;
+      border-radius: 26px;
+      box-shadow: 0 18px 36px -14px rgba(15, 20, 30, 0.22);
       display: block;
     }
 
@@ -1074,7 +1095,6 @@
       margin-top: auto;
     }
 
-    /* Reading-revealed arrow prompt (no button box) after 3rd card */
     .view-more-arrow-wrap {
       grid-column: 1 / -1;
       display: flex;
@@ -1523,6 +1543,11 @@
       .story-grid {
         grid-template-columns: 1fr 1fr;
         gap: 44px;
+      }
+
+      .story-image::before {
+        width: 410px;
+        height: 410px;
       }
 
       .story-image img {
@@ -2186,7 +2211,7 @@
           </button>
         </div>
 
-        <!-- Card 4 (Hidden until View More or filtered) -->
+        <!-- Card 4 -->
         <article class="catalog-card extra-product hidden" data-category="accessories">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80" alt="Portronics Wireless Keyboard & Mouse">
@@ -2581,7 +2606,6 @@
       }, { passive: true });
     });
 
-    // Products filter + 3-card initial view + reading-revealed arrow prompt
     const filterChips = document.querySelectorAll('.filter-chip');
     const catalogCards = Array.from(document.querySelectorAll('.catalog-card'));
     const viewMoreArrowWrap = document.getElementById('viewMoreArrowWrap');
@@ -2624,7 +2648,6 @@
       }
     }
 
-    // Reveal the arrow smoothly only when the user is actively reading near the 3rd card / catalog area
     const readingObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
