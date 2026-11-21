@@ -41,24 +41,6 @@
       overflow-x: hidden;
     }
 
-    /* Subtle background grid strictly behind text, cards, and sections */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(to right, rgba(199, 154, 43, 0.065) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(199, 154, 43, 0.065) 1px, transparent 1px);
-      background-size: 44px 44px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    body > *:not(.drawer-backdrop):not(.drawer-panel):not(.floating-stack):not(.modal-overlay) {
-      position: relative;
-      z-index: 1;
-    }
-
     a {
       text-decoration: none;
       color: inherit;
@@ -388,9 +370,32 @@
 
     /* ================= HERO SECTION ================= */
     .hero {
+      position: relative;
       padding: 22px 0 36px;
-      background: radial-gradient(circle at 50% 0%, rgba(255, 249, 230, 0.85) 0%, rgba(250, 248, 243, 0.45) 68%);
+      background: radial-gradient(circle at 50% 0%, #FFF9E6 0%, var(--bg-cream) 68%);
       text-align: center;
+      overflow: hidden;
+    }
+
+    /* Larger grid behind the 3-image circle that fades smoothly into plain cream below */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(199, 154, 43, 0.085) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(199, 154, 43, 0.085) 1px, transparent 1px);
+      background-size: 72px 72px;
+      background-position: center top;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 42%, rgba(0, 0, 0, 0) 76%);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 42%, rgba(0, 0, 0, 0) 76%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > .container {
+      position: relative;
+      z-index: 1;
     }
 
     .hero-grid {
@@ -487,7 +492,6 @@
       mix-blend-mode: multiply;
     }
 
-    /* 18s shared cycle: Main = 3 loops (6s), Laptop = 5 loops (3.6s), Yellow = 4 loops (4.5s) */
     @keyframes floatMain {
       0%, 100% {
         transform: translate3d(-50%, 0px, 0) rotate(0deg);
@@ -678,7 +682,7 @@
     }
 
     .section-alt {
-      background: rgba(246, 242, 232, 0.78);
+      background: var(--bg-cream-alt);
     }
 
     .section-head {
@@ -1217,7 +1221,7 @@
 
     /* ================= FOOTER ================= */
     .footer {
-      background: rgba(244, 239, 228, 0.92);
+      background: #F4EFE4;
       border-top: 1px solid #E6DEC8;
       padding: 48px 0 28px;
       color: var(--ink-muted);
@@ -1418,6 +1422,12 @@
 
       .hero {
         padding: 46px 0 54px;
+      }
+
+      .hero::before {
+        background-size: 84px 84px;
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 55%, rgba(0, 0, 0, 0) 92%);
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 55%, rgba(0, 0, 0, 0) 92%);
       }
 
       .hero-grid {
