@@ -381,28 +381,42 @@
       gap: 28px;
     }
 
-    /* Floating 3-Card Collage (Exact Video Replica) */
+    /* Floating 3-Card Collage (No Borders, No Glow, Ring Circle + Float & Micro-Tilt) */
     .hero-collage {
       position: relative;
       width: 100%;
       max-width: 390px;
-      height: 315px;
+      height: 330px;
       margin: 0 auto;
+    }
+
+    .hero-collage::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 335px;
+      height: 335px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1.5px solid rgba(212, 198, 168, 0.45);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .collage-main {
       position: absolute;
-      top: 0;
+      top: 12px;
       left: 50%;
-      transform: translateX(-50%);
       width: 72%;
-      height: 285px;
+      height: 295px;
       border-radius: 26px;
       overflow: hidden;
       background: #0B1220;
-      box-shadow: 0 24px 48px -12px rgba(11, 18, 32, 0.35);
-      border: 3px solid #FFFFFF;
+      box-shadow: 0 18px 36px -14px rgba(15, 20, 30, 0.28);
       z-index: 1;
+      will-change: transform;
+      animation: floatMain 6.5s ease-in-out infinite;
     }
 
     .collage-main img {
@@ -413,17 +427,17 @@
 
     .collage-laptop {
       position: absolute;
-      top: 18px;
-      right: 0;
+      top: 22px;
+      right: 2px;
       width: 47%;
-      height: 122px;
+      height: 124px;
       border-radius: 20px;
       overflow: hidden;
       background: #EFECE6;
-      border: 3.5px solid #FFFFFF;
-      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 14px 28px -10px rgba(15, 20, 30, 0.16);
       z-index: 2;
-      animation: floatSlow 5s ease-in-out infinite;
+      will-change: transform;
+      animation: floatLaptop 5.6s ease-in-out infinite;
     }
 
     .collage-laptop img {
@@ -434,17 +448,17 @@
 
     .collage-yellow {
       position: absolute;
-      bottom: 8px;
-      left: 0;
+      bottom: 12px;
+      left: 2px;
       width: 46%;
-      height: 152px;
+      height: 154px;
       border-radius: 22px;
       overflow: hidden;
       background: #FCE34D;
-      border: 3.5px solid #FFFFFF;
-      box-shadow: 0 18px 34px -8px rgba(199, 154, 43, 0.28);
+      box-shadow: 0 14px 28px -10px rgba(15, 20, 30, 0.16);
       z-index: 3;
-      animation: floatSlow 5s ease-in-out infinite reverse;
+      will-change: transform;
+      animation: floatYellow 6s ease-in-out infinite;
     }
 
     .collage-yellow img {
@@ -454,9 +468,31 @@
       mix-blend-mode: multiply;
     }
 
-    @keyframes floatSlow {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
+    @keyframes floatMain {
+      0%, 100% {
+        transform: translate3d(-50%, 0px, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate3d(-50%, -6px, 0) rotate(-0.8deg);
+      }
+    }
+
+    @keyframes floatLaptop {
+      0%, 100% {
+        transform: translate3d(0, 0px, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate3d(-2px, -8px, 0) rotate(1.4deg);
+      }
+    }
+
+    @keyframes floatYellow {
+      0%, 100% {
+        transform: translate3d(0, 0px, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate3d(2px, -7px, 0) rotate(-1.5deg);
+      }
     }
 
     .hero-copy {
@@ -673,7 +709,6 @@
       transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Exact gold rotated icon tile animation from the video */
     .feature-card:hover .icon-tile,
     .feature-card.is-active .icon-tile {
       background: linear-gradient(135deg, #DDB347 0%, #B8881E 100%);
@@ -1371,12 +1406,17 @@
       .hero-collage {
         order: 2;
         max-width: 440px;
-        height: 360px;
+        height: 375px;
         margin: 0;
       }
 
+      .hero-collage::before {
+        width: 385px;
+        height: 385px;
+      }
+
       .collage-main {
-        height: 325px;
+        height: 335px;
       }
 
       .hero-ctas {
@@ -1460,7 +1500,7 @@
     </div>
   </header>
 
-  <!-- ================= SLIDE-OUT DRAWER (EXACT VIDEO REPLICA) ================= -->
+  <!-- ================= SLIDE-OUT DRAWER ================= -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="drawer-panel" id="drawerPanel" aria-label="Mobile Navigation">
     <div>
@@ -1603,7 +1643,6 @@
       <span class="brand-item">SAMSUNG</span>
       <span class="brand-item">LOGITECH G</span>
       <span class="brand-item">GIGABYTE</span>
-      <!-- Duplicated for seamless loop -->
       <span class="brand-item">ASUS ROG</span>
       <span class="brand-item">CORSAIR</span>
       <span class="brand-item">NVIDIA</span>
@@ -1745,7 +1784,6 @@
       </div>
 
       <div class="cards-grid three-col">
-        <!-- Pick 1 -->
         <article class="pick-card">
           <div class="pick-media">
             <span class="status-badge">POPULAR</span>
@@ -1762,7 +1800,6 @@
           </div>
         </article>
 
-        <!-- Pick 2 -->
         <article class="pick-card">
           <div class="pick-media">
             <span class="status-badge">BEST SELLER</span>
@@ -1779,7 +1816,6 @@
           </div>
         </article>
 
-        <!-- Pick 3 -->
         <article class="pick-card">
           <div class="pick-media">
             <span class="status-badge">NEW</span>
@@ -1990,7 +2026,7 @@
     </div>
   </section>
 
-  <!-- ================= PRODUCTS WE DEAL (FILTERABLE CATALOG FROM 1:03–1:15) ================= -->
+  <!-- ================= PRODUCTS WE DEAL ================= -->
   <section class="section" id="products">
     <div class="container">
       <div class="section-head">
@@ -2001,7 +2037,6 @@
         </p>
       </div>
 
-      <!-- Filter Chips -->
       <div class="filter-pills" id="productFilters">
         <button class="filter-chip active" data-filter="all">All</button>
         <button class="filter-chip" data-filter="gaming">Gaming PCs</button>
@@ -2013,7 +2048,6 @@
       </div>
 
       <div class="cards-grid three-col" id="catalogGrid">
-        <!-- Item 1 -->
         <article class="catalog-card" data-category="gaming">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" alt="Shubh Apex RTX 4070 Gaming Rig">
@@ -2030,7 +2064,6 @@
           </div>
         </article>
 
-        <!-- Item 2 -->
         <article class="catalog-card" data-category="laptops">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80" alt="Aurora Pro 16 Laptop">
@@ -2047,7 +2080,6 @@
           </div>
         </article>
 
-        <!-- Item 3 (Exact GPU card from 1:12) -->
         <article class="catalog-card" data-category="components">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=800&q=80" alt="Blaze RTX 4070 GPU">
@@ -2064,7 +2096,6 @@
           </div>
         </article>
 
-        <!-- Item 4 (Exact Mouse card from 1:14) -->
         <article class="catalog-card" data-category="accessories">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80" alt="Vortex Wireless Mouse">
@@ -2081,7 +2112,6 @@
           </div>
         </article>
 
-        <!-- Item 5 (Exact Headphones card from 1:15) -->
         <article class="catalog-card" data-category="accessories">
           <div class="catalog-img" style="background:#FCE34D;">
             <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Echo Surround Headphones">
@@ -2098,7 +2128,6 @@
           </div>
         </article>
 
-        <!-- Item 6 -->
         <article class="catalog-card" data-category="displays">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80" alt="27-inch 180Hz Fast IPS Monitor">
@@ -2115,7 +2144,6 @@
           </div>
         </article>
 
-        <!-- Item 7 -->
         <article class="catalog-card" data-category="storage">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=80" alt="2TB PCIe Gen4 NVMe SSD">
@@ -2236,7 +2264,6 @@
         </a>
       </div>
 
-      <!-- Ready to Build Your Dream Setup? -->
       <div class="cta-box">
         <h2>Ready to Build Your <span>Dream Setup?</span></h2>
         <p>
@@ -2313,7 +2340,7 @@
     </div>
   </footer>
 
-  <!-- ================= FLOATING ACTION BUTTONS (SCROLL TOP + WHATSAPP) ================= -->
+  <!-- ================= FLOATING ACTION BUTTONS ================= -->
   <div class="floating-stack">
     <button class="fab-top" id="scrollTopBtn" aria-label="Scroll to top">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
@@ -2375,7 +2402,6 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // 1. Slide-out Drawer Controls
     const openDrawerBtn = document.getElementById('openDrawer');
     const closeDrawerBtn = document.getElementById('closeDrawer');
     const drawerPanel = document.getElementById('drawerPanel');
@@ -2399,7 +2425,6 @@
     drawerBackdrop.addEventListener('click', closeDrawer);
     drawerNavItems.forEach(item => item.addEventListener('click', closeDrawer));
 
-    // 2. Sticky Navbar Shadow & Floating Scroll-to-Top Button
     const navbar = document.getElementById('navbar');
     const scrollTopBtn = document.getElementById('scrollTopBtn');
 
@@ -2421,7 +2446,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // 3. Mobile Touch Feedback for Tilted Gold Icon Cards (Matches Video 0:06–0:32)
     document.querySelectorAll('.tilt-card').forEach(card => {
       card.addEventListener('touchstart', () => {
         document.querySelectorAll('.tilt-card').forEach(c => c.classList.remove('is-active'));
@@ -2429,7 +2453,6 @@
       }, { passive: true });
     });
 
-    // 4. Product Filter Chips + Category Card Jump
     const filterChips = document.querySelectorAll('.filter-chip');
     const catalogCards = document.querySelectorAll('.catalog-card');
 
@@ -2461,7 +2484,6 @@
       });
     });
 
-    // 5. Quote Modal & Direct Product Enquiry
     const quoteModal = document.getElementById('quoteModal');
     const closeModalBtn = document.getElementById('closeModal');
     const qNotesField = document.getElementById('qNotes');
@@ -2493,7 +2515,6 @@
       if (e.target === quoteModal) closeQuoteModal();
     });
 
-    // 6. WhatsApp Quote Submission
     document.getElementById('quoteForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('qName').value.trim();
