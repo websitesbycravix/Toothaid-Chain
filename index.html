@@ -33,11 +33,30 @@
     }
 
     body {
+      position: relative;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-cream);
       color: var(--ink-dark);
       line-height: 1.55;
       overflow-x: hidden;
+    }
+
+    /* Subtle background grid strictly behind text, cards, and sections */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(199, 154, 43, 0.065) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(199, 154, 43, 0.065) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > *:not(.drawer-backdrop):not(.drawer-panel):not(.floating-stack):not(.modal-overlay) {
+      position: relative;
+      z-index: 1;
     }
 
     a {
@@ -370,7 +389,7 @@
     /* ================= HERO SECTION ================= */
     .hero {
       padding: 22px 0 36px;
-      background: radial-gradient(circle at 50% 0%, #FFF9E6 0%, var(--bg-cream) 65%);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 249, 230, 0.85) 0%, rgba(250, 248, 243, 0.45) 68%);
       text-align: center;
     }
 
@@ -381,12 +400,12 @@
       gap: 28px;
     }
 
-    /* Floating 3-Card Collage (No Borders, No Glow, Ring Circle + Fast Float & Micro-Tilt) */
+    /* Floating 3-Card Collage (Larger Ring, Wider Non-Attracting Motion, ~4-5 Cycle Convergence) */
     .hero-collage {
       position: relative;
       width: 100%;
-      max-width: 390px;
-      height: 330px;
+      max-width: 410px;
+      height: 365px;
       margin: 0 auto;
     }
 
@@ -395,18 +414,18 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 335px;
-      height: 335px;
+      width: 372px;
+      height: 372px;
       transform: translate(-50%, -50%);
       border-radius: 50%;
-      border: 1.5px solid rgba(212, 198, 168, 0.45);
+      border: 1.5px solid rgba(204, 184, 142, 0.52);
       pointer-events: none;
       z-index: 0;
     }
 
     .collage-main {
       position: absolute;
-      top: 12px;
+      top: 26px;
       left: 50%;
       width: 72%;
       height: 295px;
@@ -416,7 +435,7 @@
       box-shadow: 0 18px 36px -14px rgba(15, 20, 30, 0.28);
       z-index: 1;
       will-change: transform;
-      animation: floatMain 4.2s ease-in-out infinite;
+      animation: floatMain 6s ease-in-out infinite;
     }
 
     .collage-main img {
@@ -427,7 +446,7 @@
 
     .collage-laptop {
       position: absolute;
-      top: 22px;
+      top: 28px;
       right: 2px;
       width: 47%;
       height: 124px;
@@ -448,7 +467,7 @@
 
     .collage-yellow {
       position: absolute;
-      bottom: 12px;
+      bottom: 20px;
       left: 2px;
       width: 46%;
       height: 154px;
@@ -458,7 +477,7 @@
       box-shadow: 0 14px 28px -10px rgba(15, 20, 30, 0.16);
       z-index: 3;
       will-change: transform;
-      animation: floatYellow 3.9s ease-in-out infinite;
+      animation: floatYellow 4.5s ease-in-out infinite;
     }
 
     .collage-yellow img {
@@ -468,30 +487,40 @@
       mix-blend-mode: multiply;
     }
 
+    /* 18s shared cycle: Main = 3 loops (6s), Laptop = 5 loops (3.6s), Yellow = 4 loops (4.5s) */
     @keyframes floatMain {
       0%, 100% {
         transform: translate3d(-50%, 0px, 0) rotate(0deg);
       }
-      50% {
-        transform: translate3d(-50%, -7px, 0) rotate(-0.9deg);
+      25% {
+        transform: translate3d(-52%, -11px, 0) rotate(-1.5deg);
+      }
+      75% {
+        transform: translate3d(-48%, 7px, 0) rotate(1.3deg);
       }
     }
 
     @keyframes floatLaptop {
       0%, 100% {
-        transform: translate3d(0, 0px, 0) rotate(0deg);
+        transform: translate3d(0px, 0px, 0) rotate(0deg);
       }
-      50% {
-        transform: translate3d(-2.5px, -9px, 0) rotate(1.5deg);
+      30% {
+        transform: translate3d(7px, -12px, 0) rotate(2.3deg);
+      }
+      70% {
+        transform: translate3d(3px, 8px, 0) rotate(-1.4deg);
       }
     }
 
     @keyframes floatYellow {
       0%, 100% {
-        transform: translate3d(0, 0px, 0) rotate(0deg);
+        transform: translate3d(0px, 0px, 0) rotate(0deg);
       }
-      50% {
-        transform: translate3d(2.5px, -8px, 0) rotate(-1.6deg);
+      35% {
+        transform: translate3d(-7px, 11px, 0) rotate(-2.4deg);
+      }
+      75% {
+        transform: translate3d(-3px, -9px, 0) rotate(1.5deg);
       }
     }
 
@@ -649,7 +678,7 @@
     }
 
     .section-alt {
-      background: var(--bg-cream-alt);
+      background: rgba(246, 242, 232, 0.78);
     }
 
     .section-head {
@@ -1188,7 +1217,7 @@
 
     /* ================= FOOTER ================= */
     .footer {
-      background: #F4EFE4;
+      background: rgba(244, 239, 228, 0.92);
       border-top: 1px solid #E6DEC8;
       padding: 48px 0 28px;
       color: var(--ink-muted);
@@ -1405,18 +1434,18 @@
 
       .hero-collage {
         order: 2;
-        max-width: 440px;
-        height: 375px;
+        max-width: 460px;
+        height: 430px;
         margin: 0;
       }
 
       .hero-collage::before {
-        width: 385px;
-        height: 385px;
+        width: 430px;
+        height: 430px;
       }
 
       .collage-main {
-        height: 335px;
+        height: 340px;
       }
 
       .hero-ctas {
