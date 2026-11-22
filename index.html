@@ -2706,6 +2706,8 @@
     const viewAllProductsBtn = document.getElementById('viewAllProductsBtn');
 
     let allCatalogCards = Array.from(document.querySelectorAll('#catalogGrid > .catalog-card'));
+    let orderedAllCards = [];
+    let hasShuffledAllOnce = false;
     let currentFilter = 'all';
     let expandedAllView = false;
 
@@ -2754,6 +2756,22 @@
       return JSON.parse(match[1]);
     }
 
+    function shuffleArrayOnce(arr) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function ensureShuffledOnce() {
+      if (!hasShuffledAllOnce) {
+        orderedAllCards = shuffleArrayOnce(allCatalogCards);
+        hasShuffledAllOnce = true;
+      }
+    }
+
     function initCardSpecToggles(containerEl) {
       containerEl.querySelectorAll('.catalog-card').forEach(card => {
         const list = card.querySelector('.check-list');
@@ -2799,7 +2817,10 @@
     }
 
     function updateCatalogView() {
-      const matchingCards = allCatalogCards.filter(card =>
+      ensureShuffledOnce();
+
+      const sourceList = currentFilter === 'all' ? orderedAllCards : allCatalogCards;
+      const matchingCards = sourceList.filter(card =>
         currentFilter === 'all' || card.dataset.category === currentFilter
       );
 
@@ -2943,6 +2964,7 @@
 
         initCardSpecToggles(catalogGrid);
         allCatalogCards = Array.from(document.querySelectorAll('#catalogGrid > .catalog-card'));
+        hasShuffledAllOnce = false;
         updateCatalogView();
       } catch (err) {
         console.warn('Google Sheet sync skipped:', err);
