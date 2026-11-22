@@ -1137,6 +1137,7 @@
     }
 
     .catalog-img {
+      position: relative;
       height: 220px;
       background: #11161F;
       overflow: hidden;
@@ -2770,14 +2771,29 @@
         ? `<img src="${escapeHtml(item.imageLink)}" alt="${escapeHtml(item.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=&quot;catalog-img-fallback&quot;>Image unavailable</span>'">`
         : `<span class="catalog-img-fallback">Sheet Product Image</span>`;
 
+      const specLines = item.specs
+        ? item.specs.split(/\||\n/).map(s => s.trim()).filter(Boolean)
+        : [`Category: ${item.categoryLabel}`];
+
+      const bulletItems = specLines
+        .map(line => `<li><span class="check-icon">&#10003;</span> ${escapeHtml(line)}</li>`)
+        .join('');
+
+      const statusBullet = item.status
+        ? `<li><span class="check-icon">&#10003;</span> Status: ${escapeHtml(item.status)}</li>`
+        : '';
+
       article.innerHTML = `
-        <div class="catalog-img">${mediaHtml}</div>
+        <div class="catalog-img">
+          <span class="status-badge">${escapeHtml(item.status || 'IN STOCK')}</span>
+          ${mediaHtml}
+        </div>
         <div class="catalog-body">
           <div class="pick-cat">${escapeHtml(item.categoryLabel.toUpperCase())}</div>
           <h3 class="pick-title">${escapeHtml(item.name)}</h3>
           <ul class="check-list">
-            <li><span class="check-icon">&#10003;</span> Category: ${escapeHtml(item.categoryLabel)}</li>
-            <li><span class="check-icon">&#10003;</span> Status: ${escapeHtml(item.status)}</li>
+            ${bulletItems}
+            ${statusBullet}
           </ul>
           <button type="button" class="btn-gold enquire-item">Enquire Now</button>
         </div>
@@ -2802,6 +2818,8 @@
         const idxImg = cols.indexOf('image link') !== -1 ? cols.indexOf('image link') : 1;
         const idxCat = cols.indexOf('category') !== -1 ? cols.indexOf('category') : 2;
         const idxStatus = cols.indexOf('status') !== -1 ? cols.indexOf('status') : 3;
+        const specsColIdx = cols.findIndex(label => label.includes('spec'));
+        const idxSpecs = specsColIdx !== -1 ? specsColIdx : 4;
 
         const sheetItems = rows
           .map(row => {
@@ -2809,13 +2827,15 @@
             const name = String(cells[idxName]?.v ?? '').trim();
             const imageLink = sanitizeHttpUrl(cells[idxImg]?.v ?? '');
             const categoryLabel = String(cells[idxCat]?.v ?? '').trim() || 'Hardware';
-            const status = String(cells[idxStatus]?.v ?? '').trim() || 'Available';
+            const status = String(cells[idxStatus]?.v ?? '').trim() || 'In Stock';
+            const specs = String(cells[idxSpecs]?.v ?? '').trim();
             return {
               name,
               imageLink,
               categoryLabel,
               categorySlug: mapCategorySlug(categoryLabel),
-              status
+              status,
+              specs
             };
           })
           .filter(item => item.name.length > 0);
