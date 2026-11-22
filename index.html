@@ -743,7 +743,7 @@
       line-height: 1.6;
     }
 
-    /* ================= CATEGORY & PROMISE CARDS (SMOOTH, NO FLICKER, NO GLOW) ================= */
+    /* ================= CATEGORY & PROMISE CARDS ================= */
     .cards-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -807,7 +807,7 @@
       text-align: center;
     }
 
-    /* ================= FEATURED PICKS (HOVER EFFECT, NO GLOW) ================= */
+    /* ================= FEATURED PICKS ================= */
     .pick-card {
       background: #FFFFFF;
       border-radius: 24px;
@@ -877,8 +877,15 @@
     .pick-title {
       font-size: 19px;
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       color: var(--ink-dark);
+    }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: 800;
+      color: #8E6A14;
+      margin-bottom: 12px;
     }
 
     .check-list {
@@ -886,7 +893,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-size: 14px;
       color: var(--ink-muted);
     }
@@ -897,10 +904,31 @@
       gap: 9px;
     }
 
+    .check-list li.extra-spec-item.collapsed {
+      display: none;
+    }
+
     .check-icon {
       color: var(--gold-main);
       font-weight: 800;
       flex-shrink: 0;
+    }
+
+    .more-details-btn {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #9A7418;
+      padding: 2px 0 12px;
+      transition: color 0.2s ease, gap 0.2s ease;
+    }
+
+    .more-details-btn:hover {
+      color: var(--ink-dark);
+      gap: 8px;
     }
 
     .pick-body .btn-outline {
@@ -1008,7 +1036,7 @@
       font-weight: 500;
     }
 
-    /* ================= EXPERT SERVICES (HOVER EFFECT, NO GLOW) ================= */
+    /* ================= EXPERT SERVICES ================= */
     .service-card {
       background: #FFFFFF;
       border-radius: 24px;
@@ -1227,7 +1255,7 @@
       transition: transform 0.22s ease;
     }
 
-    /* ================= TESTIMONIALS (HOVER EFFECT, NO GLOW) ================= */
+    /* ================= TESTIMONIALS ================= */
     .review-card {
       background: #FFFFFF;
       border-radius: 22px;
@@ -2191,6 +2219,7 @@
           <div class="catalog-body">
             <div class="pick-cat">GAMING PC</div>
             <h3 class="pick-title">Shubh Apex RTX 4070 Rig</h3>
+            <div class="product-price">&#8377;1,44,990</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Ryzen 7 7800X3D &bull; 32GB DDR5 RAM</li>
               <li><span class="check-icon">&#10003;</span> ASUS TUF Motherboard &bull; 1TB NVMe SSD</li>
@@ -2208,6 +2237,7 @@
           <div class="catalog-body">
             <div class="pick-cat">MOTHERBOARD</div>
             <h3 class="pick-title">ASUS TUF Gaming B650</h3>
+            <div class="product-price">&#8377;21,490</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> AM5 socket &bull; DDR5 EXPO support</li>
               <li><span class="check-icon">&#10003;</span> PCIe 5.0 M.2 &amp; Wi-Fi 6E</li>
@@ -2225,6 +2255,7 @@
           <div class="catalog-body">
             <div class="pick-cat">ZEBRONICS PERIPHERALS</div>
             <h3 class="pick-title">Zebronics Mechanical Keyboard</h3>
+            <div class="product-price">&#8377;2,499</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Tactile switches &amp; backlit keys</li>
               <li><span class="check-icon">&#10003;</span> Braided cable &amp; anti-ghosting</li>
@@ -2250,6 +2281,7 @@
           <div class="catalog-body">
             <div class="pick-cat">PORTRONICS GEAR</div>
             <h3 class="pick-title">Portronics Wireless Mouse &amp; KB</h3>
+            <div class="product-price">&#8377;1,599</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Dual-mode / 2.4GHz wireless</li>
               <li><span class="check-icon">&#10003;</span> Silent clicks &amp; ergonomic grip</li>
@@ -2267,6 +2299,7 @@
           <div class="catalog-body">
             <div class="pick-cat">MONITOR</div>
             <h3 class="pick-title">27" FHD/QHD 180Hz Monitor</h3>
+            <div class="product-price">&#8377;16,990</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Fast IPS panel &bull; 1ms response</li>
               <li><span class="check-icon">&#10003;</span> Adaptive-Sync &amp; vibrant colors</li>
@@ -2284,6 +2317,7 @@
           <div class="catalog-body">
             <div class="pick-cat">CABINET</div>
             <h3 class="pick-title">Mesh Airflow ARGB Cabinet</h3>
+            <div class="product-price">&#8377;5,490</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Tempered glass &amp; mesh front</li>
               <li><span class="check-icon">&#10003;</span> Supports 360mm radiator &amp; long GPUs</li>
@@ -2301,6 +2335,7 @@
           <div class="catalog-body">
             <div class="pick-cat">RAM MEMORY</div>
             <h3 class="pick-title">32GB (2x16GB) DDR5 6000MHz RAM</h3>
+            <div class="product-price">&#8377;9,890</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Low-latency dual-channel kit</li>
               <li><span class="check-icon">&#10003;</span> XMP 3.0 &amp; AMD EXPO ready</li>
@@ -2318,6 +2353,7 @@
           <div class="catalog-body">
             <div class="pick-cat">SSD STORAGE</div>
             <h3 class="pick-title">1TB / 2TB PCIe Gen4 NVMe SSD</h3>
+            <div class="product-price">&#8377;6,790</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> Fast boot, game loads &amp; scratch disk</li>
               <li><span class="check-icon">&#10003;</span> M.2 2280 form factor &bull; heatsink option</li>
@@ -2335,6 +2371,7 @@
           <div class="catalog-body">
             <div class="pick-cat">LAPTOP</div>
             <h3 class="pick-title">ASUS / HP / Lenovo Gaming Laptops</h3>
+            <div class="product-price">&#8377;74,990</div>
             <ul class="check-list">
               <li><span class="check-icon">&#10003;</span> High-refresh displays &amp; RTX graphics</li>
               <li><span class="check-icon">&#10003;</span> Coding, college &amp; portable gaming</li>
@@ -2655,6 +2692,7 @@
         el.id === 'toggleMoreProducts' ||
         el.id === 'viewAllProductsBtn' ||
         el.classList.contains('filter-chip') ||
+        el.classList.contains('more-details-btn') ||
         Boolean(el.closest('[data-filter-target]'));
 
       if (!isWorkingControl) {
@@ -2697,6 +2735,17 @@
       return /^https?:\/\//i.test(cleaned) ? cleaned : '';
     }
 
+    function formatPriceDisplay(rawPrice) {
+      const trimmed = String(rawPrice ?? '').trim();
+      if (!trimmed) return 'Price on Request';
+      if (trimmed.startsWith('₹') || /^rs\.?/i.test(trimmed)) return trimmed;
+      const numeric = Number(trimmed.replace(/[^0-9.]/g, ''));
+      if (!Number.isNaN(numeric) && numeric > 0) {
+        return `₹${numeric.toLocaleString('en-IN')}`;
+      }
+      return trimmed;
+    }
+
     function mapCategorySlug(rawCategory) {
       const c = String(rawCategory ?? '').trim().toLowerCase();
       if (c.includes('gaming') || c.includes('pc') || c.includes('rig') || c.includes('desktop')) return 'gaming';
@@ -2714,6 +2763,50 @@
         throw new Error('Unexpected Google Sheet response format');
       }
       return JSON.parse(match[1]);
+    }
+
+    function initCardSpecToggles(containerEl) {
+      containerEl.querySelectorAll('.catalog-card').forEach(card => {
+        const list = card.querySelector('.check-list');
+        if (!list) return;
+        const items = Array.from(list.querySelectorAll('li'));
+        if (items.length <= 3) return;
+
+        items.forEach((li, idx) => {
+          if (idx >= 3) {
+            li.classList.add('extra-spec-item', 'collapsed');
+          }
+        });
+
+        let toggleBtn = card.querySelector('.more-details-btn');
+        if (!toggleBtn) {
+          toggleBtn = document.createElement('button');
+          toggleBtn.type = 'button';
+          toggleBtn.className = 'more-details-btn';
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.innerHTML = '<span>More details</span> <span>&rarr;</span>';
+          list.insertAdjacentElement('afterend', toggleBtn);
+          attachPressFeedback(toggleBtn);
+        }
+
+        if (!toggleBtn.dataset.detailBound) {
+          toggleBtn.dataset.detailBound = '1';
+          toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+            const nextExpanded = !isExpanded;
+            toggleBtn.setAttribute('aria-expanded', String(nextExpanded));
+            items.forEach((li, idx) => {
+              if (idx >= 3) {
+                li.classList.toggle('collapsed', !nextExpanded);
+              }
+            });
+            toggleBtn.innerHTML = nextExpanded
+              ? '<span>Less details</span> <span>&uarr;</span>'
+              : '<span>More details</span> <span>&rarr;</span>';
+          });
+        }
+      });
     }
 
     function updateCatalogView() {
@@ -2781,6 +2874,8 @@
         ? `<li><span class="check-icon">&#10003;</span> Status: ${escapeHtml(item.status)}</li>`
         : '';
 
+      const priceDisplay = formatPriceDisplay(item.price);
+
       article.innerHTML = `
         <div class="catalog-img">
           <span class="status-badge">${escapeHtml(item.status || 'IN STOCK')}</span>
@@ -2789,6 +2884,7 @@
         <div class="catalog-body">
           <div class="pick-cat">${escapeHtml(item.categoryLabel.toUpperCase())}</div>
           <h3 class="pick-title">${escapeHtml(item.name)}</h3>
+          <div class="product-price">${escapeHtml(priceDisplay)}</div>
           <ul class="check-list">
             ${bulletItems}
             ${statusBullet}
@@ -2818,6 +2914,8 @@
         const idxStatus = cols.indexOf('status') !== -1 ? cols.indexOf('status') : 3;
         const specsColIdx = cols.findIndex(label => label.includes('spec'));
         const idxSpecs = specsColIdx !== -1 ? specsColIdx : 4;
+        const priceColIdx = cols.findIndex(label => label.includes('price'));
+        const idxPrice = priceColIdx !== -1 ? priceColIdx : 5;
 
         const sheetItems = rows
           .map(row => {
@@ -2827,13 +2925,16 @@
             const categoryLabel = String(cells[idxCat]?.v ?? '').trim() || 'Hardware';
             const status = String(cells[idxStatus]?.v ?? '').trim() || 'In Stock';
             const specs = String(cells[idxSpecs]?.v ?? '').trim();
+            const priceCell = cells[idxPrice];
+            const price = String(priceCell?.f ?? priceCell?.v ?? '').trim();
             return {
               name,
               imageLink,
               categoryLabel,
               categorySlug: mapCategorySlug(categoryLabel),
               status,
-              specs
+              specs,
+              price
             };
           })
           .filter(item =>
@@ -2848,6 +2949,7 @@
           catalogGrid.appendChild(cardEl);
         });
 
+        initCardSpecToggles(catalogGrid);
         allCatalogCards = Array.from(document.querySelectorAll('#catalogGrid > .catalog-card'));
         updateCatalogView();
       } catch (err) {
@@ -2897,6 +2999,7 @@
       applyProductFilter('all');
     });
 
+    initCardSpecToggles(catalogGrid);
     updateCatalogView();
     syncGoogleSheetProducts();
   </script>
