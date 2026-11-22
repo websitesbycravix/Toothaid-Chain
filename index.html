@@ -1339,7 +1339,11 @@
       box-shadow: var(--shadow-soft);
       max-width: 540px;
       margin: 0 auto;
-      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, margin-top 0.28s ease;
+    }
+
+    .store-card.map-open {
+      margin-top: 14px;
     }
 
     .store-card:hover,
@@ -1363,6 +1367,45 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .studio-map-reveal {
+      display: none;
+      margin-top: 16px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #E5DEC9;
+      background: #FAF6EC;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .studio-map-reveal.open {
+      display: block;
+    }
+
+    .studio-map-link {
+      display: block;
+      position: relative;
+    }
+
+    .studio-map-link iframe {
+      width: 100%;
+      height: 195px;
+      border: 0;
+      display: block;
+      pointer-events: none;
+    }
+
+    .studio-map-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #8E6A14;
+      background: #FFFDF7;
+      border-top: 1px solid #EFE9D8;
     }
 
     .cta-box {
@@ -2436,7 +2479,7 @@
         </p>
       </div>
 
-      <div class="store-card fade-reveal" style="margin-bottom: 44px;">
+      <div class="store-card fade-reveal" id="studioStoreCard" style="margin-bottom: 44px;">
         <div class="icon-tile" style="margin-bottom: 14px; background-color: #C79A2B; color: #FFF;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
@@ -2455,9 +2498,31 @@
             Mon–Sat: 10:30 AM – 8:30 PM
           </li>
         </ul>
-        <a href="#contact" class="know-more">
+
+        <button type="button" class="know-more" id="getDirectionsBtn" aria-expanded="false" aria-controls="studioMapReveal">
           Get directions <span>&rarr;</span>
-        </a>
+        </button>
+
+        <div class="studio-map-reveal" id="studioMapReveal">
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Main+Road,+Near+Firayalal+Chowk,+Ranchi"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="studio-map-link"
+            aria-label="Open PC by Shubh Main Studio in Google Maps"
+          >
+            <iframe
+              title="PC by Shubh Main Studio Map"
+              src="https://www.google.com/maps?q=Main+Road,+Near+Firayalal+Chowk,+Ranchi&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <div class="studio-map-footer">
+              <span>Main Road, Near Firayalal Chowk, Ranchi</span>
+              <span>Open in Maps &rarr;</span>
+            </div>
+          </a>
+        </div>
       </div>
 
       <div class="cta-box fade-reveal">
@@ -2617,6 +2682,20 @@
       });
     });
 
+    // Get directions toggle: shifts card down slightly & reveals map; clicking map opens Google Maps
+    const getDirectionsBtn = document.getElementById('getDirectionsBtn');
+    const studioMapReveal = document.getElementById('studioMapReveal');
+    const studioStoreCard = document.getElementById('studioStoreCard');
+
+    if (getDirectionsBtn && studioMapReveal && studioStoreCard) {
+      getDirectionsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = studioMapReveal.classList.toggle('open');
+        studioStoreCard.classList.toggle('map-open', isOpen);
+        getDirectionsBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
     // Soft, gradual fade-in reveal (unobserved after reveal so scrolling stays lag-free)
     const fadeTargets = document.querySelectorAll('.fade-reveal');
     const fadeObserver = new IntersectionObserver((entries, obs) => {
@@ -2672,6 +2751,8 @@
         el.id === 'scrollTopBtn' ||
         el.id === 'toggleMoreProducts' ||
         el.id === 'viewAllProductsBtn' ||
+        el.id === 'getDirectionsBtn' ||
+        el.classList.contains('studio-map-link') ||
         el.classList.contains('filter-chip') ||
         el.classList.contains('more-details-btn') ||
         Boolean(el.closest('[data-filter-target]'));
@@ -2877,10 +2958,6 @@
         .map(line => `<li><span class="check-icon">&#10003;</span> ${escapeHtml(line)}</li>`)
         .join('');
 
-      const statusBullet = item.status
-        ? `<li><span class="check-icon">&#10003;</span> Status: ${escapeHtml(item.status)}</li>`
-        : '';
-
       const priceDisplay = formatPriceDisplay(item.price);
 
       article.innerHTML = `
@@ -2894,7 +2971,6 @@
           <div class="product-price">${escapeHtml(priceDisplay)}</div>
           <ul class="check-list">
             ${bulletItems}
-            ${statusBullet}
           </ul>
           <button type="button" class="btn-gold enquire-item">Enquire Now</button>
         </div>
