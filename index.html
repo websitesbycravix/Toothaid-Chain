@@ -1152,6 +1152,15 @@
       object-fit: cover;
     }
 
+    /* Big uncropped frame ONLY for Gaming PCs (in both All and Gaming PCs tabs) */
+    .catalog-card[data-category="gaming"] .catalog-img {
+      height: 360px;
+    }
+
+    .catalog-card[data-category="gaming"] .catalog-img img {
+      object-fit: contain;
+    }
+
     .catalog-img-fallback {
       color: #D1D5DB;
       font-size: 13px;
