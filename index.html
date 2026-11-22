@@ -9,8 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-cream: #FAF8F3;
-      --bg-cream-alt: #F6F2E8;
+      --bg-white: #FFFFFF;
+      --bg-soft-wash: #FCFBF7;
       --card-white: #FFFFFF;
       --ink-dark: #14171F;
       --ink-muted: #5F6673;
@@ -35,8 +35,8 @@
     body {
       position: relative;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-cream);
-      background-image: radial-gradient(circle at 0% 0%, rgba(235, 198, 92, 0.22) 0%, rgba(247, 224, 148, 0.09) 28%, rgba(250, 248, 243, 0) 58%);
+      background-color: var(--bg-white);
+      background-image: radial-gradient(circle at 0% 0%, rgba(242, 206, 98, 0.22) 0%, rgba(250, 232, 168, 0.08) 26%, rgba(255, 255, 255, 0) 52%);
       background-attachment: fixed;
       color: var(--ink-dark);
       line-height: 1.55;
@@ -49,12 +49,12 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(to right, rgba(199, 154, 43, 0.095) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(199, 154, 43, 0.095) 1px, transparent 1px);
+        linear-gradient(to right, rgba(199, 154, 43, 0.085) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(199, 154, 43, 0.085) 1px, transparent 1px);
       background-size: 72px 72px;
       background-position: center top;
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 50%, rgba(0, 0, 0, 0) 84%);
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 50%, rgba(0, 0, 0, 0) 84%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.78) 46%, rgba(0, 0, 0, 0) 78%);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.78) 46%, rgba(0, 0, 0, 0) 78%);
       pointer-events: none;
       z-index: 0;
     }
@@ -83,11 +83,11 @@
       padding: 0 20px;
     }
 
-    /* ================= BUTTER-SMOOTH FADE-IN ANIMATION ================= */
+    /* ================= SOFT, GRADUAL FADE-IN ANIMATION ================= */
     .fade-reveal {
       opacity: 0;
-      transform: translate3d(0, 12px, 0);
-      transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translate3d(0, 7px, 0);
+      transition: opacity 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: opacity, transform;
     }
 
@@ -102,11 +102,11 @@
       position: sticky;
       top: 0;
       z-index: 90;
-      background: rgba(250, 248, 243, 0.9);
-      background-image: radial-gradient(circle at 0% 0%, rgba(235, 198, 92, 0.16) 0%, rgba(250, 248, 243, 0) 45%);
+      background: rgba(255, 255, 255, 0.92);
+      background-image: radial-gradient(circle at 0% 0%, rgba(242, 206, 98, 0.16) 0%, rgba(255, 255, 255, 0) 42%);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(231, 217, 183, 0.55);
+      border-bottom: 1px solid rgba(231, 217, 183, 0.45);
       transition: box-shadow 0.25s ease;
     }
 
@@ -437,7 +437,7 @@
     .hero {
       position: relative;
       padding: 22px 0 36px;
-      background: radial-gradient(circle at 0% 0%, rgba(238, 198, 86, 0.24) 0%, rgba(248, 226, 152, 0.08) 32%, rgba(250, 248, 243, 0) 64%);
+      background: radial-gradient(circle at 0% 0%, rgba(242, 206, 98, 0.24) 0%, rgba(250, 232, 168, 0.09) 28%, rgba(255, 255, 255, 0) 56%);
       text-align: center;
     }
 
@@ -467,7 +467,7 @@
       transform: translate(-50%, -50%);
       border-radius: 50%;
       border: 1.5px solid rgba(204, 184, 142, 0.55);
-      background: rgba(250, 248, 243, 0.12);
+      background: rgba(255, 255, 255, 0.14);
       pointer-events: none;
       z-index: 0;
     }
@@ -714,10 +714,12 @@
     /* ================= SECTION HEADERS ================= */
     .section {
       padding: 64px 0;
+      background-color: transparent;
     }
 
     .section-alt {
-      background: radial-gradient(circle at 0% 0%, rgba(238, 198, 86, 0.15) 0%, rgba(246, 242, 232, 0.82) 48%);
+      background-color: var(--bg-white);
+      background-image: radial-gradient(circle at 0% 0%, rgba(242, 206, 98, 0.13) 0%, rgba(255, 255, 255, 0) 44%);
     }
 
     .section-head {
@@ -755,6 +757,10 @@
       border: 1px solid rgba(231, 217, 183, 0.55);
       box-shadow: var(--shadow-soft);
       transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+    }
+
+    .feature-card[data-filter-target] {
+      cursor: pointer;
     }
 
     .feature-card:hover,
@@ -1160,9 +1166,9 @@
       justify-content: center;
       padding: 10px 0 4px;
       opacity: 0;
-      transform: translate3d(0, 8px, 0);
+      transform: translate3d(0, 7px, 0);
       pointer-events: none;
-      transition: opacity 0.36s ease, transform 0.36s ease;
+      transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .view-more-arrow-wrap.reading-visible {
@@ -1361,8 +1367,8 @@
 
     /* ================= FOOTER ================= */
     .footer {
-      background: #F4EFE4;
-      border-top: 1px solid #E6DEC8;
+      background: #FAFAFA;
+      border-top: 1px solid #EAEAEA;
       padding: 48px 0 28px;
       color: var(--ink-muted);
       font-size: 14px;
@@ -1373,7 +1379,7 @@
       grid-template-columns: 1fr;
       gap: 28px;
       padding-bottom: 32px;
-      border-bottom: 1px solid #E3DAC3;
+      border-bottom: 1px solid #EAEAEA;
     }
 
     .social-row {
@@ -1493,8 +1499,8 @@
 
       body::before {
         background-size: 84px 84px;
-        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 54%, rgba(0, 0, 0, 0) 86%);
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 54%, rgba(0, 0, 0, 0) 86%);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.78) 48%, rgba(0, 0, 0, 0) 82%);
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.78) 48%, rgba(0, 0, 0, 0) 82%);
       }
 
       .hero {
@@ -1813,7 +1819,7 @@
       </div>
 
       <div class="cards-grid four-col">
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="gaming">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
@@ -1821,7 +1827,7 @@
           <p>Office, gaming &amp; high-FPS performance rigs.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="laptops">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
           </div>
@@ -1829,7 +1835,7 @@
           <p>Student, business &amp; RTX gaming notebooks.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="accessories">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
           </div>
@@ -1837,7 +1843,7 @@
           <p>Zebronics, Portronics keyboards, mice &amp; cabinets.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="components">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
           </div>
@@ -1845,7 +1851,7 @@
           <p>ASUS motherboards, DDR5 RAM, GPUs &amp; cabinets.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="displays">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
           </div>
@@ -1853,7 +1859,7 @@
           <p>144Hz–240Hz IPS &amp; OLED color-accurate displays.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="all">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
@@ -1861,7 +1867,7 @@
           <p>Wi-Fi 6 routers, switches &amp; low-latency LAN setups.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="storage">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
           </div>
@@ -1869,7 +1875,7 @@
           <p>Gen4 NVMe SSDs, HDDs &amp; high-speed backup drives.</p>
         </div>
 
-        <div class="feature-card tilt-card fade-reveal">
+        <div class="feature-card tilt-card fade-reveal" data-filter-target="all">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </div>
@@ -1879,10 +1885,10 @@
       </div>
 
       <div class="section-cta fade-reveal">
-        <a href="#products" class="btn-gold">
+        <button type="button" class="btn-gold" id="viewAllProductsBtn">
           View All Products
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -2141,7 +2147,7 @@
     </div>
   </section>
 
-  <!-- ================= PRODUCTS WE DEAL ================= -->
+  <!-- ================= PRODUCTS WE DEAL (WORKING CATEGORY FILTERING) ================= -->
   <section class="section" id="products">
     <div class="container">
       <div class="section-head fade-reveal">
@@ -2153,13 +2159,13 @@
       </div>
 
       <div class="filter-pills fade-reveal" id="productFilters">
-        <button type="button" class="filter-chip active">All</button>
-        <button type="button" class="filter-chip">Gaming PCs</button>
-        <button type="button" class="filter-chip">Laptops</button>
-        <button type="button" class="filter-chip">Components</button>
-        <button type="button" class="filter-chip">Displays</button>
-        <button type="button" class="filter-chip">Accessories</button>
-        <button type="button" class="filter-chip">Storage</button>
+        <button type="button" class="filter-chip active" data-filter="all">All</button>
+        <button type="button" class="filter-chip" data-filter="gaming">Gaming PCs</button>
+        <button type="button" class="filter-chip" data-filter="laptops">Laptops</button>
+        <button type="button" class="filter-chip" data-filter="components">Components</button>
+        <button type="button" class="filter-chip" data-filter="displays">Displays</button>
+        <button type="button" class="filter-chip" data-filter="accessories">Accessories</button>
+        <button type="button" class="filter-chip" data-filter="storage">Storage</button>
       </div>
 
       <div class="cards-grid three-col" id="catalogGrid">
@@ -2460,19 +2466,15 @@
             A trusted destination for custom gaming PCs, creator workstations, laptops &amp; genuine computer hardware — expert guidance and dependable after-sales support.
           </p>
           <div class="social-row">
-            <!-- Instagram SVG -->
             <a href="#contact" class="social-btn" aria-label="Instagram">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
-            <!-- YouTube SVG -->
             <a href="#contact" class="social-btn" aria-label="YouTube">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
             </a>
-            <!-- Facebook SVG -->
             <a href="#contact" class="social-btn" aria-label="Facebook">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
-            <!-- WhatsApp SVG -->
             <a href="#contact" class="social-btn" aria-label="WhatsApp">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
             </a>
@@ -2540,13 +2542,12 @@
       }
     }, { passive: true });
 
-    // Top scroll arrow works smoothly
     scrollTopBtn.addEventListener('click', (e) => {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Menu button works to open/close drawer; items inside drawer are pressable only and do not function
+    // Menu button opens/closes drawer; items inside drawer are pressable only and do not function
     const openDrawerBtn = document.getElementById('openDrawer');
     const closeDrawerBtn = document.getElementById('closeDrawer');
     const drawerPanel = document.getElementById('drawerPanel');
@@ -2584,19 +2585,21 @@
       });
     });
 
-    // Butter-smooth one-time fade-in reveal (unobserved after reveal so scrolling stays lag-free)
+    // Soft, gradual fade-in reveal (unobserved after reveal so scrolling stays lag-free)
     const fadeTargets = document.querySelectorAll('.fade-reveal');
     const fadeObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
+          requestAnimationFrame(() => {
+            entry.target.classList.add('is-revealed');
+          });
           obs.unobserve(entry.target);
         }
       });
     }, {
       root: null,
-      rootMargin: '0px 0px -6% 0px',
-      threshold: 0.08
+      rootMargin: '0px 0px -2% 0px',
+      threshold: 0.02
     });
 
     fadeTargets.forEach(el => fadeObserver.observe(el));
@@ -2612,33 +2615,63 @@
       }, { passive: true });
     });
 
-    // Reading-revealed arrow prompt after 3rd card (shows first 3 cards initially)
+    // Working Category Cards + Filter Chips + Reading-Revealed Arrow Prompt
+    const filterChips = document.querySelectorAll('.filter-chip');
     const catalogCards = Array.from(document.querySelectorAll('.catalog-card'));
     const viewMoreArrowWrap = document.getElementById('viewMoreArrowWrap');
     const toggleMoreBtn = document.getElementById('toggleMoreProducts');
     const viewMoreLabel = document.getElementById('viewMoreLabel');
     const viewMoreArrowGlyph = document.getElementById('viewMoreArrowGlyph');
+    const viewAllProductsBtn = document.getElementById('viewAllProductsBtn');
 
+    let currentFilter = 'all';
     let expandedAllView = false;
 
     function updateCatalogView() {
-      catalogCards.forEach((card, index) => {
-        if (!expandedAllView && index >= 3) {
-          card.classList.add('hidden');
-        } else {
+      const matchingCards = catalogCards.filter(card =>
+        currentFilter === 'all' || card.dataset.category === currentFilter
+      );
+
+      catalogCards.forEach(card => card.classList.add('hidden'));
+
+      const shouldShowArrow = currentFilter === 'all' && matchingCards.length > 3;
+      const visibleLimit = (currentFilter === 'all' && !expandedAllView) ? 3 : matchingCards.length;
+
+      matchingCards.forEach((card, index) => {
+        if (index < visibleLimit) {
           card.classList.remove('hidden');
           card.classList.add('is-revealed');
         }
       });
 
-      if (expandedAllView) {
-        viewMoreLabel.textContent = 'Show Less';
-        viewMoreArrowGlyph.innerHTML = '&uarr;';
-        toggleMoreBtn.setAttribute('aria-expanded', 'true');
+      if (shouldShowArrow) {
+        viewMoreArrowWrap.classList.remove('is-hidden');
+        if (expandedAllView) {
+          viewMoreLabel.textContent = 'Show Less';
+          viewMoreArrowGlyph.innerHTML = '&uarr;';
+          toggleMoreBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          viewMoreLabel.textContent = 'View More';
+          viewMoreArrowGlyph.innerHTML = '&rarr;';
+          toggleMoreBtn.setAttribute('aria-expanded', 'false');
+        }
       } else {
-        viewMoreLabel.textContent = 'View More';
-        viewMoreArrowGlyph.innerHTML = '&rarr;';
-        toggleMoreBtn.setAttribute('aria-expanded', 'false');
+        viewMoreArrowWrap.classList.add('is-hidden');
+      }
+    }
+
+    function applyProductFilter(filterValue, scrollToCatalog = false) {
+      currentFilter = filterValue;
+      if (filterValue !== 'all') {
+        expandedAllView = true;
+      }
+      filterChips.forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.filter === filterValue);
+      });
+      updateCatalogView();
+
+      if (scrollToCatalog) {
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
       }
     }
 
@@ -2664,9 +2697,29 @@
       updateCatalogView();
     });
 
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        applyProductFilter(chip.dataset.filter, false);
+      });
+    });
+
+    document.querySelectorAll('[data-filter-target]').forEach(catCard => {
+      catCard.addEventListener('click', (e) => {
+        e.preventDefault();
+        applyProductFilter(catCard.dataset.filterTarget, true);
+      });
+    });
+
+    viewAllProductsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      expandedAllView = true;
+      applyProductFilter('all', true);
+    });
+
     updateCatalogView();
 
-    // Press feedback on all buttons & links; prevent default action on non-menu demo buttons/links
+    // Press feedback on all buttons & links; prevent default jump on other non-functional demo links/buttons
     document.querySelectorAll('button, a').forEach(el => {
       el.addEventListener('pointerdown', () => {
         el.classList.add('is-pressed');
@@ -2678,8 +2731,16 @@
         }, { passive: true });
       });
 
-      const allowedControls = ['openDrawer', 'closeDrawer', 'scrollTopBtn', 'toggleMoreProducts'];
-      if (!allowedControls.includes(el.id)) {
+      const isWorkingControl =
+        el.id === 'openDrawer' ||
+        el.id === 'closeDrawer' ||
+        el.id === 'scrollTopBtn' ||
+        el.id === 'toggleMoreProducts' ||
+        el.id === 'viewAllProductsBtn' ||
+        el.classList.contains('filter-chip') ||
+        Boolean(el.closest('[data-filter-target]'));
+
+      if (!isWorkingControl) {
         el.addEventListener('click', (e) => {
           e.preventDefault();
         });
