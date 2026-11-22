@@ -83,6 +83,20 @@
       padding: 0 20px;
     }
 
+    /* ================= BUTTER-SMOOTH FADE-IN ANIMATION ================= */
+    .fade-reveal {
+      opacity: 0;
+      transform: translate3d(0, 12px, 0);
+      transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .fade-reveal.is-revealed {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      will-change: auto;
+    }
+
     /* ================= HEADER ================= */
     .navbar {
       position: sticky;
@@ -201,6 +215,11 @@
       transition: opacity 0.28s ease;
     }
 
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .drawer-panel {
       position: fixed;
       top: 0;
@@ -217,7 +236,10 @@
       padding: 20px 22px 26px;
       box-shadow: -16px 0 40px rgba(0, 0, 0, 0.15);
       overflow-y: auto;
-      pointer-events: none;
+    }
+
+    .drawer-panel.open {
+      transform: translateX(0);
     }
 
     .drawer-header {
@@ -237,11 +259,16 @@
       place-items: center;
       font-size: 20px;
       color: #14171F;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.18s ease;
     }
 
     .drawer-close:hover {
       background: #E9DFC3;
+    }
+
+    .drawer-close:active,
+    .drawer-close.is-pressed {
+      transform: scale(0.94);
     }
 
     .drawer-links {
@@ -260,7 +287,12 @@
       font-weight: 600;
       font-size: 15.5px;
       color: #272B33;
-      transition: all 0.2s ease;
+      transition: transform 0.18s ease, background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .drawer-link:active,
+    .drawer-link.is-pressed {
+      transform: scale(0.98);
     }
 
     .drawer-link .d-icon {
@@ -1128,14 +1160,14 @@
       justify-content: center;
       padding: 10px 0 4px;
       opacity: 0;
-      transform: translateY(8px);
+      transform: translate3d(0, 8px, 0);
       pointer-events: none;
-      transition: opacity 0.38s ease, transform 0.38s ease;
+      transition: opacity 0.36s ease, transform 0.36s ease;
     }
 
     .view-more-arrow-wrap.reading-visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
       pointer-events: auto;
     }
 
@@ -1359,9 +1391,7 @@
       display: grid;
       place-items: center;
       color: #14171F;
-      font-weight: 700;
-      font-size: 13px;
-      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
 
     .social-btn:hover {
@@ -1421,7 +1451,7 @@
       display: grid;
       place-items: center;
       box-shadow: 0 10px 22px rgba(184, 136, 30, 0.42);
-      opacity: 0.92;
+      opacity: 0.94;
       transition: transform 0.2s ease;
     }
 
@@ -1453,67 +1483,6 @@
     .fab-wa:active,
     .fab-wa.is-pressed {
       transform: scale(0.95);
-    }
-
-    /* ================= QUOTE MODAL ================= */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 18, 24, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 150;
-      display: none;
-      place-items: center;
-      padding: 20px;
-    }
-
-    .modal-box {
-      background: #FFFFFF;
-      width: 100%;
-      max-width: 440px;
-      border-radius: 24px;
-      padding: 26px 22px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-      position: relative;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #F3F4F6;
-      font-size: 18px;
-      display: grid;
-      place-items: center;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 12.5px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #374151;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 11px 14px;
-      border-radius: 12px;
-      border: 1.5px solid #E5DEC9;
-      font-family: inherit;
-      font-size: 14px;
-      background: #FAF8F3;
-      outline: none;
     }
 
     /* ================= DESKTOP RESPONSIVE ================= */
@@ -1646,12 +1615,12 @@
     </div>
   </header>
 
-  <!-- ================= SLIDE-OUT DRAWER (DEMO: PRESSABLE ONLY, DOES NOT OPEN) ================= -->
+  <!-- ================= SLIDE-OUT DRAWER (MENU OPENS/CLOSES; INSIDE ITEMS DO NOT FUNCTION) ================= -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="drawer-panel" id="drawerPanel" aria-label="Mobile Navigation" aria-hidden="true">
     <div>
       <div class="drawer-header">
-        <a href="#home" class="brand-logo drawer-nav-item">
+        <a href="#home" class="brand-logo drawer-inert-link">
           <span class="top">PC BY <span>SHUBH</span></span>
           <span class="sub">Custom Rigs &bull; IT Hardware</span>
         </a>
@@ -1659,37 +1628,37 @@
       </div>
 
       <nav class="drawer-links">
-        <a href="#home" class="drawer-link active drawer-nav-item">
+        <a href="#home" class="drawer-link active drawer-inert-link">
           <span class="d-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </span>
           Home
         </a>
-        <a href="#why-us" class="drawer-link drawer-nav-item">
+        <a href="#why-us" class="drawer-link drawer-inert-link">
           <span class="d-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           </span>
           About
         </a>
-        <a href="#products" class="drawer-link drawer-nav-item">
+        <a href="#products" class="drawer-link drawer-inert-link">
           <span class="d-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </span>
           Products
         </a>
-        <a href="#services" class="drawer-link drawer-nav-item">
+        <a href="#services" class="drawer-link drawer-inert-link">
           <span class="d-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </span>
           Services
         </a>
-        <a href="#featured" class="drawer-link drawer-nav-item">
+        <a href="#featured" class="drawer-link drawer-inert-link">
           <span class="d-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </span>
           Gallery
         </a>
-        <a href="#contact" class="drawer-link drawer-nav-item">
+        <a href="#contact" class="drawer-link drawer-inert-link">
           <span class="d-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </span>
@@ -1699,7 +1668,7 @@
     </div>
 
     <div class="drawer-footer">
-      <button class="btn-gold open-quote-modal" style="width:100%;">
+      <button type="button" class="btn-gold drawer-inert-btn" style="width:100%;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         Get a Quote
       </button>
@@ -1739,7 +1708,7 @@
         </div>
 
         <!-- Hero Copy -->
-        <div class="hero-copy">
+        <div class="hero-copy fade-reveal">
           <span class="eyebrow-pill">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="#C79A2B"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             TRUSTED PC BUILDER &bull; CUSTOM RIGS &amp; IT
@@ -1759,7 +1728,7 @@
               Explore Products
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <button class="btn-outline open-quote-modal">
+            <button type="button" class="btn-outline">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
               Talk to Expert
             </button>
@@ -1803,7 +1772,7 @@
   </div>
 
   <!-- ================= DARK TRUST STRIP ================= -->
-  <div class="trust-strip">
+  <div class="trust-strip fade-reveal">
     <div class="container trust-grid">
       <div class="trust-item">
         <span class="trust-icon">
@@ -1835,7 +1804,7 @@
   <!-- ================= SHOP BY CATEGORY ================= -->
   <section class="section" id="categories">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">SHOP BY CATEGORY</span>
         <h2 class="section-title">Everything Tech, Beautifully Curated</h2>
         <p class="section-sub">
@@ -1844,7 +1813,7 @@
       </div>
 
       <div class="cards-grid four-col">
-        <div class="feature-card tilt-card" data-filter-target="gaming">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
@@ -1852,7 +1821,7 @@
           <p>Office, gaming &amp; high-FPS performance rigs.</p>
         </div>
 
-        <div class="feature-card tilt-card" data-filter-target="laptops">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
           </div>
@@ -1860,7 +1829,7 @@
           <p>Student, business &amp; RTX gaming notebooks.</p>
         </div>
 
-        <div class="feature-card tilt-card" data-filter-target="accessories">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
           </div>
@@ -1868,7 +1837,7 @@
           <p>Zebronics, Portronics keyboards, mice &amp; cabinets.</p>
         </div>
 
-        <div class="feature-card tilt-card" data-filter-target="components">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
           </div>
@@ -1876,7 +1845,7 @@
           <p>ASUS motherboards, DDR5 RAM, GPUs &amp; cabinets.</p>
         </div>
 
-        <div class="feature-card tilt-card" data-filter-target="displays">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
           </div>
@@ -1884,7 +1853,7 @@
           <p>144Hz–240Hz IPS &amp; OLED color-accurate displays.</p>
         </div>
 
-        <div class="feature-card tilt-card" data-filter-target="all">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
@@ -1892,7 +1861,7 @@
           <p>Wi-Fi 6 routers, switches &amp; low-latency LAN setups.</p>
         </div>
 
-        <div class="feature-card tilt-card" data-filter-target="storage">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
           </div>
@@ -1900,7 +1869,7 @@
           <p>Gen4 NVMe SSDs, HDDs &amp; high-speed backup drives.</p>
         </div>
 
-        <div class="feature-card tilt-card open-quote-modal">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </div>
@@ -1909,7 +1878,7 @@
         </div>
       </div>
 
-      <div class="section-cta">
+      <div class="section-cta fade-reveal">
         <a href="#products" class="btn-gold">
           View All Products
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -1921,7 +1890,7 @@
   <!-- ================= FEATURED PICKS ================= -->
   <section class="section section-alt" id="featured">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">FEATURED PICKS</span>
         <h2 class="section-title">Handpicked Tech Our Customers Love</h2>
         <p class="section-sub">
@@ -1930,7 +1899,7 @@
       </div>
 
       <div class="cards-grid three-col">
-        <article class="pick-card">
+        <article class="pick-card fade-reveal">
           <div class="pick-media">
             <span class="status-badge">POPULAR</span>
             <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80" alt="Premium Laptops">
@@ -1942,11 +1911,11 @@
               <li><span class="check-icon">&#10003;</span> ASUS &bull; HP &bull; Dell &bull; Lenovo</li>
               <li><span class="check-icon">&#10003;</span> Student to RTX gaming grade</li>
             </ul>
-            <button class="btn-outline enquire-item" data-item="Premium Laptops (ASUS / HP / Dell / Lenovo)">View Details</button>
+            <button type="button" class="btn-outline">View Details</button>
           </div>
         </article>
 
-        <article class="pick-card">
+        <article class="pick-card fade-reveal">
           <div class="pick-media">
             <span class="status-badge">BEST SELLER</span>
             <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" alt="Desktop and Custom PCs">
@@ -1958,11 +1927,11 @@
               <li><span class="check-icon">&#10003;</span> Office &amp; high-FPS gaming builds</li>
               <li><span class="check-icon">&#10003;</span> Clean cable management &amp; stress-tested</li>
             </ul>
-            <button class="btn-outline enquire-item" data-item="Custom Desktop & Gaming PC Build">View Details</button>
+            <button type="button" class="btn-outline">View Details</button>
           </div>
         </article>
 
-        <article class="pick-card">
+        <article class="pick-card fade-reveal">
           <div class="pick-media">
             <span class="status-badge">NEW</span>
             <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80" alt="Premium Accessories">
@@ -1974,7 +1943,7 @@
               <li><span class="check-icon">&#10003;</span> Zebronics &amp; Portronics gear</li>
               <li><span class="check-icon">&#10003;</span> Keyboards, mice &amp; ARGB cabinets</li>
             </ul>
-            <button class="btn-outline enquire-item" data-item="Premium Accessories (Zebronics / Portronics)">View Details</button>
+            <button type="button" class="btn-outline">View Details</button>
           </div>
         </article>
       </div>
@@ -1985,11 +1954,11 @@
   <section class="section" id="why-us">
     <div class="container">
       <div class="story-grid">
-        <div class="story-image">
+        <div class="story-image fade-reveal">
           <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=900&q=80" alt="Custom Gaming Setup by PC by Shubh">
         </div>
 
-        <div>
+        <div class="fade-reveal">
           <span class="eyebrow-pill">WHY PC BY SHUBH</span>
           <h2 class="section-title">A Standard of Trust You Can Feel</h2>
           <p class="section-sub">
@@ -2015,7 +1984,7 @@
             </li>
           </ul>
 
-          <button class="btn-outline open-quote-modal">
+          <button type="button" class="btn-outline">
             More About Us
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
@@ -2025,7 +1994,7 @@
   </section>
 
   <!-- ================= DARK STATS STRIP ================= -->
-  <section class="stats-banner">
+  <section class="stats-banner fade-reveal">
     <div class="container stats-grid">
       <div>
         <div class="stat-num">500+</div>
@@ -2045,13 +2014,13 @@
   <!-- ================= OUR PROMISE ================= -->
   <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">OUR PROMISE</span>
         <h2 class="section-title">Why Customers Choose Us</h2>
       </div>
 
       <div class="cards-grid three-col">
-        <div class="feature-card tilt-card">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
           </div>
@@ -2059,7 +2028,7 @@
           <p>Authentic IT hardware with official brand warranty you can trust.</p>
         </div>
 
-        <div class="feature-card tilt-card">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
           </div>
@@ -2067,7 +2036,7 @@
           <p>Honest, transparent quotes tailored to maximize FPS per rupee.</p>
         </div>
 
-        <div class="feature-card tilt-card">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
           </div>
@@ -2075,7 +2044,7 @@
           <p>Builders who stay updated with the latest CPUs, GPUs and thermals.</p>
         </div>
 
-        <div class="feature-card tilt-card">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </div>
@@ -2083,7 +2052,7 @@
           <p>Dependable care, driver support and warranty help long after delivery.</p>
         </div>
 
-        <div class="feature-card tilt-card">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
           </div>
@@ -2091,7 +2060,7 @@
           <p>Setups tailored for gamers, creators, students and studios.</p>
         </div>
 
-        <div class="feature-card tilt-card">
+        <div class="feature-card tilt-card fade-reveal">
           <div class="icon-tile">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
@@ -2105,7 +2074,7 @@
   <!-- ================= EXPERT SERVICES ================= -->
   <section class="section section-alt" id="services">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">OUR SERVICES</span>
         <h2 class="section-title">Expert Services You Can Rely On</h2>
         <p class="section-sub">
@@ -2114,7 +2083,7 @@
       </div>
 
       <div class="cards-grid three-col">
-        <article class="service-card">
+        <article class="service-card fade-reveal">
           <div class="service-media">
             <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=80" alt="Laptop & Desktop Repair">
             <div class="service-float-icon">
@@ -2124,13 +2093,13 @@
           <div class="service-body">
             <h3>Laptop &amp; Desktop Repair</h3>
             <p>Screens, batteries, motherboards, SSD/RAM upgrades and diagnostics for all brands.</p>
-            <button class="know-more enquire-item" data-item="Laptop & Desktop Repair Service">
+            <button type="button" class="know-more">
               Know more <span>&rarr;</span>
             </button>
           </div>
         </article>
 
-        <article class="service-card">
+        <article class="service-card fade-reveal">
           <div class="service-media">
             <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=800&q=80" alt="Custom PC Assembly & Tuning">
             <div class="service-float-icon">
@@ -2140,13 +2109,13 @@
           <div class="service-body">
             <h3>Custom PC Build &amp; Tuning</h3>
             <p>Precision assembly, AIO liquid cooling, XMP/EXPO profiling and thermal stress testing.</p>
-            <button class="know-more enquire-item" data-item="Custom PC Assembly & BIOS Tuning">
+            <button type="button" class="know-more">
               Know more <span>&rarr;</span>
             </button>
           </div>
         </article>
 
-        <article class="service-card">
+        <article class="service-card fade-reveal">
           <div class="service-media">
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Deep Cleaning & Thermal Repasting">
             <div class="service-float-icon">
@@ -2156,15 +2125,15 @@
           <div class="service-body">
             <h3>Deep Cleaning &amp; Repasting</h3>
             <p>Dust removal, premium thermal paste replacement and airflow optimization for cooler temps.</p>
-            <button class="know-more enquire-item" data-item="PC Deep Cleaning & Thermal Repasting">
+            <button type="button" class="know-more">
               Know more <span>&rarr;</span>
             </button>
           </div>
         </article>
       </div>
 
-      <div class="section-cta">
-        <button class="btn-gold open-quote-modal">
+      <div class="section-cta fade-reveal">
+        <button type="button" class="btn-gold">
           All Services
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
@@ -2175,7 +2144,7 @@
   <!-- ================= PRODUCTS WE DEAL ================= -->
   <section class="section" id="products">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">OUR PRODUCTS</span>
         <h2 class="section-title">Products We Deal</h2>
         <p class="section-sub">
@@ -2183,19 +2152,19 @@
         </p>
       </div>
 
-      <div class="filter-pills" id="productFilters">
-        <button class="filter-chip active" data-filter="all">All</button>
-        <button class="filter-chip" data-filter="gaming">Gaming PCs</button>
-        <button class="filter-chip" data-filter="laptops">Laptops</button>
-        <button class="filter-chip" data-filter="components">Components</button>
-        <button class="filter-chip" data-filter="displays">Displays</button>
-        <button class="filter-chip" data-filter="accessories">Accessories</button>
-        <button class="filter-chip" data-filter="storage">Storage</button>
+      <div class="filter-pills fade-reveal" id="productFilters">
+        <button type="button" class="filter-chip active">All</button>
+        <button type="button" class="filter-chip">Gaming PCs</button>
+        <button type="button" class="filter-chip">Laptops</button>
+        <button type="button" class="filter-chip">Components</button>
+        <button type="button" class="filter-chip">Displays</button>
+        <button type="button" class="filter-chip">Accessories</button>
+        <button type="button" class="filter-chip">Storage</button>
       </div>
 
       <div class="cards-grid three-col" id="catalogGrid">
         <!-- Card 1 -->
-        <article class="catalog-card" data-category="gaming">
+        <article class="catalog-card fade-reveal" data-category="gaming">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" alt="Shubh Apex RTX 4070 Gaming Rig">
           </div>
@@ -2207,12 +2176,12 @@
               <li><span class="check-icon">&#10003;</span> ASUS TUF Motherboard &bull; 1TB NVMe SSD</li>
               <li><span class="check-icon">&#10003;</span> Airflow ARGB Cabinet &bull; 1440p ready</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Shubh Apex RTX 4070 Gaming Rig">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
         <!-- Card 2 -->
-        <article class="catalog-card" data-category="components">
+        <article class="catalog-card fade-reveal" data-category="components">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="ASUS TUF Gaming B650 Motherboard">
           </div>
@@ -2224,12 +2193,12 @@
               <li><span class="check-icon">&#10003;</span> PCIe 5.0 M.2 &amp; Wi-Fi 6E</li>
               <li><span class="check-icon">&#10003;</span> Heavy VRM heatsink armor</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="ASUS TUF Gaming B650 Motherboard">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
         <!-- Card 3 -->
-        <article class="catalog-card" data-category="accessories">
+        <article class="catalog-card fade-reveal" data-category="accessories">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80" alt="Zebronics Mechanical Keyboard & Combo">
           </div>
@@ -2241,7 +2210,7 @@
               <li><span class="check-icon">&#10003;</span> Braided cable &amp; anti-ghosting</li>
               <li><span class="check-icon">&#10003;</span> Daily typing &amp; gaming value</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Zebronics Mechanical Keyboard">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
@@ -2266,7 +2235,7 @@
               <li><span class="check-icon">&#10003;</span> Silent clicks &amp; ergonomic grip</li>
               <li><span class="check-icon">&#10003;</span> Clean desk &amp; travel ready</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Portronics Wireless Mouse & Keyboard">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
@@ -2283,7 +2252,7 @@
               <li><span class="check-icon">&#10003;</span> Adaptive-Sync &amp; vibrant colors</li>
               <li><span class="check-icon">&#10003;</span> Gaming, editing &amp; dual-screen work</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="27-inch 180Hz Gaming Monitor">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
@@ -2300,7 +2269,7 @@
               <li><span class="check-icon">&#10003;</span> Supports 360mm radiator &amp; long GPUs</li>
               <li><span class="check-icon">&#10003;</span> Clean PSU shroud &amp; cable routing</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="Mesh Airflow ARGB PC Cabinet">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
@@ -2317,7 +2286,7 @@
               <li><span class="check-icon">&#10003;</span> XMP 3.0 &amp; AMD EXPO ready</li>
               <li><span class="check-icon">&#10003;</span> Smooth multitasking &amp; rendering</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="32GB DDR5 6000MHz RAM Kit">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
@@ -2334,7 +2303,7 @@
               <li><span class="check-icon">&#10003;</span> M.2 2280 form factor &bull; heatsink option</li>
               <li><span class="check-icon">&#10003;</span> Official brand warranty</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="1TB / 2TB PCIe Gen4 NVMe SSD">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
 
@@ -2351,7 +2320,7 @@
               <li><span class="check-icon">&#10003;</span> Coding, college &amp; portable gaming</li>
               <li><span class="check-icon">&#10003;</span> Sealed box with full warranty</li>
             </ul>
-            <button class="btn-gold enquire-item" data-item="ASUS / HP / Lenovo Gaming Laptop">Enquire Now</button>
+            <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
       </div>
@@ -2361,7 +2330,7 @@
   <!-- ================= TESTIMONIALS ================= -->
   <section class="section section-alt">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">TESTIMONIALS</span>
         <h2 class="section-title">Loved by Gamers &amp; Creators</h2>
         <p class="section-sub">
@@ -2370,7 +2339,7 @@
       </div>
 
       <div class="cards-grid three-col">
-        <article class="review-card">
+        <article class="review-card fade-reveal">
           <div class="review-top">
             <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <div class="quote-mark">&rdquo;</div>
@@ -2387,7 +2356,7 @@
           </div>
         </article>
 
-        <article class="review-card">
+        <article class="review-card fade-reveal">
           <div class="review-top">
             <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <div class="quote-mark">&rdquo;</div>
@@ -2404,7 +2373,7 @@
           </div>
         </article>
 
-        <article class="review-card">
+        <article class="review-card fade-reveal">
           <div class="review-top">
             <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <div class="quote-mark">&rdquo;</div>
@@ -2427,7 +2396,7 @@
   <!-- ================= VISIT US & READY TO BUILD CTA ================= -->
   <section class="section" id="contact">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head fade-reveal">
         <span class="eyebrow-pill">VISIT US</span>
         <h2 class="section-title">Drop By Our Studio</h2>
         <p class="section-sub">
@@ -2435,7 +2404,7 @@
         </p>
       </div>
 
-      <div class="store-card" style="margin-bottom: 44px;">
+      <div class="store-card fade-reveal" style="margin-bottom: 44px;">
         <div class="icon-tile" style="margin-bottom: 14px; background-color: #C79A2B; color: #FFF;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
@@ -2459,13 +2428,13 @@
         </a>
       </div>
 
-      <div class="cta-box">
+      <div class="cta-box fade-reveal">
         <h2>Ready to Build Your <span>Dream Setup?</span></h2>
         <p>
           Tell us your budget and use-case — <strong>PC by Shubh</strong> will design the perfect custom PC or workstation for you.
         </p>
         <div class="cta-buttons">
-          <button class="btn-gold open-quote-modal">
+          <button type="button" class="btn-gold">
             Get a Free Quote
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
@@ -2478,8 +2447,8 @@
     </div>
   </section>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="footer">
+  <!-- ================= FOOTER (SVG SOCIAL ICONS) ================= -->
+  <footer class="footer fade-reveal">
     <div class="container">
       <div class="footer-grid">
         <div>
@@ -2491,10 +2460,22 @@
             A trusted destination for custom gaming PCs, creator workstations, laptops &amp; genuine computer hardware — expert guidance and dependable after-sales support.
           </p>
           <div class="social-row">
-            <a href="#contact" class="social-btn" aria-label="Instagram">IG</a>
-            <a href="#contact" class="social-btn" aria-label="YouTube">YT</a>
-            <a href="#contact" class="social-btn" aria-label="Facebook">FB</a>
-            <a href="#contact" class="social-btn" aria-label="WhatsApp">WA</a>
+            <!-- Instagram SVG -->
+            <a href="#contact" class="social-btn" aria-label="Instagram">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <!-- YouTube SVG -->
+            <a href="#contact" class="social-btn" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+            </a>
+            <!-- Facebook SVG -->
+            <a href="#contact" class="social-btn" aria-label="Facebook">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <!-- WhatsApp SVG -->
+            <a href="#contact" class="social-btn" aria-label="WhatsApp">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </a>
           </div>
         </div>
 
@@ -2537,7 +2518,7 @@
 
   <!-- ================= FLOATING ACTION BUTTONS ================= -->
   <div class="floating-stack">
-    <button class="fab-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <button type="button" class="fab-top" id="scrollTopBtn" aria-label="Scroll to top">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
     </button>
 
@@ -2546,58 +2527,10 @@
     </a>
   </div>
 
-  <!-- ================= CUSTOM BUILD QUOTE MODAL (DEMO: PRESSABLE ONLY, DOES NOT OPEN) ================= -->
-  <div class="modal-overlay" id="quoteModal" aria-hidden="true">
-    <div class="modal-box">
-      <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
-      <span class="eyebrow-pill" style="margin-bottom:10px;">PC BY SHUBH</span>
-      <h3 style="font-size:21px; font-weight:800; margin-bottom:6px;">Get a Free PC Build Quote</h3>
-      <p style="font-size:13.5px; color:var(--ink-muted); margin-bottom:16px;">
-        Demo preview mode.
-      </p>
-
-      <form id="quoteForm">
-        <div class="form-group">
-          <label for="qName">Your Name</label>
-          <input type="text" id="qName" placeholder="e.g. Rohan Kumar">
-        </div>
-
-        <div class="form-group">
-          <label for="qUse">Primary Use / Product</label>
-          <select id="qUse">
-            <option value="Custom Gaming PC">Custom Gaming PC</option>
-            <option value="Video Editing / 3D Workstation">Video Editing / 3D Workstation</option>
-            <option value="Office / Home Desktop">Office / Home Desktop</option>
-            <option value="Gaming / Student Laptop">Gaming / Student Laptop</option>
-            <option value="PC Upgrade / Repair">PC Upgrade / Repair</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="qBudget">Estimated Budget (₹)</label>
-          <select id="qBudget">
-            <option value="Under ₹45,000">Under ₹45,000</option>
-            <option value="₹45,000 – ₹75,000" selected>₹45,000 – ₹75,000</option>
-            <option value="₹75,000 – ₹1,20,000">₹75,000 – ₹1,20,000</option>
-            <option value="₹1,20,000+ Enthusiast">₹1,20,000+ Enthusiast</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="qNotes">Preferred Parts / Notes (Optional)</label>
-          <textarea id="qNotes" rows="2" placeholder="e.g. RTX 4060 / Ryzen 5, white cabinet, monitor needed..."></textarea>
-        </div>
-
-        <button type="submit" class="btn-gold" style="width:100%;">
-          Send Quote Request
-        </button>
-      </form>
-    </div>
-  </div>
-
   <!-- ================= JAVASCRIPT ================= -->
   <script>
     const navbar = document.getElementById('navbar');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 40) {
@@ -2607,6 +2540,68 @@
       }
     }, { passive: true });
 
+    // Top scroll arrow works smoothly
+    scrollTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Menu button works to open/close drawer; items inside drawer are pressable only and do not function
+    const openDrawerBtn = document.getElementById('openDrawer');
+    const closeDrawerBtn = document.getElementById('closeDrawer');
+    const drawerPanel = document.getElementById('drawerPanel');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+    function openDrawer() {
+      drawerPanel.classList.add('open');
+      drawerBackdrop.classList.add('open');
+      drawerPanel.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawerPanel.classList.remove('open');
+      drawerBackdrop.classList.remove('open');
+      drawerPanel.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    openDrawerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openDrawer();
+    });
+
+    closeDrawerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeDrawer();
+    });
+
+    drawerBackdrop.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.drawer-inert-link, .drawer-inert-btn').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+    });
+
+    // Butter-smooth one-time fade-in reveal (unobserved after reveal so scrolling stays lag-free)
+    const fadeTargets = document.querySelectorAll('.fade-reveal');
+    const fadeObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -6% 0px',
+      threshold: 0.08
+    });
+
+    fadeTargets.forEach(el => fadeObserver.observe(el));
+
+    // Card press/hover state across all card types without glow or flicker
     document.querySelectorAll('.feature-card, .pick-card, .service-card, .catalog-card, .review-card, .store-card').forEach(card => {
       card.addEventListener('touchstart', () => {
         card.classList.add('is-active');
@@ -2617,6 +2612,7 @@
       }, { passive: true });
     });
 
+    // Reading-revealed arrow prompt after 3rd card (shows first 3 cards initially)
     const catalogCards = Array.from(document.querySelectorAll('.catalog-card'));
     const viewMoreArrowWrap = document.getElementById('viewMoreArrowWrap');
     const toggleMoreBtn = document.getElementById('toggleMoreProducts');
@@ -2631,6 +2627,7 @@
           card.classList.add('hidden');
         } else {
           card.classList.remove('hidden');
+          card.classList.add('is-revealed');
         }
       });
 
@@ -2669,6 +2666,7 @@
 
     updateCatalogView();
 
+    // Press feedback on all buttons & links; prevent default action on non-menu demo buttons/links
     document.querySelectorAll('button, a').forEach(el => {
       el.addEventListener('pointerdown', () => {
         el.classList.add('is-pressed');
@@ -2680,15 +2678,12 @@
         }, { passive: true });
       });
 
-      if (el.id !== 'toggleMoreProducts') {
+      const allowedControls = ['openDrawer', 'closeDrawer', 'scrollTopBtn', 'toggleMoreProducts'];
+      if (!allowedControls.includes(el.id)) {
         el.addEventListener('click', (e) => {
           e.preventDefault();
         });
       }
-    });
-
-    document.getElementById('quoteForm').addEventListener('submit', (e) => {
-      e.preventDefault();
     });
   </script>
 </body>
