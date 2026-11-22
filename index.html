@@ -2667,7 +2667,7 @@
     // Working Category Cards + Filter Chips + Reading-Revealed Arrow Prompt + Google Sheet Database Sync
     const SHEET_ID = '10uwvj8yi9GzkPcs-YlPO207Vvo8K9piRDKEMs5e5GhU';
     const SHEET_NAME = 'Sheet1';
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(SHEET_NAME)}`;
 
     const catalogGrid = document.getElementById('catalogGrid');
     const filterChips = document.querySelectorAll('.filter-chip');
@@ -2838,7 +2838,10 @@
               specs
             };
           })
-          .filter(item => item.name.length > 0);
+          .filter(item =>
+            item.name.length > 0 &&
+            item.name.toLowerCase() !== 'product name'
+          );
 
         document.querySelectorAll('.sheet-product-card').forEach(el => el.remove());
 
