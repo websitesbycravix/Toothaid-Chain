@@ -1206,7 +1206,7 @@
       grid-column: 1 / -1;
       display: flex;
       justify-content: center;
-      padding: 10px 0 4px;
+      padding: 16px 0 4px;
       opacity: 0;
       transform: translate3d(0, 7px, 0);
       pointer-events: none;
@@ -1227,7 +1227,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 4px;
+      padding: 8px 6px;
       font-size: 14.5px;
       font-weight: 700;
       color: #9A7418;
@@ -2212,7 +2212,7 @@
 
       <div class="cards-grid three-col" id="catalogGrid">
         <!-- Card 1 -->
-        <article class="catalog-card fade-reveal" data-category="components">
+        <article class="catalog-card fade-reveal" data-category="components" data-price-num="21490">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="ASUS TUF Gaming B650 Motherboard">
           </div>
@@ -2230,7 +2230,7 @@
         </article>
 
         <!-- Card 2 -->
-        <article class="catalog-card fade-reveal" data-category="accessories">
+        <article class="catalog-card fade-reveal" data-category="accessories" data-price-num="2499">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80" alt="Zebronics Mechanical Keyboard & Combo">
           </div>
@@ -2248,7 +2248,7 @@
         </article>
 
         <!-- Card 3 -->
-        <article class="catalog-card fade-reveal" data-category="accessories">
+        <article class="catalog-card fade-reveal" data-category="accessories" data-price-num="1599">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80" alt="Portronics Wireless Keyboard & Mouse">
           </div>
@@ -2265,16 +2265,8 @@
           </div>
         </article>
 
-        <!-- Reading-revealed arrow prompt right after the first 3 cards -->
-        <div class="view-more-arrow-wrap" id="viewMoreArrowWrap">
-          <button type="button" class="view-more-arrow" id="toggleMoreProducts" aria-expanded="false">
-            <span id="viewMoreLabel">View More</span>
-            <span class="arrow-glyph" id="viewMoreArrowGlyph">&rarr;</span>
-          </button>
-        </div>
-
         <!-- Card 4 -->
-        <article class="catalog-card extra-product hidden" data-category="displays">
+        <article class="catalog-card extra-product hidden" data-category="displays" data-price-num="16990">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80" alt="27-inch 180Hz IPS Gaming Monitor">
           </div>
@@ -2292,7 +2284,7 @@
         </article>
 
         <!-- Card 5 -->
-        <article class="catalog-card extra-product hidden" data-category="components">
+        <article class="catalog-card extra-product hidden" data-category="components" data-price-num="5490">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=800&q=80" alt="Tempered Glass ARGB PC Cabinet">
           </div>
@@ -2310,7 +2302,7 @@
         </article>
 
         <!-- Card 6 -->
-        <article class="catalog-card extra-product hidden" data-category="components">
+        <article class="catalog-card extra-product hidden" data-category="components" data-price-num="9890">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=800&q=80" alt="32GB DDR5 High-Speed RAM Kit">
           </div>
@@ -2328,7 +2320,7 @@
         </article>
 
         <!-- Card 7 -->
-        <article class="catalog-card extra-product hidden" data-category="storage">
+        <article class="catalog-card extra-product hidden" data-category="storage" data-price-num="6790">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=80" alt="1TB / 2TB Gen4 NVMe SSD">
           </div>
@@ -2346,7 +2338,7 @@
         </article>
 
         <!-- Card 8 -->
-        <article class="catalog-card extra-product hidden" data-category="laptops">
+        <article class="catalog-card extra-product hidden" data-category="laptops" data-price-num="74990">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80" alt="Gaming & Creator Laptops">
           </div>
@@ -2362,6 +2354,14 @@
             <button type="button" class="btn-gold enquire-item">Enquire Now</button>
           </div>
         </article>
+
+        <!-- Bottom View More arrow prompt placed at the downside of the catalog -->
+        <div class="view-more-arrow-wrap" id="viewMoreArrowWrap">
+          <button type="button" class="view-more-arrow" id="toggleMoreProducts" aria-expanded="false">
+            <span id="viewMoreLabel">View More</span>
+            <span class="arrow-glyph" id="viewMoreArrowGlyph">&rarr;</span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -2706,8 +2706,6 @@
     const viewAllProductsBtn = document.getElementById('viewAllProductsBtn');
 
     let allCatalogCards = Array.from(document.querySelectorAll('#catalogGrid > .catalog-card'));
-    let orderedAllCards = [];
-    let hasShuffledAllOnce = false;
     let currentFilter = 'all';
     let expandedAllView = false;
 
@@ -2723,6 +2721,15 @@
     function sanitizeHttpUrl(url) {
       const cleaned = String(url ?? '').trim();
       return /^https?:\/\//i.test(cleaned) ? cleaned : '';
+    }
+
+    function parsePriceNumber(rawPrice) {
+      const cleaned = String(rawPrice ?? '')
+        .replace(/^rs\.?\s*/i, '')
+        .replace(/[^0-9.]/g, '')
+        .trim();
+      const num = Number(cleaned);
+      return cleaned !== '' && Number.isFinite(num) ? num : 0;
     }
 
     function formatPriceDisplay(rawPrice) {
@@ -2756,20 +2763,18 @@
       return JSON.parse(match[1]);
     }
 
-    function shuffleArrayOnce(arr) {
-      const copy = arr.slice();
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
-    function ensureShuffledOnce() {
-      if (!hasShuffledAllOnce) {
-        orderedAllCards = shuffleArrayOnce(allCatalogCards);
-        hasShuffledAllOnce = true;
-      }
+    function prioritizeTwoLakhPlusFirst(cards) {
+      const highTier = [];
+      const others = [];
+      cards.forEach(card => {
+        const priceNum = Number(card.dataset.priceNum || 0);
+        if (priceNum >= 200000) {
+          highTier.push(card);
+        } else {
+          others.push(card);
+        }
+      });
+      return highTier.concat(others);
     }
 
     function initCardSpecToggles(containerEl) {
@@ -2817,10 +2822,8 @@
     }
 
     function updateCatalogView() {
-      ensureShuffledOnce();
-
-      const sourceList = currentFilter === 'all' ? orderedAllCards : allCatalogCards;
-      const matchingCards = sourceList.filter(card => {
+      const orderedCards = prioritizeTwoLakhPlusFirst(allCatalogCards);
+      const matchingCards = orderedCards.filter(card => {
         if (currentFilter === 'all') {
           return card.classList.contains('sheet-product-card');
         }
@@ -2832,12 +2835,21 @@
       const shouldShowArrow = currentFilter === 'all' && matchingCards.length > 3;
       const visibleLimit = (currentFilter === 'all' && !expandedAllView) ? 3 : matchingCards.length;
 
+      let lastVisibleCard = null;
       matchingCards.forEach((card, index) => {
         if (index < visibleLimit) {
           card.classList.remove('hidden');
           card.classList.add('is-revealed');
+          lastVisibleCard = card;
         }
       });
+
+      // Always keep the View More / Show Less prompt positioned at the downside after visible cards
+      if (lastVisibleCard) {
+        lastVisibleCard.insertAdjacentElement('afterend', viewMoreArrowWrap);
+      } else {
+        catalogGrid.appendChild(viewMoreArrowWrap);
+      }
 
       if (shouldShowArrow) {
         viewMoreArrowWrap.classList.remove('is-hidden');
@@ -2870,6 +2882,7 @@
       const article = document.createElement('article');
       article.className = 'catalog-card sheet-product-card';
       article.dataset.category = item.categorySlug;
+      article.dataset.priceNum = String(parsePriceNumber(item.price));
 
       const mediaHtml = item.imageLink
         ? `<img src="${escapeHtml(item.imageLink)}" alt="${escapeHtml(item.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=&quot;catalog-img-fallback&quot;>Image unavailable</span>'">`
@@ -2962,12 +2975,11 @@
 
         sheetItems.forEach(item => {
           const cardEl = buildSheetProductCard(item);
-          catalogGrid.appendChild(cardEl);
+          catalogGrid.insertBefore(cardEl, viewMoreArrowWrap);
         });
 
         initCardSpecToggles(catalogGrid);
         allCatalogCards = Array.from(document.querySelectorAll('#catalogGrid > .catalog-card'));
-        hasShuffledAllOnce = false;
         updateCatalogView();
       } catch (err) {
         console.warn('Google Sheet sync skipped:', err);
