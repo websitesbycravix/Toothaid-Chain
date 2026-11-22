@@ -2747,7 +2747,7 @@
       }
     }
 
-    function applyProductFilter(filterValue, scrollToCatalog = false) {
+    function applyProductFilter(filterValue) {
       currentFilter = filterValue;
       if (filterValue !== 'all') {
         expandedAllView = true;
@@ -2756,10 +2756,6 @@
         chip.classList.toggle('active', chip.dataset.filter === filterValue);
       });
       updateCatalogView();
-
-      if (scrollToCatalog) {
-        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-      }
     }
 
     function buildSheetProductCard(item) {
@@ -2882,21 +2878,21 @@
     filterChips.forEach(chip => {
       chip.addEventListener('click', (e) => {
         e.preventDefault();
-        applyProductFilter(chip.dataset.filter, false);
+        applyProductFilter(chip.dataset.filter);
       });
     });
 
     document.querySelectorAll('[data-filter-target]').forEach(catCard => {
       catCard.addEventListener('click', (e) => {
         e.preventDefault();
-        applyProductFilter(catCard.dataset.filterTarget, true);
+        applyProductFilter(catCard.dataset.filterTarget);
       });
     });
 
     viewAllProductsBtn.addEventListener('click', (e) => {
       e.preventDefault();
       expandedAllView = true;
-      applyProductFilter('all', true);
+      applyProductFilter('all');
     });
 
     updateCatalogView();
