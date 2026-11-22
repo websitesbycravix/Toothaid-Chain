@@ -2211,8 +2211,8 @@
       </div>
 
       <div class="cards-grid three-col" id="catalogGrid">
-        <!-- Card 1 -->
-        <article class="catalog-card fade-reveal" data-category="components" data-price-num="21490">
+        <!-- Static AI Cards (shown only at the end of category tabs, never in All) -->
+        <article class="catalog-card fade-reveal static-ai-card" data-category="components" data-price-num="21490">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="ASUS TUF Gaming B650 Motherboard">
           </div>
@@ -2229,8 +2229,7 @@
           </div>
         </article>
 
-        <!-- Card 2 -->
-        <article class="catalog-card fade-reveal" data-category="accessories" data-price-num="2499">
+        <article class="catalog-card fade-reveal static-ai-card" data-category="accessories" data-price-num="2499">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80" alt="Zebronics Mechanical Keyboard & Combo">
           </div>
@@ -2247,8 +2246,7 @@
           </div>
         </article>
 
-        <!-- Card 3 -->
-        <article class="catalog-card fade-reveal" data-category="accessories" data-price-num="1599">
+        <article class="catalog-card fade-reveal static-ai-card" data-category="accessories" data-price-num="1599">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80" alt="Portronics Wireless Keyboard & Mouse">
           </div>
@@ -2265,8 +2263,7 @@
           </div>
         </article>
 
-        <!-- Card 4 -->
-        <article class="catalog-card extra-product hidden" data-category="displays" data-price-num="16990">
+        <article class="catalog-card extra-product hidden static-ai-card" data-category="displays" data-price-num="16990">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80" alt="27-inch 180Hz IPS Gaming Monitor">
           </div>
@@ -2283,8 +2280,7 @@
           </div>
         </article>
 
-        <!-- Card 5 -->
-        <article class="catalog-card extra-product hidden" data-category="components" data-price-num="5490">
+        <article class="catalog-card extra-product hidden static-ai-card" data-category="components" data-price-num="5490">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=800&q=80" alt="Tempered Glass ARGB PC Cabinet">
           </div>
@@ -2301,8 +2297,7 @@
           </div>
         </article>
 
-        <!-- Card 6 -->
-        <article class="catalog-card extra-product hidden" data-category="components" data-price-num="9890">
+        <article class="catalog-card extra-product hidden static-ai-card" data-category="components" data-price-num="9890">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=800&q=80" alt="32GB DDR5 High-Speed RAM Kit">
           </div>
@@ -2319,8 +2314,7 @@
           </div>
         </article>
 
-        <!-- Card 7 -->
-        <article class="catalog-card extra-product hidden" data-category="storage" data-price-num="6790">
+        <article class="catalog-card extra-product hidden static-ai-card" data-category="storage" data-price-num="6790">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=800&q=80" alt="1TB / 2TB Gen4 NVMe SSD">
           </div>
@@ -2337,8 +2331,7 @@
           </div>
         </article>
 
-        <!-- Card 8 -->
-        <article class="catalog-card extra-product hidden" data-category="laptops" data-price-num="74990">
+        <article class="catalog-card extra-product hidden static-ai-card" data-category="laptops" data-price-num="74990">
           <div class="catalog-img">
             <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80" alt="Gaming & Creator Laptops">
           </div>
@@ -2763,18 +2756,18 @@
       return JSON.parse(match[1]);
     }
 
-    function prioritizeTwoLakhPlusFirst(cards) {
-      const highTier = [];
-      const others = [];
-      cards.forEach(card => {
-        const priceNum = Number(card.dataset.priceNum || 0);
-        if (priceNum >= 200000) {
-          highTier.push(card);
-        } else {
-          others.push(card);
-        }
-      });
-      return highTier.concat(others);
+    function orderCardsForView(cards, filterValue) {
+      if (filterValue === 'all') {
+        const sheetOnly = cards.filter(card => card.classList.contains('sheet-product-card'));
+        const highTier = sheetOnly.filter(card => Number(card.dataset.priceNum || 0) >= 200000);
+        const regularSheet = sheetOnly.filter(card => Number(card.dataset.priceNum || 0) < 200000);
+        return highTier.concat(regularSheet);
+      }
+
+      const categoryMatches = cards.filter(card => card.dataset.category === filterValue);
+      const sheetCardsInCategory = categoryMatches.filter(card => card.classList.contains('sheet-product-card'));
+      const aiCardsInCategory = categoryMatches.filter(card => card.classList.contains('static-ai-card'));
+      return sheetCardsInCategory.concat(aiCardsInCategory);
     }
 
     function initCardSpecToggles(containerEl) {
@@ -2822,34 +2815,22 @@
     }
 
     function updateCatalogView() {
-      const orderedCards = prioritizeTwoLakhPlusFirst(allCatalogCards);
-      const matchingCards = orderedCards.filter(card => {
-        if (currentFilter === 'all') {
-          return card.classList.contains('sheet-product-card');
-        }
-        return card.dataset.category === currentFilter;
-      });
+      const matchingCards = orderCardsForView(allCatalogCards, currentFilter);
 
       allCatalogCards.forEach(card => card.classList.add('hidden'));
 
       const shouldShowArrow = currentFilter === 'all' && matchingCards.length > 3;
       const visibleLimit = (currentFilter === 'all' && !expandedAllView) ? 3 : matchingCards.length;
 
-      let lastVisibleCard = null;
       matchingCards.forEach((card, index) => {
         if (index < visibleLimit) {
           card.classList.remove('hidden');
           card.classList.add('is-revealed');
-          lastVisibleCard = card;
+          catalogGrid.insertBefore(card, viewMoreArrowWrap);
         }
       });
 
-      // Always keep the View More / Show Less prompt positioned at the downside after visible cards
-      if (lastVisibleCard) {
-        lastVisibleCard.insertAdjacentElement('afterend', viewMoreArrowWrap);
-      } else {
-        catalogGrid.appendChild(viewMoreArrowWrap);
-      }
+      catalogGrid.appendChild(viewMoreArrowWrap);
 
       if (shouldShowArrow) {
         viewMoreArrowWrap.classList.remove('is-hidden');
