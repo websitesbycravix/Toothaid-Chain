@@ -36,6 +36,8 @@
       position: relative;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-cream);
+      background-image: radial-gradient(circle at 0% 0%, rgba(235, 198, 92, 0.22) 0%, rgba(247, 224, 148, 0.09) 28%, rgba(250, 248, 243, 0) 58%);
+      background-attachment: fixed;
       color: var(--ink-dark);
       line-height: 1.55;
       overflow-x: hidden;
@@ -86,7 +88,8 @@
       position: sticky;
       top: 0;
       z-index: 90;
-      background: rgba(250, 248, 243, 0.92);
+      background: rgba(250, 248, 243, 0.9);
+      background-image: radial-gradient(circle at 0% 0%, rgba(235, 198, 92, 0.16) 0%, rgba(250, 248, 243, 0) 45%);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(231, 217, 183, 0.55);
@@ -402,7 +405,7 @@
     .hero {
       position: relative;
       padding: 22px 0 36px;
-      background: radial-gradient(circle at 50% 0%, rgba(255, 249, 230, 0.72) 0%, rgba(250, 248, 243, 0.22) 68%);
+      background: radial-gradient(circle at 0% 0%, rgba(238, 198, 86, 0.24) 0%, rgba(248, 226, 152, 0.08) 32%, rgba(250, 248, 243, 0) 64%);
       text-align: center;
     }
 
@@ -682,7 +685,7 @@
     }
 
     .section-alt {
-      background: rgba(246, 242, 232, 0.82);
+      background: radial-gradient(circle at 0% 0%, rgba(238, 198, 86, 0.15) 0%, rgba(246, 242, 232, 0.82) 48%);
     }
 
     .section-head {
@@ -2604,7 +2607,6 @@
       }
     }, { passive: true });
 
-    // Card press/hover state across all card types without glow or flicker
     document.querySelectorAll('.feature-card, .pick-card, .service-card, .catalog-card, .review-card, .store-card').forEach(card => {
       card.addEventListener('touchstart', () => {
         card.classList.add('is-active');
@@ -2615,7 +2617,6 @@
       }, { passive: true });
     });
 
-    // Reading-revealed arrow prompt after 3rd card (shows first 3 cards initially)
     const catalogCards = Array.from(document.querySelectorAll('.catalog-card'));
     const viewMoreArrowWrap = document.getElementById('viewMoreArrowWrap');
     const toggleMoreBtn = document.getElementById('toggleMoreProducts');
@@ -2668,7 +2669,6 @@
 
     updateCatalogView();
 
-    // Demo mode: buttons, menu, filter chips, and links feel pressed when clicked, but do not navigate/scroll/open panels
     document.querySelectorAll('button, a').forEach(el => {
       el.addEventListener('pointerdown', () => {
         el.classList.add('is-pressed');
