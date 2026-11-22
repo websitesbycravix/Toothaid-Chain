@@ -2820,9 +2820,12 @@
       ensureShuffledOnce();
 
       const sourceList = currentFilter === 'all' ? orderedAllCards : allCatalogCards;
-      const matchingCards = sourceList.filter(card =>
-        currentFilter === 'all' || card.dataset.category === currentFilter
-      );
+      const matchingCards = sourceList.filter(card => {
+        if (currentFilter === 'all') {
+          return card.classList.contains('sheet-product-card');
+        }
+        return card.dataset.category === currentFilter;
+      });
 
       allCatalogCards.forEach(card => card.classList.add('hidden'));
 
