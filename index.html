@@ -2778,7 +2778,7 @@
       });
     }
 
-    // Product Enquire Now handler (includes product name, price, and image link if available)
+    // Product Enquire Now handler (sends store name, product name, and price)
     function bindProductEnquireButtons(containerEl) {
       containerEl.querySelectorAll('.enquire-item').forEach(btn => {
         if (btn.dataset.enquireBound) return;
@@ -2789,12 +2789,10 @@
           const card = btn.closest('.catalog-card');
           const productName = card?.querySelector('.pick-title')?.textContent?.trim() || 'Product';
           const productPrice = card?.querySelector('.product-price')?.textContent?.trim() || '';
-          const imageUrl = (card?.dataset.imageUrl || card?.querySelector('.catalog-img img')?.getAttribute('src') || '').trim();
 
           const lines = [
             `Hi ${STORE_NAME}, I want to enquire about *${productName}*`,
-            productPrice ? `Price: ${productPrice}` : '',
-            imageUrl ? `Image: ${imageUrl}` : ''
+            productPrice ? `Price: ${productPrice}` : ''
           ].filter(Boolean);
 
           openWhatsAppMessage(lines.join('\n'));
@@ -2981,7 +2979,6 @@
       article.className = 'catalog-card sheet-product-card';
       article.dataset.category = item.categorySlug;
       article.dataset.priceNum = String(parsePriceNumber(item.price));
-      article.dataset.imageUrl = item.imageLink || '';
 
       const mediaHtml = item.imageLink
         ? `<img src="${escapeHtml(item.imageLink)}" alt="${escapeHtml(item.name)}" loading="eager" decoding="async" onerror="this.parentElement.innerHTML='<span class=&quot;catalog-img-fallback&quot;>Image unavailable</span>'">`
